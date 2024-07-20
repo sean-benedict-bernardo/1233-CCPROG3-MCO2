@@ -2,6 +2,10 @@ package main;
 
 import java.util.ArrayList;
 
+import main.rooms.Room;
+import viewer.Alert;
+import viewer.Auxiliary;
+
 /**
  * This class simulates a hotel reservation system
  * that can add a hotel to the system, display
@@ -43,11 +47,6 @@ public class HotelReservationSystem {
         while (!isUniqueHotelName(hotelName, -1)) {
 
             hotelName = Auxiliary.getString(">>> ", true);
-        }
-
-        if (!hotelName.equals("/EXIT")) {
-            hotelList.add(new Hotel(hotelName));
-            System.out.println("Creating " + hotelName);
         }
     }
 
@@ -101,18 +100,19 @@ public class HotelReservationSystem {
                     break;
 
                 case 2:
-                    confirmChange = Auxiliary.getBoolean("Do you want to add room?");
-                    if (confirmChange)
-                        hotelLocal.addRoom(); // This process is automatic
+                    int roomType = Auxiliary.getInt("Enter room type:", 1, 3) - 1;
+                    try {
+                        hotelLocal.addRoom(roomType);
+                    } catch (Exception e) {
+                        Alert.displayAlert(e);
+                    }
                     break;
 
                 case 3:
                     hotelLocal.printRooms();
                     System.out.println();
                     String roomName = Auxiliary.getString("Enter room to delete");
-                    confirmChange = Auxiliary.getBoolean("Do you want to keep your changes?");
-                    if (confirmChange)
-                        hotelLocal.removeRoom(roomName);
+                    hotelLocal.removeRoom(roomName);
                     break;
 
                 case 4:
@@ -123,7 +123,11 @@ public class HotelReservationSystem {
                         float newRoomPrice = Auxiliary.getFloat("Enter new base price", 100.0f);
                         confirmChange = Auxiliary.getBoolean("Do you want to keep your changes?");
                         if (confirmChange)
-                            hotelLocal.setBasePrice(newRoomPrice);
+                            try {
+                                hotelLocal.setBasePrice(newRoomPrice);
+                            } catch (Exception e) {
+                                Alert.displayAlert(e);
+                            }
                     }
                     break;
 
@@ -131,12 +135,15 @@ public class HotelReservationSystem {
                     if (hotelLocal.getNumReservations() == 0)
                         System.out.println("There are no reservations!");
                     else {
-                        hotelLocal.printReservationsList();
                         int anotherUserInt = Auxiliary.getInt("Enter # of reservation to delete", 1,
                                 hotelLocal.getNumReservations()) - 1;
                         confirmChange = Auxiliary.getBoolean("Do you want to keep your changes?");
                         if (confirmChange)
-                            hotelLocal.removeReservation(anotherUserInt);
+                            try {
+                                hotelLocal.removeReservation(anotherUserInt);
+                            } catch (Exception e) {
+                                // TODO: handle exception
+                            }
                     }
                     break;
 
@@ -236,8 +243,6 @@ public class HotelReservationSystem {
                     if (localHotel.getNumReservations() <= 0) {
                         System.out.println("There's no active reservations!");
                     } else {
-                        localHotel.printReservationsList();
-
                         int userReservation = Auxiliary.getInt("Enter # of reservation", 1,
                                 localHotel.getNumReservations());
 
@@ -253,7 +258,12 @@ public class HotelReservationSystem {
                             System.out.println("======== Cost Breakdown =======");
                             System.out.println("  Number of Nights: "
                                     + (localReservation.getCheckOutDate() - localReservation.getCheckInDate()));
-                            System.out.printf("  Rate:  %.2f/night\n", localReservation.getPrice());
+                            System.out.println("Nightly Breakdown");
+                            for (int i = localReservation.getCheckInDate(); i < localReservation
+                                    .getCheckOutDate(); i++) {
+                                System.out.printf("  Rate:  %.2f/night\n", localReservation.getNightPrice(i));
+
+                            }
                             System.out.printf("  Total: %.2f/night\n", localReservation.getTotalPrice());
                             Auxiliary.printBar(31);
                             System.out.println();

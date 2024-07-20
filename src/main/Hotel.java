@@ -1,6 +1,13 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+
+import main.rooms.*;
+import viewer.Auxiliary;
+import viewer.Alert;
 
 /**
  * This class simulates a hotel that has rooms
@@ -15,12 +22,24 @@ public class Hotel {
     private float basePrice;
     private ArrayList<Room> roomsList;
     private ArrayList<Reservation> reservationsList;
+    private ArrayList<NightRates> nightRates;
+
+    private static HashMap<Character, Integer> compareRoomType = new HashMap<>();
+
+    // initialize HashMap
+    static {
+        compareRoomType.put('S', 0);
+        compareRoomType.put('D', 1);
+        compareRoomType.put('E', 2);
+        compareRoomType.put(null, -1);
+    }
 
     /**
      * Hotel constructor
      * 
      * @param name String name of hotel
      */
+
     public Hotel(String name) {
         this.name = name;
         this.basePrice = 1299.0f;
@@ -28,7 +47,14 @@ public class Hotel {
         this.reservationsList = new ArrayList<Reservation>();
 
         // to satisfy minimum of one room
-        this.roomsList.add(new Room("1", this.basePrice));
+        try {
+            System.out.println(this.roomsList.size());
+
+            this.addRoom('S');
+        } catch (Exception e) {
+            System.err.println(e);
+            // Do nothing
+        }
     }
 
     /*
@@ -52,26 +78,75 @@ public class Hotel {
 
     /**
      * Add a room to roomsList
-     * naming convention is ordered by number
+     * naming convention is room type followed by
+     * 
+     * @param roomType - integer representation of what type of room is to be added
      */
 
-    public void addRoom() {
-        if (this.roomsList.size() < 50) {
+    public void addRoom(char roomType) throws Exception {
+        if (this.roomsList.size() >= 50) {
+            throw new Exception("Hotel is full");
+        } else if (compareRoomType.get(roomType) == -1) {
+            // should not be possible as we are going to be using buttons for this
+            throw new Exception("Invalid room type");
+        } else if (this.roomsList.size() < 50 && compareRoomType.get(roomType) != -1) {
             int roomNum = 1;
-            String roomNumStr = Integer.toString(roomNum);
+
+            String roomNumStr = roomType + Integer.toString(roomNum);
 
             // This loop finds the lowest number available, filling deleted rooms
             // if roomsList has no holes, then it will simply fill the index after the last
             while (getRoomIndex(roomNumStr) != -1) {
                 roomNum++;
-                roomNumStr = Integer.toString(roomNum);
+                roomNumStr = roomType + Integer.toString(roomNum);
             }
 
-            this.roomsList.add(roomNum - 1, new Room(roomNumStr, this.basePrice));
+            Room newRoom = null;
+
+            switch (roomType) {
+                case 'S': // Standard
+                    newRoom = new Room(roomNumStr, this.basePrice);
+                    break;
+                case 'D': // Deluxe
+                    newRoom = new DeluxeRoom(roomNumStr, this.basePrice);
+                    break;
+                case 'E': // Executive
+                    newRoom = new ExecutiveRoom(roomNumStr, this.basePrice);
+                    break;
+            }
+
+            /*
+             * Insertion Logic:
+             * If the list is empty, add room
+             * Otherwise, start from end and move rightward until the ff conditions are met:
+             * 1. the new room is within the right category grouping S > D > E
+             * 2. the new room is in order within said category
+             */
+            if (this.roomsList.size() == 0)
+                this.roomsList.add(newRoom);
+            else {
+                int i = this.roomsList.size() - 1;
+                while (true && i >= 0) {
+                    char localRoomType = this.roomsList.get(i).getRoomType().charAt(0);
+                    int localRoomNum = Integer.parseInt(this.roomsList.get(i).getName().substring(1));
+
+                    if (compareRoomType.get(roomType) > compareRoomType.get(localRoomType))
+                        break;
+                    else if (compareRoomType.get(roomType) == compareRoomType.get(localRoomType)
+                            && roomNum > localRoomNum)
+                        break;
+                    i--;
+                }
+                i++;
+                this.roomsList.add(i, newRoom);
+            }
             System.out.printf("Adding Room '%s'\n", roomNumStr);
-        } else {
-            System.out.println("Hotel is full!");
         }
+
+        // rearranges the list with consideration of the new room types
+        // Sorts in order of room type then number
+        // Standard >
+
     }
 
     /**
@@ -209,9 +284,15 @@ public class Hotel {
             System.out.println("Given dates are either invalid or are already booked!");
         else {
             System.out.println("Creating reservation for " + guestName);
-            localRoom.addReservedDays(checkInDate, checkOutDate);
-            this.reservationsList
-                    .add(new Reservation(guestName, checkInDate, checkOutDate + 1, localRoom, this.basePrice));
+            try {
+                localRoom.addReservedDays(checkInDate, checkOutDate);
+                Reservation newReservation = new Reservation(guestName,
+                        (ArrayList<NightRates>) this.nightRates.subList(checkInDate, checkOutDate), localRoom,
+                        this.basePrice);
+                this.reservationsList.add(newReservation);
+            } catch (Exception e) {
+                Alert.displayAlert(e);
+            }
         }
     }
 
@@ -223,37 +304,20 @@ public class Hotel {
      * 
      * @param reservationIndex index of the reservation to be deleted
      */
-    public void removeReservation(int reservationIndex) {
+    public void removeReservation(int reservationIndex) throws Exception {
         int roomIndex = getRoomIndex(this.reservationsList.get(reservationIndex).getRoom().getName());
         if (reservationIndex < 0 || this.reservationsList.size() - 1 < reservationIndex) {
-            System.out.println("Reservation not found!");
+            throw new Exception("Reservation not found!");
         } else {
-            System.out.println("Deleting reservation of " + this.reservationsList.get(reservationIndex).getGuestName());
+            Alert.displayAlert("Deleting reservation of " + this.reservationsList.get(reservationIndex).getGuestName());
 
             this.roomsList.get(roomIndex).removeReservedDays(this.reservationsList.get(reservationIndex));
             this.reservationsList.remove(reservationIndex);
         }
     }
 
-    /**
-     * Prints all active reservations in this hotel
-     * Prints each reservations number in the list and the guestName
-     */
-    public void printReservationsList() {
-        int i = 1;
-        int longestStrLen = 0;
-
-        // This is to supply a nice length to printBar
-        for (Reservation reservation : reservationsList)
-            if (reservation.getGuestName().length() > longestStrLen)
-                longestStrLen = reservation.getGuestName().length();
-        longestStrLen += 15;
-
-        Auxiliary.printBar(longestStrLen);
-        System.out.println("   Res. # | Guest Name");
-        for (Reservation reservation : reservationsList)
-            System.out.printf("   [%4d] | %s \n", i++, reservation.getGuestName());
-        Auxiliary.printBar(longestStrLen);
+    public ArrayList<Reservation> getReservations() {
+        return this.reservationsList;
     }
 
     /*
@@ -295,16 +359,20 @@ public class Hotel {
      * 
      * @param basePrice new updated base price
      */
-    public void setBasePrice(float basePrice) {
+    public void setBasePrice(float basePrice) throws Exception {
         if (this.reservationsList.size() != 0)
-            System.out.println("There are still active bookings!");
+            throw new Exception("There are still active bookings!");
         else if (basePrice < 100.0f)
-            System.out.println("New price is too low!");
+            throw new Exception("New price is too low!");
         else {
             this.basePrice = basePrice;
 
             for (Room room : roomsList) {
-                room.setPrice(basePrice);
+                try {
+                    room.setPrice(basePrice);
+                } catch (Exception e) {
+                    Alert.displayAlert(e);
+                }
             }
         }
     }
@@ -345,6 +413,10 @@ public class Hotel {
     public Room getRoom(String roomName) {
         int roomIndex = this.getRoomIndex(roomName);
         return (roomIndex > -1) ? this.roomsList.get(roomIndex) : null;
+    }
+
+    public ArrayList<Room> getRooms() {
+        return this.roomsList;
     }
 
     /**

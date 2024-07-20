@@ -1,0 +1,1 @@
+Ted Hopp & Frederik Wordenskjold. Answer to "Static Initialization Blocks." https://stackoverflow.com/a/2420466

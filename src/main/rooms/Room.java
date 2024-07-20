@@ -1,4 +1,6 @@
-package main;
+package main.rooms;
+
+import main.Reservation;
 
 /**
  * This class simulates a room in a hotel
@@ -8,13 +10,14 @@ package main;
  * @author Luis Andrew Madridijo
  */
 public class Room {
-    private String name;
+    protected String name;
+    protected String roomType;
     // this boolean array represents the days in our
     // hypothetical month that are reserved or not
     // true - reserved
     // false - not reserved
-    private boolean daysReserved[] = new boolean[31];
-    private float price;
+    protected boolean daysReserved[] = new boolean[31];
+    protected float price;
 
     /**
      * Room contstructor
@@ -25,6 +28,7 @@ public class Room {
     public Room(String name, float price) {
         this.name = name;
         this.price = price;
+        this.roomType = "Standard";
 
         // while false by default, this is an added safety measure
         for (int i = 0; i < this.daysReserved.length; i++)
@@ -72,7 +76,7 @@ public class Room {
      * @param checkInDate  integer index of day from 1-30 for check in date
      * @param checkOutDate integer index of day from 2-31 for check out date
      */
-    public void addReservedDays(int checkInDate, int checkOutDate) {
+    public void addReservedDays(int checkInDate, int checkOutDate) throws Exception {
         // If booking can be made, flip reservation to
         // true to represent there's a booking on that
         // This if statement is really just an extra safety net because the statement
@@ -86,7 +90,8 @@ public class Room {
             // checkout date should be able to accommodate a new reservation
             for (int i = checkInDate; i < checkOutDate; i++)
                 this.daysReserved[i] = true;
-        }
+        } else
+            throw new Exception("Room is not available!");
     }
 
     /**
@@ -117,11 +122,15 @@ public class Room {
      * Returns availability for a specific day provided index
      * 
      * @param index of date
-     * @return boolean status of day, false if invalid index is given
+     * @return boolean status of day
+     * @throws ArrayIndexOutOfBoundsException for indexes outside of 0-30
      */
-    public boolean getDayAvailability(int index) {
+    public boolean getDayAvailability(int index) throws ArrayIndexOutOfBoundsException {
         // ternary is safety check for in index access
-        return (0 <= index && index <= 30) ? this.daysReserved[index] : false;
+        if (0 <= index && index <= 30)
+            return this.daysReserved[index];
+        else
+            throw new ArrayIndexOutOfBoundsException("Date index (" + index + ") out of range!");
     }
 
     // Getters and setters
@@ -133,6 +142,15 @@ public class Room {
      */
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * Getter for room type
+     * 
+     * @return String of room type
+     */
+    public String getRoomType(){
+        return this.roomType;
     }
 
     /**
@@ -150,9 +168,11 @@ public class Room {
      * 
      * @param price Float of new nightly room rate of hotel and room
      */
-    public void setPrice(float price) {
+    public void setPrice(float price) throws Exception {
         // should already be handled in Hotel but this is an added safety net
         if (price >= 100.0f)
             this.price = price;
+        else
+            throw new Exception("New price is too low!");
     }
 }
