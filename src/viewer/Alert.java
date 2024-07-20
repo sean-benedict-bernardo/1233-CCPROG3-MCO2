@@ -12,7 +12,7 @@ public class Alert {
      * @param message String to be displayed
      */
     public static void displayAlert(String message) {
-        JOptionPane.showMessageDialog(null, message, "", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, message, "Hotel Reservation System", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**

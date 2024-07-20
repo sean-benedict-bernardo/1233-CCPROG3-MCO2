@@ -25,7 +25,7 @@ public class UserInput {
 
     /**
      * 
-     * @return Character representation of room
+     * @return String representation of Room
      */
     public static String selectRoom(ArrayList<Room> roomsList) {
         String[] roomNames = new String[roomsList.size()];
@@ -42,30 +42,32 @@ public class UserInput {
         return selectedRoom;
     }
 
-    public static void main(String[] args) {
-        Hotel testHotel = new Hotel("Alexander");
+    public static Hotel selectHotel(ArrayList<Hotel> hotelList) throws Exception {
 
-        for (int i = 30; i >= 0; i--) {
+        if (hotelList.size() == 0)
+            throw new Exception("No hotels in system!");
+        else {
+            String[] hotelNames = new String[hotelList.size()];
+            int i = 0;
+            for (Hotel hotel : hotelList) {
+                hotelNames[i++] = hotel.getName();
+            }
+
             try {
-                switch ((i + 1) % 3) {
-                    case 0:
-                        testHotel.addRoom('S');
-                        break;
-                    case 1:
-                        testHotel.addRoom('E');
-                        break;
-                    case 2:
-                        testHotel.addRoom('D');
-                        break;
+                String selectedHotel = (String) JOptionPane.showInputDialog(null,
+                        "Select Hotel", "Hotel Selection",
+                        JOptionPane.QUESTION_MESSAGE, null,
+                        hotelNames, hotelNames[0]);
 
-                    default:
-                        break;
+                for (Hotel hotel : hotelList) {
+                    if (hotel.getName().equals(selectedHotel))
+                        return hotel;
                 }
             } catch (Exception e) {
                 // TODO: handle exception
             }
-        }
 
-        System.out.println(selectRoom(testHotel.getRooms()));
+            return null;
+        }
     }
 }

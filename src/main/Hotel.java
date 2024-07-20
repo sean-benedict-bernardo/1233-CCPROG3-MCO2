@@ -22,7 +22,7 @@ public class Hotel {
     private float basePrice;
     private ArrayList<Room> roomsList;
     private ArrayList<Reservation> reservationsList;
-    private ArrayList<NightRates> nightRates;
+    private NightRates[] nightRates = new NightRates[31];
 
     private static HashMap<Character, Integer> compareRoomType = new HashMap<>();
 
@@ -40,19 +40,21 @@ public class Hotel {
      * @param name String name of hotel
      */
 
-    public Hotel(String name) {
+    public Hotel(String name) throws Exception {
         this.name = name;
         this.basePrice = 1299.0f;
         this.roomsList = new ArrayList<Room>();
         this.reservationsList = new ArrayList<Reservation>();
 
+        for (int i = 0; i < nightRates.length; i++) {
+            this.nightRates[i] = new NightRates(i + 1);
+        }
+
         // to satisfy minimum of one room
         try {
-            System.out.println(this.roomsList.size());
-
             this.addRoom('S');
         } catch (Exception e) {
-            System.err.println(e);
+            throw e;
             // Do nothing
         }
     }

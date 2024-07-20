@@ -1,17 +1,7 @@
 package viewer;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
+import javax.swing.*;
+import java.awt.*;
 
 public class HomeMenu extends JFrame {
     private JButton buttonsList[];
@@ -33,37 +23,42 @@ public class HomeMenu extends JFrame {
         setForeground(CSS.color.FOREGROUND);
 
         // NORTH FRAME
-        JLabel nameLabel = new JLabel("Hotel Reservation System");
+        JLabel nameLabel = new JLabel("<html><p style=\"text-align: center;\">Hotel Reservation System</p></html>",
+                SwingConstants.CENTER);
+        nameLabel.setOpaque(true);
+        nameLabel.setBackground(CSS.color.BACKGROUND);
+        nameLabel.setForeground(getForeground());
         nameLabel.setFont(CSS.font.HEADER);
-        nameLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); 
+        nameLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 0));
         add(nameLabel, BorderLayout.NORTH);
 
         // CENTER FRAME
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(0,1));
-        buttonPanel.setBackground(CSS.color.BACKGROUND);
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        // This Extra JPanel chesses and restricts the size of GridLayout
+        JPanel buttonPanelContain = new JPanel(new GridBagLayout());
+        buttonPanelContain.setBackground(getBackground());
 
-        JButton createHotelButton = new JButton("Create Hotel");
-        JButton viewHotelButton = new JButton("View Hotel");
-        JButton manageHotelButton = new JButton("Manage Hotel");
-        JButton makeReservationButton = new JButton("Make a Reservation");
-        JButton exitButton = new JButton("Exit Program");
+        JPanel buttonPanel = new JPanel(new GridLayout(0, 1));
+        buttonPanel.setBackground(buttonPanelContain.getBackground());
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(24, 24, 24, 24));
 
+        // BUTTONS
         this.buttonsList = new JButton[] {
-                createHotelButton, viewHotelButton, manageHotelButton,
-                makeReservationButton, exitButton
+                new JButton("Create Hotel"),
+                new JButton("View Hotel"),
+                new JButton("Manage Hotel"),
+                new JButton("Make a Reservation"),
+                new JButton("Exit Program")
         };
 
         for (JButton jButton : buttonsList) {
             jButton.setBackground(Color.white);
             jButton.setFont(CSS.font.BUTTON);
-            jButton.setAlignmentX(CENTER_ALIGNMENT);
-            // jButton.setSize(, jButton.getHeight());
+            jButton.setFocusPainted(false);
             buttonPanel.add(jButton);
         }
 
-        add(buttonPanel, BorderLayout.CENTER);
+        buttonPanelContain.add(buttonPanel);
+        add(buttonPanelContain, BorderLayout.CENTER);
     }
 
     public JButton[] getButtons() {

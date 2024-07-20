@@ -103,7 +103,6 @@ public class Reservation {
      */
 
     public float getTotalPrice() {
-        // checkOutDate - checkInDate is the number of nights stayed in the hotel
         // this is needed because reservations are priced
         // by the number of nights in a stay
 
@@ -111,7 +110,8 @@ public class Reservation {
         boolean isPayday = false;
 
         for (int i = 0; i < nightRates.length; i++) {
-            if ("STAY4_GET1".equals(this.discountCode))
+            if ("STAY4_GET1".equals(this.discountCode)
+                    && this.getCheckOutDate() - this.getCheckInDate() >= 5)
                 continue;
             total += this.room.getPrice() * nightRates[i].getDayRate();
         }
