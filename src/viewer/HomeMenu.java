@@ -1,5 +1,7 @@
 package viewer;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -9,6 +11,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 
 public class HomeMenu extends JFrame {
     private JButton buttonsList[];
@@ -16,6 +19,7 @@ public class HomeMenu extends JFrame {
     public HomeMenu() {
         super();
         setLayout(new BorderLayout());
+
         this.initFrame();
 
         pack();
@@ -25,16 +29,20 @@ public class HomeMenu extends JFrame {
     }
 
     public void initFrame() {
+        setBackground(CSS.color.BACKGROUND);
+        setForeground(CSS.color.FOREGROUND);
+
         // NORTH FRAME
-        JLabel name = new JLabel("BOW: Big Old Wrangler");
-        name.setFont(CSS.font.SANSERIF);
-        name.setForeground(CSS.color.WHITE);
-        name.setBackground(getBackground());
+        JLabel nameLabel = new JLabel("Hotel Reservation System");
+        nameLabel.setFont(CSS.font.HEADER);
+        nameLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); 
+        add(nameLabel, BorderLayout.NORTH);
 
         // CENTER FRAME
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());
+        buttonPanel.setLayout(new GridLayout(0,1));
         buttonPanel.setBackground(CSS.color.BACKGROUND);
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JButton createHotelButton = new JButton("Create Hotel");
         JButton viewHotelButton = new JButton("View Hotel");
@@ -42,12 +50,16 @@ public class HomeMenu extends JFrame {
         JButton makeReservationButton = new JButton("Make a Reservation");
         JButton exitButton = new JButton("Exit Program");
 
-        this.buttonsList = new JButton[] { createHotelButton, viewHotelButton, manageHotelButton, makeReservationButton,
-                exitButton };
+        this.buttonsList = new JButton[] {
+                createHotelButton, viewHotelButton, manageHotelButton,
+                makeReservationButton, exitButton
+        };
 
         for (JButton jButton : buttonsList) {
             jButton.setBackground(Color.white);
-            jButton.setFont(CSS.font.SANSERIF);
+            jButton.setFont(CSS.font.BUTTON);
+            jButton.setAlignmentX(CENTER_ALIGNMENT);
+            // jButton.setSize(, jButton.getHeight());
             buttonPanel.add(jButton);
         }
 

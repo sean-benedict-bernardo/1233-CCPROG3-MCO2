@@ -4,10 +4,9 @@ import java.awt.*;
 
 public class CSS {
     public class font {
-        public static final Font SANSERIF = (System.getProperty("os.name").toUpperCase().contains("WINDOWS"))
-                ? Font.decode("Calibri")
-                : Font.decode(Font.SANS_SERIF);
-        public static final Font COMICSANS = Font.decode("Comic Sans MS");
+        public static final Font HEADER = new Font("Sans Serif", Font.BOLD, 48);
+        public static final Font BODY = new Font("Sans Serif", Font.PLAIN, 12);
+        public static final Font BUTTON = new Font("Sans Serif", Font.PLAIN, 16);
     }
 
     public class color {
@@ -16,8 +15,8 @@ public class CSS {
         public static final Color LIGHTGRAY = Color.decode("#C4C4C4");
         public static final Color WHITE = Color.white;
 
-        public static final Color BACKGROUND = Color.decode("#121212");
-        public static final Color FOREGROUND = Color.decode("#054A91");
+        public static final Color BACKGROUND = BLACK;
+        public static final Color FOREGROUND = WHITE;
     }
 }
 /**

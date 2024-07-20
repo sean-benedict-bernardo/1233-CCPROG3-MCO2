@@ -23,8 +23,4 @@ public class Alert {
     public static void displayAlert(Exception exception) {
         JOptionPane.showMessageDialog(null, exception.getMessage(), "Alert!", JOptionPane.ERROR_MESSAGE);
     }
-
-    // More of a checker to play around with JOptionPane
-    public static void main(String[] args) {
-    }
 }
