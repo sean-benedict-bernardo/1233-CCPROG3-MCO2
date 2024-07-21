@@ -18,7 +18,23 @@ public class HotelReservationSystem {
         this.gui = new HomeMenu();
 
         try {
-            this.hotelList.add(new Hotel("HotelGemal"));
+            Hotel myHotel = new Hotel("HotelGemal");
+
+            for (int i = 0; i < 15; i++) {
+                switch (i % 3) {
+                    case 0:
+                        myHotel.addRoom('S');
+                        break;
+                    case 1:
+                        myHotel.addRoom('D');
+                        break;
+                    default:
+                        myHotel.addRoom('E');
+                        break;
+                }
+            }
+
+            this.hotelList.add(myHotel);
         } catch (Exception e) {
             // TODO: handle exception
         }

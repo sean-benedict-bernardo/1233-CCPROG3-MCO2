@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import main.Hotel;
-import viewer.common.CSS;
+import viewer.common.MyStyles;
 import viewer.common.MyComponents;
 
 public class HotelInfo extends JPanel {
@@ -22,12 +22,12 @@ public class HotelInfo extends JPanel {
         this.initFrame();
 
         setLayout(new GridBagLayout());
-        setBackground(CSS.color.BACKGROUND);
+        setBackground(MyStyles.color.BACKGROUND);
     }
 
     public void initFrame() {
         JPanel tableContainer = new JPanel(new GridLayout(4, 2, 12, 8));
-        tableContainer.setBackground(CSS.color.BACKGROUND);
+        tableContainer.setBackground(MyStyles.color.BACKGROUND);
 
         String data[][] = {
                 { "Name", this.hotel.getName() },

@@ -73,7 +73,7 @@ public class ViewHotel extends JDialog {
 
         this.cardComponents[0] = new HotelInfo(hotel);
         this.cardComponents[1] = new RoomAvailability(hotel);
-        this.cardComponents[2] = new RoomInformation(hotel);
+        this.cardComponents[2] = new RoomInformation(hotel.getRooms());
         this.cardComponents[3] = new Reservations(hotel.getReservations());
 
         for (int i = 0; i < this.cardComponents.length; i++)
@@ -113,5 +113,9 @@ public class ViewHotel extends JDialog {
 
     public JDialog getJDialog() {
         return this;
+    }
+
+    public JPanel getCardComponent(int index) {
+        return (0 <= index && index <= 3) ? this.cardComponents[index] : null;
     }
 }

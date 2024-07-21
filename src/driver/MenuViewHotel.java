@@ -2,6 +2,7 @@ package driver;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JPanel;
 
 import main.Hotel;
 import viewer.viewhotel.*;
@@ -33,6 +34,19 @@ public class MenuViewHotel {
             buttons[3].addActionListener((e) -> this.gui.showCard(3));
 
         buttons[4].addActionListener(e -> this.hideWindow());
+
+        // add eventlistener to the jscrollpane
+        JPanel roomInfoPanel = this.gui.getCardComponent(2);
+
+        if (roomInfoPanel instanceof RoomInformation) {
+            JButton roomSelectButtons[] = ((RoomInformation) roomInfoPanel).getRoomSelectButtons();
+
+            for (JButton jButton : roomSelectButtons) {
+                jButton.addActionListener((e) -> {
+                    ((RoomInformation) roomInfoPanel).dispRoomInfo(this.hotel.getRoom(e.getActionCommand()));
+                });
+            }
+        }
     }
 
     public void hideWindow() {

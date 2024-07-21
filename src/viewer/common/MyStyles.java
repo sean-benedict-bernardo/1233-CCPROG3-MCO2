@@ -2,7 +2,7 @@ package viewer.common;
 
 import java.awt.*;
 
-public class CSS {
+public class MyStyles {
     public class font {
         public static final Font HEADER = new Font("Sans Serif", Font.BOLD, 48);
         public static final Font BODY = new Font("Sans Serif", Font.PLAIN, 12);

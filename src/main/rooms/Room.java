@@ -149,7 +149,7 @@ public class Room {
      * 
      * @return String of room type
      */
-    public String getRoomType(){
+    public String getRoomType() {
         return this.roomType;
     }
 
@@ -174,5 +174,10 @@ public class Room {
             this.price = price;
         else
             throw new Exception("New price is too low!");
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }
