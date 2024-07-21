@@ -1,4 +1,4 @@
-package viewer;
+package viewer.common;
 
 import java.awt.*;
 

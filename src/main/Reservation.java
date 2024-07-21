@@ -30,18 +30,18 @@ public class Reservation {
      * @param room         Room details
      * @param basePrice    base price as passed from the instantiating Hotel
      */
-    public Reservation(String guestName, ArrayList<NightRates> nightRates,
+    public Reservation(String guestName, NightRates[] nightRates,
             Room room, float basePrice, String discountCode) {
         this.guestName = guestName;
-        this.nightRates = (NightRates[]) nightRates.toArray();
+        this.nightRates = nightRates;
         this.room = room;
         this.discountCode = discountCode;
     }
 
-    public Reservation(String guestName, ArrayList<NightRates> nightRates,
+    public Reservation(String guestName, NightRates[] nightRates,
             Room room, float basePrice) {
         this.guestName = guestName;
-        this.nightRates = (NightRates[]) nightRates.toArray();
+        this.nightRates = nightRates;
         this.room = room;
         this.discountCode = null;
     }
@@ -134,5 +134,10 @@ public class Reservation {
         }
 
         return total;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%3s %s", this.room.getName(), this.guestName);
     }
 }

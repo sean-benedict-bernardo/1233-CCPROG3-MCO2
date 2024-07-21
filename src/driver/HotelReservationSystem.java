@@ -5,9 +5,9 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import main.Hotel;
-import viewer.Alert;
 import viewer.HomeMenu;
-import viewer.UserInput;
+import viewer.common.Alert;
+import viewer.common.UserInput;
 
 public class HotelReservationSystem {
     private ArrayList<Hotel> hotelList;
@@ -82,7 +82,7 @@ public class HotelReservationSystem {
 
                 if (localHotel != null) {
                     // nothing is returned or kept
-                    ViewHotel viewHotel = new ViewHotel(localHotel);
+                    MenuViewHotel viewHotel = new MenuViewHotel(localHotel);
                 }
             } catch (Exception err) {
                 Alert.displayAlert(err);

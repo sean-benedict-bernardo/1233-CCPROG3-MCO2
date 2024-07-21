@@ -1,26 +1,33 @@
-package viewer;
+package viewer.viewhotel;
 
 import main.*;
+import viewer.common.CSS;
 
 import java.awt.*;
 import javax.swing.*;
 
-public class HotelInfo extends JDialog {
+public class ViewHotel extends JDialog {
     private Hotel hotel;
     private JButton buttonsList[];
+    private JPanel cardComponents[] = new JPanel[4];
+    private JPanel cardPanel;
+    private CardLayout cardPanelLayout = new CardLayout();
 
-    public HotelInfo(Hotel hotel) {
+    public ViewHotel(Hotel hotel) {
         super();
         this.hotel = hotel;
         setLayout(new BorderLayout());
 
         this.initFrame();
+        this.initButtons();
+        this.initCardContent();
 
-        pack();
+        setMinimumSize(new Dimension(720, 405));
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
     }
 
-    public void initFrame() {
+    private void initFrame() {
         setBackground(CSS.color.BACKGROUND);
         setForeground(CSS.color.FOREGROUND);
 
@@ -32,8 +39,10 @@ public class HotelInfo extends JDialog {
         nameLabel.setFont(CSS.font.BODY);
         nameLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 0));
         add(nameLabel, BorderLayout.NORTH);
+    }
 
-        // CENTER FRAME
+    private void initButtons() {
+        // WEST FRAME
         // This Extra JPanel chesses and restricts the size of GridLayout
         JPanel buttonPanelContain = new JPanel(new GridBagLayout());
         buttonPanelContain.setBackground(getBackground());
@@ -61,6 +70,25 @@ public class HotelInfo extends JDialog {
         add(buttonPanelContain, BorderLayout.WEST);
     }
 
+    private void initCardContent() {
+        this.cardPanel = new JPanel(this.cardPanelLayout);
+
+        this.cardComponents[0] = new HotelInfo(hotel);
+        this.cardComponents[1] = new RoomAvailability(hotel);
+        this.cardComponents[2] = new RoomInformation(hotel);
+        this.cardComponents[3] = new Reservations(hotel.getReservations());
+
+        for (int i = 0; i < this.cardComponents.length; i++)
+            this.cardPanel.add(this.cardComponents[i], "" + i);
+
+        JPanel dummyPanel = new JPanel();
+        dummyPanel.setSize(720, 400);
+        this.cardPanel.add(dummyPanel, "" + -1);
+
+        add(cardPanel);
+        this.cardPanelLayout.show(this.cardPanel, "-1");
+    }
+
     /**
      * case 1:
      * System.out.println();
@@ -75,29 +103,10 @@ public class HotelInfo extends JDialog {
      * System.out.println();
      */
 
-    public void displayHotelInformation() {
-        JPanel hotelInfo = new JPanel(new GridLayout(4, 2));
-        hotelInfo.setBackground(CSS.color.BACKGROUND);
-
-        String data[][] = {
-                { "Name", this.hotel.getName() },
-                { "Room Count", "" + this.hotel.getNumRooms() },
-                { "Reservation Count", "" + this.hotel.getNumReservations() },
-                { "Total Revenue", "" + this.hotel.getTotalRevenue() }
-        };
-
-        for (int i = 0; i < data.length; i++) {
-            for (int j = 0; j < data[0].length; j++) {
-                JLabel jLabel = new JLabel(data[i][j], SwingConstants.LEFT);
-                jLabel.setOpaque(true);
-                jLabel.setBackground(CSS.color.BACKGROUND);
-                jLabel.setForeground(getForeground());
-                jLabel.setFont(CSS.font.BODY);
-                hotelInfo.add(jLabel);
-            }
+    public void showCard(int index) {
+        if (0 <= index && index <= 3) {
+            this.cardPanelLayout.show(this.cardPanel, "" + index);
         }
-
-        add(hotelInfo, BorderLayout.CENTER);
     }
 
     public JButton[] getButtons() {

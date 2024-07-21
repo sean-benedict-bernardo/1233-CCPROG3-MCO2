@@ -3,8 +3,8 @@ package main;
 import java.util.ArrayList;
 
 import main.rooms.Room;
-import viewer.Alert;
-import viewer.Auxiliary;
+import viewer.common.Alert;
+import viewer.common.Auxiliary;
 
 /**
  * This class simulates a hotel reservation system

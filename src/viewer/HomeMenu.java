@@ -1,6 +1,9 @@
 package viewer;
 
 import javax.swing.*;
+
+import viewer.common.CSS;
+
 import java.awt.*;
 
 public class HomeMenu extends JFrame {
@@ -21,6 +24,8 @@ public class HomeMenu extends JFrame {
     public void initFrame() {
         setBackground(CSS.color.BACKGROUND);
         setForeground(CSS.color.FOREGROUND);
+        setMinimumSize(new Dimension(720, 405));
+
 
         // NORTH FRAME
         JLabel nameLabel = new JLabel("<html><p style=\"text-align: center;\">Hotel Reservation System</p></html>",

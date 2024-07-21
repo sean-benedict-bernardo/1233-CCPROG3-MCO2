@@ -1,14 +1,9 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
 
 import main.rooms.*;
-import viewer.Auxiliary;
-import viewer.Alert;
-
+import viewer.common.*;
 /**
  * This class simulates a hotel that has rooms
  * and can accept reservations of those rooms.
@@ -289,7 +284,7 @@ public class Hotel {
             try {
                 localRoom.addReservedDays(checkInDate, checkOutDate);
                 Reservation newReservation = new Reservation(guestName,
-                        (ArrayList<NightRates>) this.nightRates.subList(checkInDate, checkOutDate), localRoom,
+                        Arrays.copyOfRange(this.nightRates, checkInDate, checkOutDate), localRoom,
                         this.basePrice);
                 this.reservationsList.add(newReservation);
             } catch (Exception e) {
