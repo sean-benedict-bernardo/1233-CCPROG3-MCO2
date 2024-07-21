@@ -2,7 +2,7 @@ package viewer;
 
 import javax.swing.*;
 
-import viewer.common.CSS;
+import viewer.common.MyStyles;
 
 import java.awt.*;
 
@@ -22,8 +22,8 @@ public class HomeMenu extends JFrame {
     }
 
     public void initFrame() {
-        setBackground(CSS.color.BACKGROUND);
-        setForeground(CSS.color.FOREGROUND);
+        setBackground(MyStyles.color.BACKGROUND);
+        setForeground(MyStyles.color.FOREGROUND);
         setMinimumSize(new Dimension(720, 405));
 
 
@@ -31,9 +31,9 @@ public class HomeMenu extends JFrame {
         JLabel nameLabel = new JLabel("<html><p style=\"text-align: center;\">Hotel Reservation System</p></html>",
                 SwingConstants.CENTER);
         nameLabel.setOpaque(true);
-        nameLabel.setBackground(CSS.color.BACKGROUND);
+        nameLabel.setBackground(MyStyles.color.BACKGROUND);
         nameLabel.setForeground(getForeground());
-        nameLabel.setFont(CSS.font.HEADER);
+        nameLabel.setFont(MyStyles.font.HEADER);
         nameLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 0));
         add(nameLabel, BorderLayout.NORTH);
 
@@ -57,7 +57,7 @@ public class HomeMenu extends JFrame {
 
         for (JButton jButton : buttonsList) {
             jButton.setBackground(Color.white);
-            jButton.setFont(CSS.font.BUTTON);
+            jButton.setFont(MyStyles.font.BUTTON);
             jButton.setFocusPainted(false);
             buttonPanel.add(jButton);
         }

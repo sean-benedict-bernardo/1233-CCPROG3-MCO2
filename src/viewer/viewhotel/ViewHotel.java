@@ -1,7 +1,8 @@
 package viewer.viewhotel;
 
 import main.*;
-import viewer.common.CSS;
+import viewer.common.MyStyles;
+import viewer.common.MyComponents;
 
 import java.awt.*;
 import javax.swing.*;
@@ -28,15 +29,15 @@ public class ViewHotel extends JDialog {
     }
 
     private void initFrame() {
-        setBackground(CSS.color.BACKGROUND);
-        setForeground(CSS.color.FOREGROUND);
+        setBackground(MyStyles.color.BACKGROUND);
+        setForeground(MyStyles.color.FOREGROUND);
 
         // NORTH FRAME
         JLabel nameLabel = new JLabel("Viewing " + hotel.getName(), SwingConstants.CENTER);
         nameLabel.setOpaque(true);
-        nameLabel.setBackground(CSS.color.BACKGROUND);
+        nameLabel.setBackground(MyStyles.color.BACKGROUND);
         nameLabel.setForeground(getForeground());
-        nameLabel.setFont(CSS.font.BODY);
+        nameLabel.setFont(MyStyles.font.BODY);
         nameLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 0));
         add(nameLabel, BorderLayout.NORTH);
     }
@@ -53,19 +54,16 @@ public class ViewHotel extends JDialog {
 
         // BUTTONS
         this.buttonsList = new JButton[] {
-                new JButton("Hotel Information"),
-                new JButton("View Room Availability"),
-                new JButton("View Room Information"),
-                new JButton("View Reservations"),
-                new JButton("Return to Main Menu")
+                MyComponents.JButton("Hotel Information"),
+                MyComponents.JButton("View Room Availability"),
+                MyComponents.JButton("View Room Information"),
+                MyComponents.JButton("View Reservations"),
+                MyComponents.JButton("Return to Main Menu")
         };
 
-        for (JButton jButton : buttonsList) {
-            jButton.setBackground(Color.white);
-            jButton.setFont(CSS.font.BUTTON);
-            jButton.setFocusPainted(false);
+        for (JButton jButton : buttonsList)
             buttonPanel.add(jButton);
-        }
+
         buttonPanelContain.add(buttonPanel);
         add(buttonPanelContain, BorderLayout.WEST);
     }

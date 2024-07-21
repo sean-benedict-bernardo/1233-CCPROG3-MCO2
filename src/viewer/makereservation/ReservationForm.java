@@ -1,17 +1,14 @@
 package viewer.makereservation;
 
 import main.Hotel;
-import viewer.common.CSS;
+import viewer.common.MyStyles;
 import viewer.common.MyComponents;
-import viewer.viewhotel.HotelInfo;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -26,7 +23,7 @@ public class ReservationForm extends JDialog {
 
     public ReservationForm(Hotel hotel, int mode) {
         super();
-        
+
         this.containerPanel = new JPanel(gbl);
 
         this.initFrame();

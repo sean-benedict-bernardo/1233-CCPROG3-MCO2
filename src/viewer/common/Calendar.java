@@ -21,13 +21,14 @@ public class Calendar extends JPanel {
         JPanel buttonsPanel = new JPanel(new GridLayout(0, 7));
 
         for (int i = 0; i < buttons.length; i++) {
-            buttons[i] = new JButton("" + (i + 1));
-            buttons[i].setBackground(CSS.color.WHITE);
-            buttons[i].setFont(CSS.font.BUTTON);
-            buttons[i].setFocusPainted(false);
+            buttons[i] = MyComponents.JButton("" + (i + 1));
             buttonsPanel.add(buttons[i]);
         }
 
         add(buttonsPanel);
+    }
+
+    public JButton[] getButtons() {
+        return this.buttons;
     }
 }
