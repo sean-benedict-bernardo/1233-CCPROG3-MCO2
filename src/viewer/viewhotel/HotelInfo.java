@@ -1,10 +1,8 @@
 package viewer.viewhotel;
 
 import java.awt.GridLayout;
-import java.awt.Component;
 import java.awt.GridBagLayout;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -38,7 +36,7 @@ public class HotelInfo extends JPanel {
 
         for (int i = 0; i < data.length; i++) {
             for (int j = 0; j < data[0].length; j++) {
-                tableContainer.add(MyComponents.JLabel(data[i][j], SwingConstants.LEFT));
+                tableContainer.add(MyComponents.bodyText(data[i][j], SwingConstants.LEFT));
             }
         }
 

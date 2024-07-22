@@ -10,7 +10,6 @@ public class HomeMenu extends JFrame {
     private JButton buttonsList[];
 
     public HomeMenu() {
-        super();
         setLayout(new BorderLayout());
 
         this.initFrame();

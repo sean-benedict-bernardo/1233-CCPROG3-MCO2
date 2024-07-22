@@ -64,7 +64,6 @@ public class UserInput {
                         return hotel;
                 }
             } catch (Exception e) {
-                // TODO: handle exception
             }
 
             return null;

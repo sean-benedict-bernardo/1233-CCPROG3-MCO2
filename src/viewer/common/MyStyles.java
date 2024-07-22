@@ -4,8 +4,9 @@ import java.awt.*;
 
 public class MyStyles {
     public class font {
-        public static final Font HEADER = new Font("Sans Serif", Font.BOLD, 48);
-        public static final Font BODY = new Font("Sans Serif", Font.PLAIN, 12);
+        public static final Font TITLE = new Font("Sans Serif", Font.BOLD, 32);
+        public static final Font HEADER = new Font("Sans Serif", Font.BOLD, 24);
+        public static final Font BODY = new Font("Sans Serif", Font.PLAIN, 14);
         public static final Font BUTTON = new Font("Sans Serif", Font.PLAIN, 16);
     }
 

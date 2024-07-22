@@ -123,11 +123,11 @@ public class Room {
      * 
      * @param index of date
      * @return boolean status of day
-     * @throws ArrayIndexOutOfBoundsException for indexes outside of 0-31
+     * @throws ArrayIndexOutOfBoundsException for indexes outside of 0-30
      */
     public boolean getDayAvailability(int index) throws ArrayIndexOutOfBoundsException {
         // ternary is safety check for in index access
-        if (0 <= index && index <= 31)
+        if (0 <= index && index <= 30)
             return this.daysReserved[index];
         else
             throw new ArrayIndexOutOfBoundsException("Date index (" + index + ") out of range!");

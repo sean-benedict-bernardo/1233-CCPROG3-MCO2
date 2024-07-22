@@ -33,11 +33,7 @@ public class ViewHotel extends JDialog {
         setForeground(MyStyles.color.FOREGROUND);
 
         // NORTH FRAME
-        JLabel nameLabel = new JLabel("Viewing " + hotel.getName(), SwingConstants.CENTER);
-        nameLabel.setOpaque(true);
-        nameLabel.setBackground(MyStyles.color.BACKGROUND);
-        nameLabel.setForeground(getForeground());
-        nameLabel.setFont(MyStyles.font.BODY);
+        JLabel nameLabel = MyComponents.bodyText("Viewing " + hotel.getName(), SwingConstants.CENTER);
         nameLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 0));
         add(nameLabel, BorderLayout.NORTH);
     }

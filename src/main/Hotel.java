@@ -4,6 +4,7 @@ import java.util.*;
 
 import main.rooms.*;
 import viewer.common.*;
+
 /**
  * This class simulates a hotel that has rooms
  * and can accept reservations of those rooms.
@@ -35,7 +36,7 @@ public class Hotel {
      * @param name String name of hotel
      */
 
-    public Hotel(String name) throws Exception {
+    public Hotel(String name, char roomType) throws Exception {
         this.name = name;
         this.basePrice = 1299.0f;
         this.roomsList = new ArrayList<Room>();
@@ -47,7 +48,7 @@ public class Hotel {
 
         // to satisfy minimum of one room
         try {
-            this.addRoom('S');
+            this.addRoom(roomType);
         } catch (Exception e) {
             throw e;
             // Do nothing
@@ -271,25 +272,38 @@ public class Hotel {
      *                     assumed to be the string of an integer from 1 - 50
      * 
      */
-    public void createReservation(String guestName, int checkInDate, int checkOutDate, String roomName) {
+    public void createReservation(String guestName, int checkInDate, int checkOutDate, String roomName,
+            String discountCode) throws Exception {
         int roomIndex = getRoomIndex(roomName);
         Room localRoom = (roomIndex != -1) ? this.roomsList.get(roomIndex) : null;
 
         if (localRoom == null)
-            System.out.println("Room not found!");
+            throw new Exception("Room not found!");
         else if (!localRoom.checkRoomAvailability(checkInDate, checkOutDate))
-            System.out.println("Given dates are either invalid or are already booked!");
+            throw new Exception("Given dates are either invalid or are already booked!");
         else {
-            System.out.println("Creating reservation for " + guestName);
+            System.out.println("newReservation: " + guestName);
             try {
                 localRoom.addReservedDays(checkInDate, checkOutDate);
-                Reservation newReservation = new Reservation(guestName,
+                Reservation newReservation = (roomName != null) ? new Reservation(guestName,
                         Arrays.copyOfRange(this.nightRates, checkInDate, checkOutDate), localRoom,
-                        this.basePrice);
+                        this.basePrice)
+                        : new Reservation(guestName,
+                                Arrays.copyOfRange(this.nightRates, checkInDate, checkOutDate), localRoom,
+                                this.basePrice);
                 this.reservationsList.add(newReservation);
             } catch (Exception e) {
-                Alert.displayAlert(e);
+                throw e;
             }
+        }
+    }
+
+    public void createReservation(String guestName, int checkInDate, int checkOutDate, String roomName)
+            throws Exception {
+        try {
+            this.createReservation(guestName, checkInDate, checkOutDate, roomName, null);
+        } catch (Exception e) {
+            throw e;
         }
     }
 
@@ -414,6 +428,16 @@ public class Hotel {
 
     public ArrayList<Room> getRooms() {
         return this.roomsList;
+    }
+
+    public String[] getRoomNames() {
+        String[] roomNames = new String[this.getNumRooms()];
+
+        for (int i = 0; i < this.getNumRooms(); i++) {
+            roomNames[i] = this.roomsList.get(i).getName();
+        }
+
+        return roomNames;
     }
 
     /**

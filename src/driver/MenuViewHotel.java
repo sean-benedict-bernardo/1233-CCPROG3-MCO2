@@ -1,7 +1,6 @@
 package driver;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import main.Hotel;
@@ -16,9 +15,8 @@ public class MenuViewHotel {
         this.gui = new ViewHotel(this.hotel);
         this.initButtons();
 
-        JDialog addition = this.gui.getJDialog();
-        addition.setModal(true);
-        addition.setVisible(true);
+        this.gui.setModal(true);
+        this.gui.setVisible(true);
     }
 
     public void initButtons() {

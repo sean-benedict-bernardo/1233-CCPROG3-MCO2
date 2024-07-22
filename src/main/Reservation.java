@@ -43,7 +43,7 @@ public class Reservation {
         this.guestName = guestName;
         this.nightRates = nightRates;
         this.room = room;
-        this.discountCode = null;
+        this.discountCode = "";
     }
 
     /**
@@ -87,8 +87,7 @@ public class Reservation {
     // no setter because the hotel should not
     // be updating its prices if there are reservations
 
-    public float getNightPrice(int date) {
-        int index = date - this.getCheckInDate();
+    public float getNightPrice(int index) {
         return (0 <= index && index < nightRates.length)
                 ? this.room.getPrice() * nightRates[index].getDayRate()
                 : 0.0f;
@@ -138,6 +137,6 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return String.format("%3s %s", this.room.getName(), this.guestName);
+        return String.format("%-3s %s", this.room.getName(), this.guestName);
     }
 }
