@@ -16,7 +16,7 @@ import view.viewhotel.RoomInformation;
 
 public class ManageHotel extends JDialog {
     private Hotel hotel;
-    private JPanel cardComponents[] = new JPanel[1];
+    private JPanel cardComponents[] = new JPanel[3];
     private JPanel cardPanel;
     private CardLayout cardPanelLayout = new CardLayout();
     private ToolBar toolBar;
@@ -62,9 +62,9 @@ public class ManageHotel extends JDialog {
         this.cardPanel = new JPanel(this.cardPanelLayout);
 
         this.cardComponents[0] = new ChangeHotelName(hotel);
-        /* 
         this.cardComponents[1] = new AddRoom(hotel);
         this.cardComponents[2] = new RemoveRoom(hotel.getRooms());
+        /* 
         this.cardComponents[3] = new UpdateBasePrice(hotel.getReservations());
         //Sean will cook date price modifier
         this.cardComponents[5] = new RemoveReservation(hotel.getReservations());

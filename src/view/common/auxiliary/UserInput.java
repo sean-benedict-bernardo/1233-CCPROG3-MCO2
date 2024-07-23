@@ -35,7 +35,7 @@ public class UserInput {
         }
 
         String selectedRoom = (String) JOptionPane.showInputDialog(null,
-                "Select room to add", "Room Selection",
+                "Select room", "Room Selection",
                 JOptionPane.QUESTION_MESSAGE, null,
                 roomNames, roomNames[0]);
 

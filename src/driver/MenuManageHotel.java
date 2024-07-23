@@ -11,8 +11,11 @@ import view.viewhotel.RoomAvailability;
 import view.viewhotel.RoomInformation;
 import view.viewhotel.ViewHotel;
 import view.common.auxiliary.Alert;
+import view.common.auxiliary.UserInput;
 import view.managehotel.ChangeHotelName;
 import view.managehotel.ManageHotel;
+import view.managehotel.RemoveRoom;
+import view.managehotel.AddRoom;
 
 public class MenuManageHotel {
     private ManageHotel gui;
@@ -34,10 +37,10 @@ public class MenuManageHotel {
 
         buttons[0].addActionListener(e -> this.gui.showCard(0));
 
-        JPanel changeHotelNamePanel = this.gui.getCardComponent(0);
-        if (changeHotelNamePanel instanceof ChangeHotelName){
-            JButton confirmButton = ((ChangeHotelName)changeHotelNamePanel).getConfirmButton();
-            JTextField hotelNameField = ((ChangeHotelName)changeHotelNamePanel).getHotelNameField();
+        JPanel currentPanel1 = this.gui.getCardComponent(0);
+        if (currentPanel1 instanceof ChangeHotelName){
+            JButton confirmButton = ((ChangeHotelName) currentPanel1).getConfirmButton();
+            JTextField hotelNameField = ((ChangeHotelName) currentPanel1).getHotelNameField();
 
             confirmButton.addActionListener((e) -> {
                 String hotelName = hotelNameField.getText();
@@ -60,6 +63,65 @@ public class MenuManageHotel {
             }); 
         }
 
+        buttons[1].addActionListener(e -> this.gui.showCard(1));
+
+        JPanel currentPanel2 = this.gui.getCardComponent(1);
+        if (currentPanel2 instanceof AddRoom){
+            JButton confirmButton = ((AddRoom)currentPanel2).getConfirmButton();
+
+            confirmButton.addActionListener((e) -> {
+                char roomType = ((AddRoom)currentPanel2).getRoomType();
+                System.out.println("Adding " + Character.toString(roomType) + " to " + this.hotel.getName());
+
+                try {
+                   this.hotel.addRoom(roomType);
+                   String roomTypeName;
+                   switch (roomType){
+                        case 'S': roomTypeName = "a standard";
+                        break;
+                        case 'D': roomTypeName = "a deluxe";
+                        break;
+                        default: roomTypeName = "an executive";
+                   }
+                   Alert.displayAlert("Adding " + roomTypeName + " room to " + this.hotel.getName());
+                }
+
+                catch (Exception omg){
+                    Alert.displayAlert(omg);
+                }
+            });
+        }
+
+        buttons[2].addActionListener(e -> this.gui.showCard(2));
+
+        JPanel currentPanel3 = this.gui.getCardComponent(2);
+        if (currentPanel3 instanceof RemoveRoom){
+            JButton confirmButton = ((RemoveRoom)currentPanel3).getConfirmButton();
+            JButton nameSelectButton = ((RemoveRoom)currentPanel3).getNameSelectButton();
+
+            confirmButton.addActionListener((e) -> {
+                String roomName = ((RemoveRoom)currentPanel3).getCurrentRoomName();
+                System.out.println("Deleting room" + roomName + " from " + this.hotel.getName());
+
+                try {
+                   this.hotel.removeRoom(roomName);
+                   Alert.displayAlert("Removing " + roomName + " from " + this.hotel.getName());
+                }
+
+                catch (Exception omg){
+                    Alert.displayAlert(omg);
+                }
+            });
+
+            nameSelectButton.addActionListener((e) -> {
+                nameSelectButton.setText("...");
+                String buttonText = UserInput.selectRoom(this.hotel.getRooms());
+                if (buttonText.equals(""))
+                    nameSelectButton.setText("...");
+
+                else nameSelectButton.setText(buttonText);
+            });
+        }
         /*
         // the card can only show if there are reservations
         if (this.hotel.getNumReservations() > 0)
