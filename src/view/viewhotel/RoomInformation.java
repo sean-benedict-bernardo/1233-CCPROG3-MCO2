@@ -16,7 +16,6 @@ import view.common.components.RoomSelector;
 
 public class RoomInformation extends JPanel {
     private JPanel roomSelectPanel;
-    private JButton roomButtons[];
 
     // Info blocks
     private JLabel infoRoomName;
@@ -27,10 +26,11 @@ public class RoomInformation extends JPanel {
     public RoomInformation(ArrayList<Room> rooms) {
         super();
         setLayout(new BorderLayout());
-        this.roomButtons = new JButton[rooms.size()];
         this.roomSelectPanel = new RoomSelector(rooms);
 
         this.initFrame(rooms);
+        // show first room info
+        this.dispRoomInfo(rooms.get(0));
     }
 
     private void initFrame(ArrayList<Room> rooms) {
@@ -58,9 +58,9 @@ public class RoomInformation extends JPanel {
         // Info text
         Room firstRoom = rooms.get(0); // This is assumed to exist
 
-        this.infoRoomName = MyComponents.bodyText("Room " + firstRoom.getName());
-        this.infoRoomType = MyComponents.bodyText("Room Type: " + firstRoom.getRoomType());
-        this.infoNightlyRate = MyComponents.bodyText(String.format("Base Nightly Rate: %.2f", firstRoom.getPrice()));
+        this.infoRoomName = MyComponents.bodyText();
+        this.infoRoomType = MyComponents.bodyText();
+        this.infoNightlyRate = MyComponents.bodyText();
         for (int i = 0; i < infoAvailabilityDate.length; i++)
             infoAvailabilityDate[i] = MyComponents.bodyText(
                     String.format("%d - %c", i + 1, !firstRoom.getDayAvailability(i) ? '✓' : '✗'),
@@ -85,15 +85,10 @@ public class RoomInformation extends JPanel {
         add(infoPanel, BorderLayout.CENTER);
     }
 
-    /**
-     * Room Name
-     * Price Per Night
-     * JPanel containing availability
-     */
     public void dispRoomInfo(Room room) {
         this.infoRoomName.setText("Room " + room.getName());
         this.infoRoomType.setText("Room Type: " + room.getRoomType());
-        this.infoNightlyRate.setText(String.format("Nightly Rate: %.2f", room.getPrice()));
+        this.infoNightlyRate.setText(String.format("Base Nightly Rate: %.2f", room.getPrice()));
 
         for (int i = 0; i < this.infoAvailabilityDate.length; i++) {
             this.infoAvailabilityDate[i]

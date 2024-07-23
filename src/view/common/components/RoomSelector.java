@@ -1,17 +1,12 @@
 package view.common.components;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.util.ArrayList;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
+import java.awt.*;
 
 import model.rooms.Room;
 import view.common.MyStyles;
+
+import java.util.ArrayList;
 
 public class RoomSelector extends JPanel {
     private ArrayList<JButton> roomButtons;
@@ -32,12 +27,11 @@ public class RoomSelector extends JPanel {
 
         JPanel scrollArea = new JPanel(new GridBagLayout());
 
-        int i = 0;
         for (Room room : rooms) {
             JButton button = MyComponents.button(room.getName());
-            button.setPreferredSize(new Dimension(75, 36));
+            // button.setPreferredSize(new Dimension(75, 36));
             this.roomButtons.add(button);
-            scrollArea.add(this.roomButtons.get(i++), gbc);
+            scrollArea.add(button, gbc);
         }
 
         // Room Select
@@ -48,9 +42,13 @@ public class RoomSelector extends JPanel {
         roomSelect.getVerticalScrollBar().setUnitIncrement(16);
 
         add(roomSelect, BorderLayout.CENTER);
-
     }
 
+    /**
+     * Getter for JButton
+     * 
+     * @return ArrayList of all room select JButtons
+     */
     public ArrayList<JButton> getRoomSelectButtons() {
         return this.roomButtons;
     }

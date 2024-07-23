@@ -194,7 +194,8 @@ public class Hotel {
      * @param checkOutDate date when guest will check-out of the hotel
      * @param roomName     name of the room the guest will be reserved
      *                     assumed to be the string of an integer from 1 - 50
-     * 
+     * @throws Exception if either the room is not found or
+     *                   room is occupied in the given date range
      */
     public void createReservation(String guestName, int checkInDate, int checkOutDate, String roomName,
             String discountCode) throws Exception {
@@ -238,6 +239,7 @@ public class Hotel {
      * else print an error message and do nothing
      * 
      * @param reservationIndex index of the reservation to be deleted
+     * @throws Exception when reservationIndex is out of range
      */
     public void removeReservation(int reservationIndex) throws Exception {
         int roomIndex = getRoomIndex(this.reservationsList.get(reservationIndex).getRoom().getName());
@@ -251,13 +253,7 @@ public class Hotel {
         }
     }
 
-    public ArrayList<Reservation> getReservations() {
-        return this.reservationsList;
-    }
-
-    /*
-     * Getters and Setters below
-     */
+    // Getters and Setters below
 
     /**
      * Getter for hotel name
@@ -322,7 +318,7 @@ public class Hotel {
         return (0 <= index && index <= 30) ? this.nightRates[index] : null;
     }
 
-    public NightRates[] getNightRates(){
+    public NightRates[] getNightRates() {
         return this.nightRates;
     }
 
@@ -395,5 +391,13 @@ public class Hotel {
      */
     public Reservation getReservation(int index) {
         return (0 <= index && index < this.reservationsList.size()) ? this.reservationsList.get(index) : null;
+    }
+
+    /**
+     * Getter for all reservations
+     * @return ArrayList of Reservations
+     */
+    public ArrayList<Reservation> getReservations() {
+        return this.reservationsList;
     }
 }

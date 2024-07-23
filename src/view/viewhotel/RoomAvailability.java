@@ -38,10 +38,10 @@ public class RoomAvailability extends JPanel {
         JPanel dateSelectPanel = new JPanel(new GridBagLayout());
         dateSelectPanel.setBackground(MyStyles.color.BACKGROUND);
 
-        this.selectedDate = MyComponents.bodyText("Viewing Availability on Day: 1");
+        this.selectedDate = MyComponents.headerText("Selected: Day 1");
 
         dateSelectPanel.add(this.selectedDate, gbc);
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         dateSelectPanel.add(this.dateSelector, gbc);
 
         add(dateSelectPanel, BorderLayout.WEST);
@@ -70,7 +70,7 @@ public class RoomAvailability extends JPanel {
     }
 
     public void updateAvailability(ArrayList<Room> rooms, int index) {
-        this.selectedDate.setText("Viewing Availability on Day: " + index);
+        this.selectedDate.setText("Selected: Day " + index);
         index--;
         for (int i = 0; i < this.roomsAvailability.length; i++) {
             this.roomsAvailability[i].setText(

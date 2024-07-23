@@ -5,12 +5,19 @@ import java.awt.*;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
+/**
+ * This class contains standard fonts, colors, and
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class MyStyles {
     public class font {
         public static final Font TITLE = new Font("Sans Serif", Font.BOLD, 32);
-        public static final Font HEADER = new Font("Sans Serif", Font.BOLD, 24);
+        public static final Font HEADER = new Font("Sans Serif", Font.PLAIN, 18);
         public static final Font BODY = new Font("Sans Serif", Font.PLAIN, 14);
-        public static final Font BUTTON = new Font("Sans Serif", Font.PLAIN, 16);
+        public static final Font MONOSPACE = new Font("Ubuntu Mono", Font.PLAIN, 14);
+        public static final Font BUTTON = new Font("Sans Serif", Font.BOLD, 16);
     }
 
     public class color {
@@ -23,11 +30,8 @@ public class MyStyles {
         public static final Color FOREGROUND = WHITE;
     }
 
-    public class border {
-        public static final Border BLACK_BORDER = BorderFactory.createLineBorder(color.BLACK, 4);
-    }
-
     public class misc {
+        public static final Border BLACK_BORDER = BorderFactory.createLineBorder(color.BLACK, 4);
         public static final Dimension SCREEN_SIZE = new Dimension(
                 (int) ((Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 3) / 4),
                 (int) ((Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 3) / 4));

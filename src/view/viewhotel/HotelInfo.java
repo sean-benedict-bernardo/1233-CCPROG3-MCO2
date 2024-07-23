@@ -44,7 +44,7 @@ public class HotelInfo extends JPanel {
         for (int i = 0; i < data.length; i++) {
             gbc.gridy = i;
             for (int j = 0; j < data[0].length; j++) {
-                JLabel text = MyComponents.bodyText(data[i][j], SwingConstants.LEFT);
+                JLabel text = MyComponents.headerText(data[i][j], SwingConstants.LEFT);
                 gbc.gridx = j;
 
                 tablePanel.add(text, gbc);

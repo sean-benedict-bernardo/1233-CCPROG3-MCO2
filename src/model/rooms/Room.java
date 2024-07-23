@@ -175,9 +175,4 @@ public class Room {
         else
             throw new Exception("New price is too low!");
     }
-
-    @Override
-    public String toString() {
-        return this.name;
-    }
 }
