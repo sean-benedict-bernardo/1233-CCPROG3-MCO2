@@ -14,6 +14,7 @@ public class ToolBar extends JToolBar {
      * @param buttons array of JButtons to be added to the toolbar
      */
     public ToolBar(JButton buttons[]) {
+        super();
         this.buttons = buttons;
         this.initToolbar();
     }

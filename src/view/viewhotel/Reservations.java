@@ -9,11 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import model.Reservation;
-
-/** https://www.youtube.com/watch?v=KOI1WbkKUpQ */
+import view.common.components.ReservationSelector;
 
 public class Reservations extends JPanel {
-    private JPanel reservationSelectPanel;
+    private ReservationSelector reservationSelectPanel;
     private JButton reservationButtons[];
     private JScrollPane reservationSelectScroll;
 
@@ -25,10 +24,8 @@ public class Reservations extends JPanel {
     }
 
     public void initFrame(ArrayList<Reservation> reservations) {
-        this.reservationSelectPanel = new JPanel();
-        this.reservationButtons = new JButton[reservations.size()];
-        this.reservationSelectScroll = new JScrollPane();
-
+        this.reservationSelectPanel = new ReservationSelector(reservations);
+        
         System.out.println();
     }
 

@@ -6,6 +6,13 @@ import model.Hotel;
 import view.common.auxiliary.Alert;
 import view.createhotel.CreateHotel;
 
+/**
+ * MenuCreateHotel is the controller class
+ * for the "Create Hotel" functionality.
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class MenuCreateHotel {
     private ArrayList<Hotel> hotelList;
     private CreateHotel gui;

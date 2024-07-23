@@ -8,20 +8,37 @@ import javax.swing.JPanel;
 import model.Hotel;
 import view.viewhotel.*;
 
+/**
+ * MenuViewHotel is the controller class for
+ * anything related to the "View Hotel" functionality
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class MenuViewHotel {
     private ViewHotel gui;
     private Hotel hotel;
 
+    /**
+     * MenuViewHotel Constructor
+     * 
+     * @param hotel
+     */
     public MenuViewHotel(Hotel hotel) {
         this.hotel = hotel;
         this.gui = new ViewHotel(this.hotel);
+
+        this.initToolBar();
         this.initButtons();
 
         this.gui.setModal(true);
         this.gui.setVisible(true);
     }
 
-    public void initButtons() {
+    /**
+     * Attaches ActionListeners to ToolBar buttons
+     */
+    private void initToolBar() {
         JButton buttons[] = this.gui.getButtons();
 
         for (int i = 0; i < buttons.length - 2; i++) {
@@ -35,10 +52,15 @@ public class MenuViewHotel {
             buttons[3].addActionListener((e) -> this.gui.showCard(3));
 
         buttons[4].addActionListener(e -> this.hideWindow());
+    }
+
+    /**
+     * Attaches ActionListeners to child components of ViewHotel
+     */
+    private void initButtons() {
 
         // add eventlistener to the jscrollpane
         JPanel roomInfoPanel = this.gui.getCardComponent(2);
-
         if (roomInfoPanel instanceof RoomInformation) {
             ArrayList<JButton> roomSelectButtons = ((RoomInformation) roomInfoPanel).getRoomSelectButtons();
 
@@ -50,9 +72,8 @@ public class MenuViewHotel {
         }
 
         JPanel roomAvailabilityPanel = this.gui.getCardComponent(1);
-
         if (roomAvailabilityPanel instanceof RoomAvailability) {
-            JButton calendarButtons[] = ((RoomAvailability) roomAvailabilityPanel).getDateSelector();
+            JButton[] calendarButtons = ((RoomAvailability) roomAvailabilityPanel).getDateSelector();
 
             for (JButton jButton : calendarButtons) {
                 jButton.addActionListener((e) -> {
@@ -63,7 +84,10 @@ public class MenuViewHotel {
         }
     }
 
-    public void hideWindow() {
+    /**
+     * method to hide widnow
+     */
+    private void hideWindow() {
         System.out.println("ViewHotel: window hidden");
         this.gui.setVisible(false);
     }

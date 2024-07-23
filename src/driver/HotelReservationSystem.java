@@ -8,10 +8,20 @@ import view.HomeMenu;
 import view.common.auxiliary.Alert;
 import view.common.auxiliary.UserInput;
 
+/**
+ * HotelReservationSystem is the main class
+ * and entry point for the project
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class HotelReservationSystem {
     private ArrayList<Hotel> hotelList;
     private HomeMenu gui;
 
+    /**
+     * HotelReservationSystem constructor
+     */
     public HotelReservationSystem() {
         this.hotelList = new ArrayList<Hotel>();
         this.gui = new HomeMenu();
@@ -43,6 +53,9 @@ public class HotelReservationSystem {
         this.initButtons();
     }
 
+    /**
+     * Initializes the home screen buttons
+     */
     public void initButtons() {
         JButton buttonsList[] = this.gui.getButtons();
 

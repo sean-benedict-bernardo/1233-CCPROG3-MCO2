@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 
 import view.common.MyStyles;
+import view.common.components.MyComponents;
 
 import java.awt.*;
 
@@ -25,15 +26,9 @@ public class HomeMenu extends JFrame {
         setForeground(MyStyles.color.FOREGROUND);
         setMinimumSize(new Dimension(720, 405));
 
-
         // NORTH FRAME
-        JLabel nameLabel = new JLabel("<html><p style=\"text-align: center;\">Hotel Reservation System</p></html>",
-                SwingConstants.CENTER);
-        nameLabel.setOpaque(true);
-        nameLabel.setBackground(MyStyles.color.BACKGROUND);
-        nameLabel.setForeground(getForeground());
-        nameLabel.setFont(MyStyles.font.HEADER);
-        nameLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 0));
+        JLabel nameLabel = MyComponents.titleText("Hotel Reservation System");
+        nameLabel.setBorder(BorderFactory.createEmptyBorder(24, 10, 10, 0));
         add(nameLabel, BorderLayout.NORTH);
 
         // CENTER FRAME

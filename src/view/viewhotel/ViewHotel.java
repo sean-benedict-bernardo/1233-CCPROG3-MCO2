@@ -62,7 +62,7 @@ public class ViewHotel extends JDialog {
             this.cardPanel.add(this.cardComponents[i], "" + i);
 
         JPanel dummyPanel = new JPanel();
-        dummyPanel.setSize(MyStyles.misc.SCREEN_SIZE);
+        dummyPanel.setBackground(MyStyles.color.BACKGROUND);
         this.cardPanel.add(dummyPanel, "" + -1);
 
         add(cardPanel);
@@ -70,19 +70,10 @@ public class ViewHotel extends JDialog {
     }
 
     /**
-     * case 1:
-     * System.out.println();
-     * Auxiliary.printBar(40);
-     * System.out.println(" Name: " + localHotel.getName());
-     * System.out.println(" Number of Rooms: " + localHotel.getNumRooms());
-     * System.out.println(" Number of Reservations: " +
-     * localHotel.getNumReservations());
-     * System.out.printf(" Projected Earnings: %.2f\n",
-     * localHotel.getTotalRevenue());
-     * Auxiliary.printBar(40);
-     * System.out.println();
+     * shows 
+     * 
+     * @param index index of card to be shown 0-3
      */
-
     public void showCard(int index) {
         if (0 <= index && index <= 3) {
             this.cardPanelLayout.show(this.cardPanel, "" + index);

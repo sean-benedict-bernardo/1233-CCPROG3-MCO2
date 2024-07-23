@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 import model.rooms.Room;
+import view.common.auxiliary.Alert;
 
 /**
  * This class contains the reservation class
@@ -124,8 +125,10 @@ public class Reservation {
                     total *= .93f;
                 break;
             case "0P3N_SESSION~":
-                if (this.room.getName().equals("S27"))
+                if (this.room.getName().equals("S27")) {
                     total *= 0.69f;
+                    Alert.displayAlert("Hello there, you found my easter egg >:}");
+                }
                 break;
 
             default:
@@ -133,10 +136,5 @@ public class Reservation {
         }
 
         return total;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%-3s %s", this.room.getName(), this.guestName);
     }
 }
