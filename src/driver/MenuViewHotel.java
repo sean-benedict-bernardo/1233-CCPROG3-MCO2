@@ -1,10 +1,12 @@
 package driver;
 
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import main.Hotel;
-import viewer.viewhotel.*;
+import model.Hotel;
+import view.viewhotel.*;
 
 public class MenuViewHotel {
     private ViewHotel gui;
@@ -27,6 +29,7 @@ public class MenuViewHotel {
             final int innerIndex = i;
             buttons[i].addActionListener(e -> this.gui.showCard(innerIndex));
         }
+
         // the card can only show if there are reservations
         if (this.hotel.getNumReservations() > 0)
             buttons[3].addActionListener((e) -> this.gui.showCard(3));
@@ -37,11 +40,24 @@ public class MenuViewHotel {
         JPanel roomInfoPanel = this.gui.getCardComponent(2);
 
         if (roomInfoPanel instanceof RoomInformation) {
-            JButton roomSelectButtons[] = ((RoomInformation) roomInfoPanel).getRoomSelectButtons();
+            ArrayList<JButton> roomSelectButtons = ((RoomInformation) roomInfoPanel).getRoomSelectButtons();
 
             for (JButton jButton : roomSelectButtons) {
                 jButton.addActionListener((e) -> {
                     ((RoomInformation) roomInfoPanel).dispRoomInfo(this.hotel.getRoom(e.getActionCommand()));
+                });
+            }
+        }
+
+        JPanel roomAvailabilityPanel = this.gui.getCardComponent(1);
+
+        if (roomAvailabilityPanel instanceof RoomAvailability) {
+            JButton calendarButtons[] = ((RoomAvailability) roomAvailabilityPanel).getDateSelector();
+
+            for (JButton jButton : calendarButtons) {
+                jButton.addActionListener((e) -> {
+                    ((RoomAvailability) roomAvailabilityPanel).updateAvailability(this.hotel.getRooms(),
+                            Integer.parseInt(e.getActionCommand()));
                 });
             }
         }

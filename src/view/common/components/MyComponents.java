@@ -1,8 +1,10 @@
-package viewer.common;
+package view.common.components;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import view.common.MyStyles;
 
 public class MyComponents {
     public static JLabel bodyText(String text, int align) {
@@ -22,10 +24,18 @@ public class MyComponents {
         return bodyText("", SwingConstants.CENTER);
     }
 
-    public static JButton JButton(String text) {
+    public static JButton button(String text) {
         JButton jbutton = new JButton(text);
         jbutton.setBackground(MyStyles.color.WHITE);
         jbutton.setFont(MyStyles.font.BUTTON);
+        jbutton.setFocusPainted(false);
+        return jbutton;
+    }
+
+    public static JButton smallButton(String text) {
+        JButton jbutton = new JButton(text);
+        jbutton.setBackground(MyStyles.color.WHITE);
+        jbutton.setFont(MyStyles.font.BODY);
         jbutton.setFocusPainted(false);
         return jbutton;
     }

@@ -3,10 +3,10 @@ package driver;
 import java.util.ArrayList;
 import javax.swing.JButton;
 
-import main.Hotel;
-import viewer.HomeMenu;
-import viewer.common.Alert;
-import viewer.common.UserInput;
+import model.Hotel;
+import view.HomeMenu;
+import view.common.auxiliary.Alert;
+import view.common.auxiliary.UserInput;
 
 public class HotelReservationSystem {
     private ArrayList<Hotel> hotelList;
@@ -19,7 +19,7 @@ public class HotelReservationSystem {
         try {
             Hotel myHotel = new Hotel("HotelGemal", 'D');
 
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 49; i++) {
                 switch (i % 3) {
                     case 0:
                         myHotel.addRoom('S');
@@ -86,6 +86,10 @@ public class HotelReservationSystem {
     }
 
     public static void main(String[] args) {
-        new HotelReservationSystem();
+        try {
+            new HotelReservationSystem();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 }

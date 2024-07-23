@@ -1,11 +1,11 @@
-package viewer.common;
+package view.common.auxiliary;
 
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import main.Hotel;
-import main.rooms.*;
+import model.Hotel;
+import model.rooms.*;
 
 public class UserInput {
     /**

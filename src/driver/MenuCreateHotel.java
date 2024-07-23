@@ -2,9 +2,9 @@ package driver;
 
 import java.util.ArrayList;
 
-import main.Hotel;
-import viewer.common.Alert;
-import viewer.createhotel.CreateHotel;
+import model.Hotel;
+import view.common.auxiliary.Alert;
+import view.createhotel.CreateHotel;
 
 public class MenuCreateHotel {
     private ArrayList<Hotel> hotelList;

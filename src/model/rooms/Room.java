@@ -1,6 +1,6 @@
-package main.rooms;
+package model.rooms;
 
-import main.Reservation;
+import model.Reservation;
 
 /**
  * This class simulates a room in a hotel

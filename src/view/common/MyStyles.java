@@ -1,6 +1,9 @@
-package viewer.common;
+package view.common;
 
 import java.awt.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
 
 public class MyStyles {
     public class font {
@@ -18,6 +21,16 @@ public class MyStyles {
 
         public static final Color BACKGROUND = BLACK;
         public static final Color FOREGROUND = WHITE;
+    }
+
+    public class border {
+        public static final Border BLACK_BORDER = BorderFactory.createLineBorder(color.BLACK, 4);
+    }
+
+    public class misc {
+        public static final Dimension SCREEN_SIZE = new Dimension(
+                (int) ((Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 3) / 4),
+                (int) ((Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 3) / 4));
     }
 }
 /**

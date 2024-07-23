@@ -1,15 +1,12 @@
-package viewer.makereservation;
+package view.makereservation;
 
-import main.Hotel;
-import main.rooms.Room;
-import viewer.common.MyComponents;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import javax.swing.*;
+
+import model.Hotel;
+import model.rooms.Room;
+import view.common.MyStyles;
+import view.common.components.MyComponents;
 
 public class ReservationForm extends JDialog {
     private GridBagConstraints gbc = new GridBagConstraints();
@@ -28,15 +25,16 @@ public class ReservationForm extends JDialog {
     private JButton cancelReservation;
 
     public ReservationForm(Hotel hotel) {
-        super();
+        super((Dialog)null);
+
+        setLayout(new BorderLayout());
+        setTitle(hotel.getName() + " Reservation Form");
 
         this.containerPanel = new JPanel(new GridBagLayout());
-        setLayout(new BorderLayout());
-
         this.initFrame(hotel);
         this.updateCalendar(hotel.getRooms().get(0));
 
-        setMinimumSize(new Dimension(720, 405));
+        setMinimumSize(MyStyles.misc.SCREEN_SIZE);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         pack();
@@ -50,8 +48,8 @@ public class ReservationForm extends JDialog {
         this.guestCheckIn = new JSpinner(new SpinnerNumberModel(1, 1, 30, 1));
         this.guestCheckOut = new JSpinner(new SpinnerNumberModel(2, 2, 31, 1));
         this.guestDiscountCode = new JTextField("", 20);
-        this.submitReservation = MyComponents.JButton("Make Reservation");
-        this.cancelReservation = MyComponents.JButton("Cancel Reservation");
+        this.submitReservation = MyComponents.button("Make Reservation");
+        this.cancelReservation = MyComponents.button("Cancel Reservation");
 
         this.initAvailabilityCalendar(hotel.getRooms().get(0));
 
@@ -178,35 +176,5 @@ public class ReservationForm extends JDialog {
         for (int i = 0; i < infoAvailabilityDate.length; i++)
             infoAvailabilityDate[i]
                     .setText(String.format("%d - %c", i + 1, !room.getDayAvailability(i) ? '✓' : '✗'));
-    }
-
-    public static void main(String[] args) {
-        try {
-
-            Hotel myHotel = new Hotel("HotelGemal", 'D');
-
-            for (int i = 0; i < 10; i++) {
-                switch (i % 3) {
-                    case 0:
-                        myHotel.addRoom('S');
-                        break;
-                    case 1:
-                        myHotel.addRoom('D');
-                        break;
-                    default:
-                        myHotel.addRoom('E');
-                        break;
-                }
-            }
-
-            myHotel.createReservation("Andrew", 1, 5, "S1");
-
-            ReservationForm test = new ReservationForm(myHotel);
-
-            test.pack();
-            test.setVisible(true);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 }

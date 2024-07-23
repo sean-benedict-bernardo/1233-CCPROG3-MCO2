@@ -1,8 +1,8 @@
-package main;
+package model;
 
 import java.util.ArrayList;
 
-import main.rooms.Room;
+import model.rooms.Room;
 
 /**
  * This class contains the reservation class
@@ -89,7 +89,7 @@ public class Reservation {
 
     public float getNightPrice(int index) {
         return (0 <= index && index < nightRates.length)
-                ? this.room.getPrice() * nightRates[index].getDayRate()
+                ? this.room.getPrice() * nightRates[index].getNightRate()
                 : 0.0f;
     }
 
@@ -112,7 +112,7 @@ public class Reservation {
             if ("STAY4_GET1".equals(this.discountCode)
                     && this.getCheckOutDate() - this.getCheckInDate() >= 5)
                 continue;
-            total += this.room.getPrice() * nightRates[i].getDayRate();
+            total += this.room.getPrice() * nightRates[i].getNightRate();
         }
 
         switch (this.discountCode) {

@@ -1,4 +1,4 @@
-package main.rooms;
+package model.rooms;
 
 public class ExecutiveRoom extends Room {
     public ExecutiveRoom(String name, float price) {

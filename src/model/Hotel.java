@@ -1,9 +1,9 @@
-package main;
+package model;
 
 import java.util.*;
 
-import main.rooms.*;
-import viewer.common.*;
+import model.rooms.*;
+import view.common.auxiliary.Alert;
 
 /**
  * This class simulates a hotel that has rooms
@@ -157,100 +157,24 @@ public class Hotel {
      * Don't do anything and return false otherwise
      * 
      * @param roomName name of room to be removed
-     * @return boolean of whether room removal was successful or not
+     * @throws Exception when room fails one of the aforementioned conditions
      */
 
-    public boolean removeRoom(String roomName) {
+    public void removeRoom(String roomName) throws Exception {
         // Hotel
         int roomIndex = getRoomIndex(roomName);
         Room localRoom = (roomIndex != -1) ? this.roomsList.get(roomIndex) : null;
 
         if (localRoom == null) {
-            System.out.println("Room not found!");
+            throw new Exception("Room not found!");
         } else if (localRoom.getNumReservedNights() > 0) {
-            System.out.println("Room has an active reservation and cannot be deleted!");
+            throw new Exception("Room has an active reservation and cannot be deleted!");
         } else if (this.roomsList.size() == 1) {
-            System.out.println("The hotel must have at least one room!");
+            throw new Exception("The hotel must have at least one room!");
         } else {
             System.out.println("Deleting room '" + localRoom.getName() + "'");
             this.roomsList.remove(roomIndex);
-            return true;
         }
-        return false;
-
-    }
-
-    /**
-     * Prints whether room is available
-     * 
-     * @param startDate 1-31 date representing prints availability of the room on
-     *                  that
-     *                  particular day, will print all rooms if out of range
-     * @param len       number of days from startDate to check, 0 by default
-     *                  if this parameter is negative, it will print for all
-     */
-    public void printRooms(int startDate, int len) {
-        Boolean isSpecificDay = 1 <= startDate && startDate <= 31 && len >= 0;
-
-        System.out.println();
-        Auxiliary.printBar(46);
-        System.out.println("Rooms of '" + this.name + "'");
-        if (isSpecificDay)
-            if (len <= 0)
-                System.out.println("Day " + startDate);
-            else
-                System.out.println("Days " + startDate + " to " + (startDate + len));
-
-        // convert to zero indexing
-        startDate--;
-
-        Auxiliary.printBar(46);
-        System.out.print("|");
-        for (int i = 0; i < this.roomsList.size(); i++) {
-            if (i % 5 == 0 && i != 0)
-                System.out.print("\n|");
-            Room room = this.roomsList.get(i);
-
-            if (!isSpecificDay)
-                // Availability across all night
-                System.out.printf(" %2s - %c |", room.getName(), (room.getNumReservedNights() == 0) ? 'O' : '/');
-            else {
-                // Availability on a certain night/s
-                boolean hasReservation = false;
-                for (int j = startDate; j <= startDate + len && !hasReservation; j++) {
-                    if (room.getDayAvailability(j) == true) {
-                        hasReservation = true;
-                    }
-                }
-
-                System.out.printf(" %2s - %c |", room.getName(), (hasReservation) ? '/' : 'O');
-            }
-        }
-        System.out.println();
-        Auxiliary.printBar(46);
-        System.out.println("Legend");
-        System.out.println("   O - No Booked Reservations");
-        System.out.println("   / - Has Reservations");
-        Auxiliary.printBar(46);
-        System.out.println();
-    }
-
-    /**
-     * Overloaded method of printRooms wherein
-     * availability for only one day is printed
-     * 
-     * @param date integer representation of day to be checked
-     */
-    public void printRooms(int date) {
-        this.printRooms(date, 0);
-    }
-
-    /**
-     * Overloaded method of printRooms that prints the
-     * availability throughout the entire month
-     */
-    public void printRooms() {
-        this.printRooms(-1);
     }
 
     /*
@@ -386,6 +310,20 @@ public class Hotel {
                 }
             }
         }
+    }
+
+    /**
+     * 
+     * @param date integer representation of date
+     * @return NightRate
+     */
+
+    public NightRates getNightRate(int index) {
+        return (0 <= index && index <= 30) ? this.nightRates[index] : null;
+    }
+
+    public NightRates[] getNightRates(){
+        return this.nightRates;
     }
 
     /**

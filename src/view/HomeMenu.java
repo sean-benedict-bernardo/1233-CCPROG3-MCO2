@@ -1,8 +1,8 @@
-package viewer;
+package view;
 
 import javax.swing.*;
 
-import viewer.common.MyStyles;
+import view.common.MyStyles;
 
 import java.awt.*;
 

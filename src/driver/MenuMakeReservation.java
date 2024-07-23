@@ -1,8 +1,8 @@
 package driver;
 
-import main.Hotel;
-import viewer.common.Alert;
-import viewer.makereservation.ReservationForm;
+import model.Hotel;
+import view.common.auxiliary.Alert;
+import view.makereservation.ReservationForm;
 
 public class MenuMakeReservation {
     private ReservationForm form;

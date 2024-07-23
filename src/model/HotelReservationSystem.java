@@ -1,10 +1,10 @@
-package main;
+package model;
 
 import java.util.ArrayList;
 
-import main.rooms.Room;
-import viewer.common.Alert;
-import viewer.common.Auxiliary;
+import model.rooms.Room;
+import view.common.Auxiliary;
+import view.common.auxiliary.Alert;
 
 /**
  * This class simulates a hotel reservation system

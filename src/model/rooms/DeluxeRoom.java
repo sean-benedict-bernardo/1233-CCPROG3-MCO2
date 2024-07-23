@@ -1,4 +1,4 @@
-package main.rooms;
+package model.rooms;
 
 public class DeluxeRoom extends Room {
     public DeluxeRoom(String name, float price) {

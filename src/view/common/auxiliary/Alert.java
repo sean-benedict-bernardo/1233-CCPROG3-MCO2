@@ -1,4 +1,4 @@
-package viewer.common;
+package view.common.auxiliary;
 
 import javax.swing.JOptionPane;
 

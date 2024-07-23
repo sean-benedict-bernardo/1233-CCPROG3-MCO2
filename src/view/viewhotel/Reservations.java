@@ -1,4 +1,4 @@
-package viewer.viewhotel;
+package view.viewhotel;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import main.Reservation;
+import model.Reservation;
 
 /** https://www.youtube.com/watch?v=KOI1WbkKUpQ */
 

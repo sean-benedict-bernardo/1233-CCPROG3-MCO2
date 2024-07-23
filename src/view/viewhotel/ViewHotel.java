@@ -1,29 +1,32 @@
-package viewer.viewhotel;
-
-import main.*;
-import viewer.common.MyStyles;
-import viewer.common.MyComponents;
+package view.viewhotel;
 
 import java.awt.*;
 import javax.swing.*;
 
+import model.*;
+import view.common.MyStyles;
+import view.common.components.MyComponents;
+import view.common.components.ToolBar;
+
 public class ViewHotel extends JDialog {
     private Hotel hotel;
-    private JButton buttonsList[];
     private JPanel cardComponents[] = new JPanel[4];
     private JPanel cardPanel;
     private CardLayout cardPanelLayout = new CardLayout();
+    private ToolBar toolBar;
 
     public ViewHotel(Hotel hotel) {
-        super();
+        super((Dialog) null);
         this.hotel = hotel;
         setLayout(new BorderLayout());
+
+        setTitle(hotel.getName() + " View Mode");
 
         this.initFrame();
         this.initButtons();
         this.initCardContent();
 
-        setMinimumSize(new Dimension(720, 405));
+        setMinimumSize(MyStyles.misc.SCREEN_SIZE);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
     }
@@ -31,37 +34,20 @@ public class ViewHotel extends JDialog {
     private void initFrame() {
         setBackground(MyStyles.color.BACKGROUND);
         setForeground(MyStyles.color.FOREGROUND);
-
-        // NORTH FRAME
-        JLabel nameLabel = MyComponents.bodyText("Viewing " + hotel.getName(), SwingConstants.CENTER);
-        nameLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 0));
-        add(nameLabel, BorderLayout.NORTH);
     }
 
     private void initButtons() {
-        // WEST FRAME
-        // This Extra JPanel chesses and restricts the size of GridLayout
-        JPanel buttonPanelContain = new JPanel(new GridBagLayout());
-        buttonPanelContain.setBackground(getBackground());
-
-        JPanel buttonPanel = new JPanel(new GridLayout(0, 1));
-        buttonPanel.setBackground(buttonPanelContain.getBackground());
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(24, 24, 24, 24));
-
         // BUTTONS
-        this.buttonsList = new JButton[] {
-                MyComponents.JButton("Hotel Information"),
-                MyComponents.JButton("View Room Availability"),
-                MyComponents.JButton("View Room Information"),
-                MyComponents.JButton("View Reservations"),
-                MyComponents.JButton("Return to Main Menu")
-        };
+        String buttonsList[] = {
+                "Hotel Info",
+                "Room Availability",
+                "Room Info",
+                "Reservations",
+                "Main Menu" };
 
-        for (JButton jButton : buttonsList)
-            buttonPanel.add(jButton);
+        this.toolBar = new ToolBar(this.hotel.getName() + " View Mode",buttonsList);
 
-        buttonPanelContain.add(buttonPanel);
-        add(buttonPanelContain, BorderLayout.WEST);
+        add(this.toolBar, BorderLayout.NORTH);
     }
 
     private void initCardContent() {
@@ -76,7 +62,7 @@ public class ViewHotel extends JDialog {
             this.cardPanel.add(this.cardComponents[i], "" + i);
 
         JPanel dummyPanel = new JPanel();
-        dummyPanel.setSize(720, 400);
+        dummyPanel.setSize(MyStyles.misc.SCREEN_SIZE);
         this.cardPanel.add(dummyPanel, "" + -1);
 
         add(cardPanel);
@@ -104,7 +90,7 @@ public class ViewHotel extends JDialog {
     }
 
     public JButton[] getButtons() {
-        return this.buttonsList;
+        return this.toolBar.getButtons();
     }
 
     public JDialog getJDialog() {
