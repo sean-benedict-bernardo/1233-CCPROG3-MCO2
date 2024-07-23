@@ -69,6 +69,24 @@ public class HotelReservationSystem {
                 Alert.displayAlert(err);
             }
         });
+        
+        buttonsList[2].addActionListener((e) -> {
+            try {
+                Hotel localHotel = UserInput.selectHotel(hotelList);
+
+                if (this.hotelList.isEmpty()){
+                    throw new Exception("There are no hotels in the system!");
+                }
+
+                if (localHotel != null) {
+                    this.gui.setVisible(false);
+                    new MenuManageHotel(localHotel, this.hotelList);
+                    this.gui.setVisible(true);
+                }
+            } catch (Exception err) {
+                Alert.displayAlert(err);
+            }
+        });
 
         buttonsList[3].addActionListener((e) -> {
             try {

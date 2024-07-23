@@ -71,4 +71,16 @@ public class MenuCreateHotel {
             Alert.displayAlert(e);
         }
     }
+
+    public int getHotelIndex(Hotel hotel){
+        int i = 0;
+        for (Hotel candidate : this.hotelList){
+            if (hotel.getName().equals(candidate.getName()))
+                return i;
+    
+            i++;
+        }
+
+        return -1;
+    }
 }
