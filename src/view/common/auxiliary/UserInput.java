@@ -69,4 +69,14 @@ public class UserInput {
             return null;
         }
     }
+
+    public static boolean confirmAction(String prompt){
+        int option = JOptionPane.showConfirmDialog(null, prompt, "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        if (option == JOptionPane.YES_NO_OPTION){
+            return true;
+        }
+
+        else return false;
+    }
 }

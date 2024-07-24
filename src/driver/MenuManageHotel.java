@@ -9,8 +9,10 @@ import javax.swing.JTextField;
 import model.Hotel;
 import view.common.auxiliary.Alert;
 import view.common.auxiliary.UserInput;
+import view.managehotel.UpdateBasePrice;
 import view.managehotel.ChangeHotelName;
 import view.managehotel.ManageHotel;
+import view.managehotel.RemoveHotel;
 import view.managehotel.RemoveRoom;
 import view.managehotel.AddRoom;
 
@@ -119,6 +121,59 @@ public class MenuManageHotel {
                 else nameSelectButton.setText(buttonText);
             });
         }
+
+        buttons[3].addActionListener(e -> this.gui.showCard(3));
+
+        JPanel currentPanel4 = this.gui.getCardComponent(3);
+        if (currentPanel4 instanceof UpdateBasePrice){
+            JButton confirmButton = ((UpdateBasePrice) currentPanel4).getConfirmButton();
+            JTextField basePriceField = ((UpdateBasePrice) currentPanel4).getBasePriceField();
+
+            confirmButton.addActionListener((e) -> {
+                try {
+                    float basePrice = Float.parseFloat(basePriceField.getText());
+                    
+                    this.hotel.setBasePrice(basePrice);            
+                    Alert.displayAlert("Changing base price of " + this.hotel.getName() + " to " + basePrice);
+                    System.out.println("New Base Price: " + basePrice);
+                }
+
+                catch (NumberFormatException numOMG){
+                    Alert.displayAlert("Invalid input!");
+                }
+
+                catch (Exception omg){
+                    Alert.displayAlert(omg);
+                }
+            }); 
+        }
+
+        buttons[4].addActionListener(e -> this.gui.showCard(4));
+
+        JPanel currentPanel6 = this.gui.getCardComponent(4);
+        if (currentPanel6 instanceof RemoveHotel){
+            JButton deleteButton = ((RemoveHotel) currentPanel6).getDeleteButton();
+
+            deleteButton.addActionListener((e) -> {
+                try {
+                    boolean hasConfirmed = UserInput.confirmAction("Do you want to delete this hotel");
+
+                    if (hasConfirmed) {
+                        this.hotelList.remove(getHotelIndex(this.hotel));
+                        Alert.displayAlert("Deleting " + this.hotel.getName());
+                        System.out.println("Deleted: " + this.hotel.getName());
+                        this.hideWindow();
+                    }
+                }
+
+                catch (Exception omg){
+                    Alert.displayAlert(omg);
+                }
+            }); 
+        }
+
+        buttons[5].addActionListener(e -> this.hideWindow());
+
         /*
         // the card can only show if there are reservations
         if (this.hotel.getNumReservations() > 0)
@@ -157,6 +212,7 @@ public class MenuManageHotel {
     public void hideWindow() {
         System.out.println("ManageHotel: window hidden");
         this.gui.setVisible(false);
+        this.gui.dispose();
     }
 
     public int getHotelIndex(Hotel hotel){

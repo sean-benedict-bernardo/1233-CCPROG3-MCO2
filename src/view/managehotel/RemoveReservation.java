@@ -1,5 +1,7 @@
 package view.managehotel;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,18 +12,21 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.Hotel;
+import model.Reservation;
 import model.rooms.Room;
 import view.common.MyStyles;
+import view.common.auxiliary.UserInput;
 import view.common.components.MyComponents;
 
-public class RemoveRoom extends JPanel{
-    ArrayList<Room> roomList;
-    JButton roomNameSelect;
+public class RemoveReservation extends JPanel{
+    ArrayList<Reservation> reservationList;
+    JButton reservationNameSelect;
     JButton confirmButton;
     GridBagConstraints gbc;
 
-    public RemoveRoom(ArrayList<Room> roomList){
-        this.roomList = roomList;
+    public RemoveReservation(ArrayList<Reservation> reservationList){
+        this.reservationList = reservationList;
         this.gbc = new GridBagConstraints();
 
         setLayout(new GridBagLayout());
@@ -33,8 +38,8 @@ public class RemoveRoom extends JPanel{
 
     public void initFrame(){
         JPanel container = new JPanel();
-        JLabel currentRoomLabel = MyComponents.headerText("Select a room to delete:");
-        roomNameSelect = MyComponents.smallButton("...");
+        JLabel currentReservationLabel = MyComponents.headerText("Select a reservation to delete:");
+        reservationNameSelect = MyComponents.smallButton("...");
         confirmButton = MyComponents.button("Confirm Deletion");
 
         container.setLayout(new GridBagLayout());
@@ -42,10 +47,10 @@ public class RemoveRoom extends JPanel{
         
         this.gbc.insets = new Insets(0, 0, 0, 10);
         this.gbc.anchor = GridBagConstraints.WEST;
-        container.add(currentRoomLabel, this.gbc);
-        roomNameSelect.setBorder(BorderFactory.createEmptyBorder(0, roomNameSelect.getText().length() * 7, 0, roomNameSelect.getText().length() * 7));
+        container.add(currentReservationLabel, this.gbc);
+        reservationNameSelect.setBorder(BorderFactory.createEmptyBorder(0, reservationNameSelect.getText().length() * 2, 0, reservationNameSelect.getText().length() * 2));
         this.gbc.anchor = GridBagConstraints.EAST;
-        container.add(roomNameSelect, this.gbc);
+        container.add(reservationNameSelect, this.gbc);
         this.gbc.anchor = GridBagConstraints.WEST;
         this.add(container, this.gbc);
 
@@ -57,14 +62,14 @@ public class RemoveRoom extends JPanel{
     }
 
     public JButton getNameSelectButton(){
-        return this.roomNameSelect;
+        return this.reservationNameSelect;
     }
 
     public JButton getConfirmButton(){
         return this.confirmButton;
     }
 
-    public String getCurrentRoomName(){
-        return this.roomNameSelect.getText();
+    public String getCurrentReservationName(){
+        return this.reservationNameSelect.getText();
     }
 }

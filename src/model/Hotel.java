@@ -291,7 +291,10 @@ public class Hotel {
      * @param basePrice new updated base price
      */
     public void setBasePrice(float basePrice) throws Exception {
-        if (this.reservationsList.size() != 0)
+        if (Float.isNaN(basePrice)){
+            throw new Exception("Invalid base price!");
+        }
+        else if (this.reservationsList.size() != 0)
             throw new Exception("There are still active bookings!");
         else if (basePrice < 100.0f)
             throw new Exception("New price is too low!");

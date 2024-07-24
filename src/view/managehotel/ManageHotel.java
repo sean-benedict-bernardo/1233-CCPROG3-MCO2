@@ -12,7 +12,7 @@ import view.common.components.ToolBar;
 
 public class ManageHotel extends JDialog {
     private Hotel hotel;
-    private JPanel cardComponents[] = new JPanel[3];
+    private JPanel cardComponents[] = new JPanel[5];
     private JPanel cardPanel;
     private CardLayout cardPanelLayout = new CardLayout();
     private ToolBar toolBar;
@@ -44,9 +44,10 @@ public class ManageHotel extends JDialog {
                 "Add Room",
                 "Remove Room",
                 "Update Base Price",
-                "Edit Date Price Modifer",
-                "Remove Reservation",
-                "Remove Hotel"
+                "Remove Hotel",
+                //"Remove Reservation",
+                //"Edit Date Price Modifer"
+                "Main Menu"
                 };
 
         this.toolBar = new ToolBar(buttonsList);
@@ -57,15 +58,16 @@ public class ManageHotel extends JDialog {
     private void initCardContent() {
         this.cardPanel = new JPanel(this.cardPanelLayout);
 
-        this.cardComponents[0] = new ChangeHotelName(hotel);
-        this.cardComponents[1] = new AddRoom(hotel);
-        this.cardComponents[2] = new RemoveRoom(hotel.getRooms());
+        this.cardComponents[0] = new ChangeHotelName(this.hotel);
+        this.cardComponents[1] = new AddRoom(this.hotel);
+        this.cardComponents[2] = new RemoveRoom(this.hotel.getRooms());
+        this.cardComponents[3] = new UpdateBasePrice(this.hotel);
         /* 
-        this.cardComponents[3] = new UpdateBasePrice(hotel.getReservations());
         //Sean will cook date price modifier
-        this.cardComponents[5] = new RemoveReservation(hotel.getReservations());
-        this.cardComponents[6] = new RemoveHotel(hotel.getReservations());
         */
+        this.cardComponents[4] = new RemoveHotel(this.hotel);
+        //this.cardComponents[5] = new RemoveHotel(this.hotel);
+        
 
         for (int i = 0; i < this.cardComponents.length; i++)
             this.cardPanel.add(this.cardComponents[i], "" + i);
@@ -93,6 +95,6 @@ public class ManageHotel extends JDialog {
     }
 
     public JPanel getCardComponent(int index) {
-        return (0 <= index && index <= 3) ? this.cardComponents[index] : null;
+        return (0 <= index && index <= 6) ? this.cardComponents[index] : null;
     }
 }
