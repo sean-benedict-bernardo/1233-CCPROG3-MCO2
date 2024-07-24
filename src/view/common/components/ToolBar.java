@@ -23,7 +23,7 @@ public class ToolBar extends JToolBar {
      * ToolBar constructor
      * 
      * @param headerText String of ToolBar text to beinitialized
-     * @param buttons array of Strings to be added as toolbar buttons
+     * @param buttons    array of Strings to be added as toolbar buttons
      */
     public ToolBar(String headerText, String buttonTexts[]) {
         this.titleText = MyComponents.bodyText(headerText);
@@ -41,6 +41,7 @@ public class ToolBar extends JToolBar {
      */
     private void initToolbar() {
         setBackground(MyStyles.color.BACKGROUND);
+        setFloatable(false);
 
         if (this.titleText != null)
             add(this.titleText);

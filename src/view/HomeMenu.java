@@ -28,7 +28,7 @@ public class HomeMenu extends JFrame {
 
         // NORTH FRAME
         JLabel nameLabel = MyComponents.titleText("Hotel Reservation System");
-        nameLabel.setBorder(BorderFactory.createEmptyBorder(24, 10, 10, 0));
+        nameLabel.setBorder(BorderFactory.createEmptyBorder(32, 12, 12, 0));
         add(nameLabel, BorderLayout.NORTH);
 
         // CENTER FRAME
@@ -38,22 +38,23 @@ public class HomeMenu extends JFrame {
 
         JPanel buttonPanel = new JPanel(new GridLayout(0, 1));
         buttonPanel.setBackground(buttonPanelContain.getBackground());
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(24, 24, 24, 24));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(12, 12, 32, 12));
 
         // BUTTONS
-        this.buttonsList = new JButton[] {
-                new JButton("Create Hotel"),
-                new JButton("View Hotel"),
-                new JButton("Manage Hotel"),
-                new JButton("Make a Reservation"),
-                new JButton("Exit Program")
+        this.buttonsList = new JButton[5];
+
+        String buttonText[] = {
+                "Create Hotel",
+                "View Hotel",
+                "Manage Hotel",
+                "Make a Reservation",
+                "Exit Program"
         };
 
-        for (JButton jButton : buttonsList) {
-            jButton.setBackground(Color.white);
-            jButton.setFont(MyStyles.font.BUTTON);
-            jButton.setFocusPainted(false);
-            buttonPanel.add(jButton);
+        int i = 0;
+        for (String text : buttonText) {
+            this.buttonsList[i] = MyComponents.button(text);
+            buttonPanel.add(this.buttonsList[i++]);
         }
 
         buttonPanelContain.add(buttonPanel);

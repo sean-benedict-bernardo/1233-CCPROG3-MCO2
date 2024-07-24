@@ -44,7 +44,15 @@ public class MyComponents {
      * @return JLabel header
      */
     public static JLabel headerText(String text) {
-        return headerText(text, SwingConstants.CENTER);
+        return headerText(text, SwingConstants.LEFT);
+    }
+
+    /**
+     * Custom JLabel empty
+     * @return JLabel header
+     */
+    public static JLabel headerText() {
+        return headerText("", SwingConstants.LEFT);
     }
 
     /**

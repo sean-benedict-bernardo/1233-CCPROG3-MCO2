@@ -29,8 +29,9 @@ public class ReservationSelector extends JPanel {
 
         int innerId = 0;
         for (Reservation reservation : reservations) {
-            JButton button = MyComponents.button(String.format("%s | %s", reservation.getGuestName()));
+            JButton button = MyComponents.button(String.format("%s | %s", reservation.getRoom().getName(), reservation.getGuestName()));
             button.setName("reservationButton" + innerId++);
+            button.setHorizontalAlignment(SwingConstants.LEFT);
             this.reservationButtons.add(button);
             scrollArea.add(button, gbc);
         }
