@@ -29,7 +29,8 @@ public class RoomSelector extends JPanel {
 
         for (Room room : rooms) {
             JButton button = MyComponents.button(room.getName());
-            // button.setPreferredSize(new Dimension(75, 36));
+            button.setName(room.getName());
+            button.setHorizontalAlignment(SwingConstants.LEFT);
             this.roomButtons.add(button);
             scrollArea.add(button, gbc);
         }
@@ -38,6 +39,7 @@ public class RoomSelector extends JPanel {
         this.roomSelect = new JScrollPane(scrollArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         roomSelect.setBackground(MyStyles.color.GRAY);
+
         roomSelect.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
         roomSelect.getVerticalScrollBar().setUnitIncrement(16);
 

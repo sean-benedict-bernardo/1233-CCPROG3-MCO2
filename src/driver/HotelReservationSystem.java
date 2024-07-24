@@ -27,27 +27,23 @@ public class HotelReservationSystem {
         this.gui = new HomeMenu();
 
         try {
-            Hotel myHotel = new Hotel("HotelGemal", 'D');
+            Hotel myHotel = new Hotel("HotelGemal", 'S');
 
             for (int i = 0; i < 49; i++) {
-                switch (i % 3) {
-                    case 0:
-                        myHotel.addRoom('S');
-                        break;
-                    case 1:
-                        myHotel.addRoom('D');
-                        break;
-                    default:
-                        myHotel.addRoom('E');
-                        break;
+                myHotel.addRoom('S');
+            }
+
+            for (int i = 0; i < 50; i++) {
+                try {
+                    myHotel.createReservation("Person" + i, (i % 30) + 1, (i % 30) + 2, "S" + (i + 1));
+                } catch (Exception e) {
+                    // TODO: handle exception
                 }
             }
 
-            myHotel.createReservation("Andrew", 1, 5, "S1");
-
             this.hotelList.add(myHotel);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println(e);
         }
 
         this.initButtons();
@@ -63,10 +59,10 @@ public class HotelReservationSystem {
             try {
                 this.gui.setVisible(false);
                 new MenuCreateHotel(hotelList);
-                this.gui.setVisible(true);
             } catch (Exception err) {
                 Alert.displayAlert(err);
             }
+            this.gui.setVisible(true);
         });
 
         buttonsList[1].addActionListener((e) -> {
@@ -76,11 +72,11 @@ public class HotelReservationSystem {
                 if (localHotel != null) {
                     this.gui.setVisible(false);
                     new MenuViewHotel(localHotel);
-                    this.gui.setVisible(true);
                 }
             } catch (Exception err) {
                 Alert.displayAlert(err);
             }
+            this.gui.setVisible(true);
         });
         
         buttonsList[2].addActionListener((e) -> {
@@ -110,6 +106,7 @@ public class HotelReservationSystem {
             } catch (Exception err) {
                 Alert.displayAlert(err);
             }
+            this.gui.setVisible(true);
         });
 
         // Exit Program

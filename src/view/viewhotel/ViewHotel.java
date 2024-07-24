@@ -45,7 +45,7 @@ public class ViewHotel extends JDialog {
                 "Reservations",
                 "Main Menu" };
 
-        this.toolBar = new ToolBar(this.hotel.getName() + " View Mode",buttonsList);
+        this.toolBar = new ToolBar(this.hotel.getName() + " View Mode", buttonsList);
 
         add(this.toolBar, BorderLayout.NORTH);
     }
@@ -70,7 +70,7 @@ public class ViewHotel extends JDialog {
     }
 
     /**
-     * shows 
+     * shows
      * 
      * @param index index of card to be shown 0-3
      */

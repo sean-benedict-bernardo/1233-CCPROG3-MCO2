@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 import model.rooms.Room;
 import view.common.auxiliary.Alert;
 
@@ -17,6 +15,8 @@ import view.common.auxiliary.Alert;
  */
 
 public class Reservation {
+    public static final String NODISCOUNT = "__NULL__";
+
     private String guestName;
     private NightRates nightRates[];
     private Room room;
@@ -44,7 +44,7 @@ public class Reservation {
         this.guestName = guestName;
         this.nightRates = nightRates;
         this.room = room;
-        this.discountCode = "";
+        this.discountCode = Reservation.NODISCOUNT;
     }
 
     /**
@@ -85,9 +85,21 @@ public class Reservation {
         return this.room;
     }
 
+    /**
+     * Getter for discount code
+     * 
+     * @return String of discount code
+     */
+    public String getDiscountCode() {
+        return this.discountCode;
+    }
+
+    public NightRates[] getNightRates() {
+        return this.nightRates;
+    }
+
     // no setter because the hotel should not
     // be updating its prices if there are reservations
-
     public float getNightPrice(int index) {
         return (0 <= index && index < nightRates.length)
                 ? this.room.getPrice() * nightRates[index].getNightRate()
@@ -113,6 +125,9 @@ public class Reservation {
             if ("STAY4_GET1".equals(this.discountCode)
                     && this.getCheckOutDate() - this.getCheckInDate() >= 5)
                 continue;
+            if (!isPayday && (nightRates[i].getDate() == 15 || nightRates[i].getDate() == 30))
+                isPayday = true;
+
             total += this.room.getPrice() * nightRates[i].getNightRate();
         }
 

@@ -9,7 +9,6 @@ import view.common.MyStyles;
 import view.common.components.MyComponents;
 
 public class ReservationForm extends JDialog {
-    private GridBagConstraints gbc = new GridBagConstraints();
     private JPanel containerPanel;
 
     private JPanel availabilityPanel;
@@ -41,6 +40,7 @@ public class ReservationForm extends JDialog {
     }
 
     public void initFrame(Hotel hotel) {
+        GridBagConstraints gbc = new GridBagConstraints();
         this.containerPanel.setBorder(BorderFactory.createEmptyBorder(16, 24, 16, 24));
         this.guestNameField = new JTextField("", 20);
         this.guestRoomSelection = new JComboBox<String>(hotel.getRoomNames());
