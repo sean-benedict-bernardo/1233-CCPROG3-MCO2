@@ -21,6 +21,7 @@ public class Reservation {
     private NightRates nightRates[];
     private Room room;
     private String discountCode; // this is to be used in getTotalPrice
+    private String id;
 
     /**
      * Reservation constructor
@@ -37,6 +38,9 @@ public class Reservation {
         this.nightRates = nightRates;
         this.room = room;
         this.discountCode = discountCode;
+        this.id = String.format("%s-%02d%02d",
+                this.room.getName(),
+                this.getCheckInDate(), this.getCheckOutDate());
     }
 
     public Reservation(String guestName, NightRates[] nightRates,
@@ -45,6 +49,9 @@ public class Reservation {
         this.nightRates = nightRates;
         this.room = room;
         this.discountCode = Reservation.NODISCOUNT;
+        this.id = String.format("%s-%02d%02d",
+                this.room.getName(),
+                this.getCheckInDate(), this.getCheckOutDate());
     }
 
     /**
@@ -94,8 +101,22 @@ public class Reservation {
         return this.discountCode;
     }
 
+    /**
+     * Getter for NightRates
+     * 
+     * @return Array of all NightRates in the reservation
+     */
     public NightRates[] getNightRates() {
         return this.nightRates;
+    }
+
+    /**
+     * Getter for Id
+     * 
+     * @return String Id
+     */
+    public String getId() {
+        return this.id;
     }
 
     // no setter because the hotel should not

@@ -9,10 +9,6 @@ import javax.swing.JPanel;
 import model.Hotel;
 import view.common.MyStyles;
 import view.common.components.ToolBar;
-import view.viewhotel.HotelInfo;
-import view.viewhotel.Reservations;
-import view.viewhotel.RoomAvailability;
-import view.viewhotel.RoomInformation;
 
 public class ManageHotel extends JDialog {
     private Hotel hotel;
@@ -53,7 +49,7 @@ public class ManageHotel extends JDialog {
                 "Remove Hotel"
                 };
 
-        this.toolBar = new ToolBar(this.hotel.getName() + " Manage Mode",buttonsList);
+        this.toolBar = new ToolBar(buttonsList);
 
         add(this.toolBar, BorderLayout.NORTH);
     }

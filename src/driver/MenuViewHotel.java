@@ -59,6 +59,18 @@ public class MenuViewHotel {
      */
     private void initButtons() {
 
+        JPanel roomAvailabilityPanel = this.gui.getCardComponent(1);
+        if (roomAvailabilityPanel instanceof RoomAvailability) {
+            JButton[] calendarButtons = ((RoomAvailability) roomAvailabilityPanel).getDateSelector();
+
+            for (JButton jButton : calendarButtons) {
+                jButton.addActionListener((e) -> {
+                    ((RoomAvailability) roomAvailabilityPanel).updateAvailability(this.hotel.getRooms(),
+                            Integer.parseInt(e.getActionCommand()));
+                });
+            }
+        }
+
         // add eventlistener to the jscrollpane
         JPanel roomInfoPanel = this.gui.getCardComponent(2);
         if (roomInfoPanel instanceof RoomInformation) {
@@ -71,14 +83,16 @@ public class MenuViewHotel {
             }
         }
 
-        JPanel roomAvailabilityPanel = this.gui.getCardComponent(1);
-        if (roomAvailabilityPanel instanceof RoomAvailability) {
-            JButton[] calendarButtons = ((RoomAvailability) roomAvailabilityPanel).getDateSelector();
+        JPanel reservationsPanel = this.gui.getCardComponent(3);
 
-            for (JButton jButton : calendarButtons) {
+        if (reservationsPanel instanceof Reservations) {
+            ArrayList<JButton> reservationSelectButtons = ((Reservations) reservationsPanel)
+                    .getReservationSelectButtons();
+
+            for (JButton jButton : reservationSelectButtons) {
                 jButton.addActionListener((e) -> {
-                    ((RoomAvailability) roomAvailabilityPanel).updateAvailability(this.hotel.getRooms(),
-                            Integer.parseInt(e.getActionCommand()));
+                    ((Reservations) reservationsPanel)
+                            .updateInformation(hotel.getReservation(jButton.getName()));
                 });
             }
         }

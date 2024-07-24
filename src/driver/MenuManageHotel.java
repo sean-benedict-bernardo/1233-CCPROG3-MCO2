@@ -7,9 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import model.Hotel;
-import view.viewhotel.RoomAvailability;
-import view.viewhotel.RoomInformation;
-import view.viewhotel.ViewHotel;
 import view.common.auxiliary.Alert;
 import view.common.auxiliary.UserInput;
 import view.managehotel.ChangeHotelName;

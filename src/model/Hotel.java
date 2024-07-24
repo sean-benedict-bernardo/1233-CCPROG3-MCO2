@@ -394,7 +394,21 @@ public class Hotel {
     }
 
     /**
+     * Getter of specific reservation given index
+     * 
+     * @param id String identification assigned to reservation
+     * @return Reservation if in range, null otherwise
+     */
+    public Reservation getReservation(String id) {
+        for (Reservation reservation : this.reservationsList)
+            if (id.equals(reservation.getId()))
+                return reservation;
+        return null;
+    }
+
+    /**
      * Getter for all reservations
+     * 
      * @return ArrayList of Reservations
      */
     public ArrayList<Reservation> getReservations() {

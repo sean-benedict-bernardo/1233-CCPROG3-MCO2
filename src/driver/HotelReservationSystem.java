@@ -33,13 +33,9 @@ public class HotelReservationSystem {
                 myHotel.addRoom('S');
             }
 
-            for (int i = 0; i < 50; i++) {
-                try {
-                    myHotel.createReservation("Person" + i, (i % 30) + 1, (i % 30) + 2, "S" + (i + 1));
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
-            }
+            myHotel.createReservation("Ryan", 3, 14, "S1");
+            myHotel.createReservation("Jack", 2, 5, "S2");
+
 
             this.hotelList.add(myHotel);
         } catch (Exception e) {

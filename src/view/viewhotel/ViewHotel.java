@@ -45,7 +45,7 @@ public class ViewHotel extends JDialog {
                 "Reservations",
                 "Main Menu" };
 
-        this.toolBar = new ToolBar(this.hotel.getName() + " View Mode", buttonsList);
+        this.toolBar = new ToolBar(buttonsList);
 
         add(this.toolBar, BorderLayout.NORTH);
     }

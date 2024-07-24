@@ -22,15 +22,15 @@ public class ReservationSelector extends JPanel {
     private void initFrame(ArrayList<Reservation> reservations) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.gridheight = 1;
         gbc.weightx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JPanel scrollArea = new JPanel(new GridBagLayout());
 
-        int innerId = 0;
         for (Reservation reservation : reservations) {
             JButton button = MyComponents.button(String.format("%s | %s", reservation.getRoom().getName(), reservation.getGuestName()));
-            button.setName("reservationButton" + innerId++);
+            button.setName(reservation.getId());
             button.setHorizontalAlignment(SwingConstants.LEFT);
             this.reservationButtons.add(button);
             scrollArea.add(button, gbc);
