@@ -90,5 +90,6 @@ public class MenuViewHotel {
     private void hideWindow() {
         System.out.println("ViewHotel: window hidden");
         this.gui.setVisible(false);
+        this.gui.dispose();
     }
 }
