@@ -12,6 +12,7 @@ import view.viewhotel.RoomInformation;
 import view.viewhotel.ViewHotel;
 import view.common.auxiliary.Alert;
 import view.common.auxiliary.UserInput;
+import view.managehotel.UpdateBasePrice;
 import view.managehotel.ChangeHotelName;
 import view.managehotel.ManageHotel;
 import view.managehotel.RemoveRoom;
@@ -121,6 +122,32 @@ public class MenuManageHotel {
 
                 else nameSelectButton.setText(buttonText);
             });
+        }
+
+        buttons[3].addActionListener(e -> this.gui.showCard(3));
+
+        JPanel currentPanel4 = this.gui.getCardComponent(3);
+        if (currentPanel4 instanceof UpdateBasePrice){
+            JButton confirmButton = ((UpdateBasePrice) currentPanel4).getConfirmButton();
+            JTextField basePriceField = ((UpdateBasePrice) currentPanel4).getBasePriceField();
+
+            confirmButton.addActionListener((e) -> {
+                try {
+                    float basePrice = Float.parseFloat(basePriceField.getText());
+                    
+                    this.hotel.setBasePrice(basePrice);
+                    Alert.displayAlert("Changing base price of " + this.hotel.getName() + " to " + basePrice);
+                    System.out.println("New Base Price: " + basePrice);
+                }
+
+                catch (NumberFormatException numOMG){
+                    Alert.displayAlert("Invalid input!");
+                }
+
+                catch (Exception omg){
+                    Alert.displayAlert(omg);
+                }
+            }); 
         }
         /*
         // the card can only show if there are reservations

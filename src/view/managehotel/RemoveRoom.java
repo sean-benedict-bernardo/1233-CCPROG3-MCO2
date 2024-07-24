@@ -39,7 +39,7 @@ public class RemoveRoom extends JPanel{
         JPanel container = new JPanel();
         JLabel currentRoomLabel = MyComponents.headerText("Select a room to delete:");
         roomNameSelect = MyComponents.smallButton("...");
-        confirmButton = MyComponents.button("Confirm deletion");
+        confirmButton = MyComponents.button("Confirm Deletion");
 
         container.setLayout(new GridBagLayout());
         container.setBackground(MyStyles.color.BACKGROUND);
