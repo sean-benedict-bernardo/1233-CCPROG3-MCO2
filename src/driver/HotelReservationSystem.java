@@ -2,9 +2,11 @@ package driver;
 
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.UIManager;
 
 import model.Hotel;
 import view.HomeMenu;
+import view.common.MyStyles;
 import view.common.auxiliary.Alert;
 import view.common.auxiliary.UserInput;
 
@@ -35,7 +37,6 @@ public class HotelReservationSystem {
 
             myHotel.createReservation("Ryan", 3, 14, "S1");
             myHotel.createReservation("Jack", 2, 5, "S2");
-
 
             this.hotelList.add(myHotel);
         } catch (Exception e) {
@@ -74,12 +75,12 @@ public class HotelReservationSystem {
             }
             this.gui.setVisible(true);
         });
-        
+
         buttonsList[2].addActionListener((e) -> {
             try {
                 Hotel localHotel = UserInput.selectHotel(hotelList);
 
-                if (this.hotelList.isEmpty()){
+                if (this.hotelList.isEmpty()) {
                     throw new Exception("There are no hotels in the system!");
                 }
 

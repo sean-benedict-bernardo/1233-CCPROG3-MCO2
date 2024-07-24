@@ -47,6 +47,14 @@ public class ViewHotel extends JDialog {
 
         this.toolBar = new ToolBar(buttonsList);
 
+        // give user context clue that there's no reservation
+        if (this.hotel.getNumReservations() == 0) {
+            JButton reservationButton = this.toolBar.getButtons()[3];
+            reservationButton.setBackground(MyStyles.color.LIGHTGRAY);
+            // disable button
+            reservationButton.setEnabled(false);
+        }
+
         add(this.toolBar, BorderLayout.NORTH);
     }
 

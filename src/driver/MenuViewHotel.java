@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import model.Hotel;
+import view.common.auxiliary.Alert;
 import view.viewhotel.*;
 
 /**
@@ -50,7 +51,7 @@ public class MenuViewHotel {
         // the card can only show if there are reservations
         if (this.hotel.getNumReservations() > 0)
             buttons[3].addActionListener((e) -> this.gui.showCard(3));
-
+        
         buttons[4].addActionListener(e -> this.hideWindow());
     }
 
@@ -83,17 +84,20 @@ public class MenuViewHotel {
             }
         }
 
-        JPanel reservationsPanel = this.gui.getCardComponent(3);
+        // Reservation selector
+        if (this.hotel.getNumReservations() > 0) {
+            JPanel reservationsPanel = this.gui.getCardComponent(3);
 
-        if (reservationsPanel instanceof Reservations) {
-            ArrayList<JButton> reservationSelectButtons = ((Reservations) reservationsPanel)
-                    .getReservationSelectButtons();
+            if (reservationsPanel instanceof Reservations) {
+                ArrayList<JButton> reservationSelectButtons = ((Reservations) reservationsPanel)
+                        .getReservationSelectButtons();
 
-            for (JButton jButton : reservationSelectButtons) {
-                jButton.addActionListener((e) -> {
-                    ((Reservations) reservationsPanel)
-                            .updateInformation(hotel.getReservation(jButton.getName()));
-                });
+                for (JButton jButton : reservationSelectButtons) {
+                    jButton.addActionListener((e) -> {
+                        ((Reservations) reservationsPanel)
+                                .updateInformation(hotel.getReservation(jButton.getName()));
+                    });
+                }
             }
         }
     }

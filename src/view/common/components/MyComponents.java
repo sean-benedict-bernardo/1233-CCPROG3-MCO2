@@ -49,6 +49,7 @@ public class MyComponents {
 
     /**
      * Custom JLabel empty
+     * 
      * @return JLabel header
      */
     public static JLabel headerText() {
@@ -117,5 +118,12 @@ public class MyComponents {
         jbutton.setFont(MyStyles.font.BODY);
         jbutton.setFocusPainted(false);
         return jbutton;
+    }
+
+    public static JTextField textField(String defaultValue) {
+        JTextField jtextfield = new JTextField(defaultValue, 20);
+        jtextfield.setBackground(MyStyles.color.WHITE);
+        jtextfield.setFont(MyStyles.font.BODY);
+        return jtextfield;
     }
 }

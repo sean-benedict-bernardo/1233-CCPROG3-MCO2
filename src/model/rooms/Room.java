@@ -1,5 +1,6 @@
 package model.rooms;
 
+import model.Hotel;
 import model.Reservation;
 
 /**
@@ -16,7 +17,7 @@ public class Room {
     // hypothetical month that are reserved or not
     // true - reserved
     // false - not reserved
-    protected boolean daysReserved[] = new boolean[31];
+    protected boolean daysReserved[] = new boolean[Hotel.NUM_NIGHTS];
     protected float price;
 
     /**

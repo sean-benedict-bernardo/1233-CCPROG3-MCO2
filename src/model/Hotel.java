@@ -14,11 +14,13 @@ import view.common.auxiliary.Alert;
  */
 
 public class Hotel {
+    public static final int NUM_NIGHTS = 31;
+
     private String name;
     private float basePrice;
     private ArrayList<Room> roomsList;
     private ArrayList<Reservation> reservationsList;
-    private NightRates[] nightRates = new NightRates[31];
+    private NightRates[] nightRates = new NightRates[Hotel.NUM_NIGHTS];
 
     private static HashMap<Character, Integer> compareRoomType = new HashMap<>();
 
@@ -81,7 +83,7 @@ public class Hotel {
      * @param roomType - integer representation of what type of room is to be added
      */
 
-    public void addRoom(char roomType) throws Exception {
+    public Room addRoom(char roomType) throws Exception {
         if (this.roomsList.size() >= 50) {
             throw new Exception("Hotel is full");
         } else if (compareRoomType.get(roomType) == -1) {
@@ -116,7 +118,7 @@ public class Hotel {
             /*
              * Insertion Logic:
              * If the list is empty, add room
-             * Otherwise, start from end and move rightward until the ff conditions are met:
+             * Otherwise, start from end and move leftward until the ff conditions are met:
              * 1. the new room is within the right category grouping S > D > E
              * 2. the new room is in order within said category
              */
@@ -139,12 +141,10 @@ public class Hotel {
                 this.roomsList.add(i, newRoom);
             }
             System.out.printf("Adding Room '%s'\n", roomNumStr);
+            return newRoom;
         }
 
-        // rearranges the list with consideration of the new room types
-        // Sorts in order of room type then number
-        // Standard >
-
+        return null;
     }
 
     /**
@@ -291,10 +291,9 @@ public class Hotel {
      * @param basePrice new updated base price
      */
     public void setBasePrice(float basePrice) throws Exception {
-        if (Float.isNaN(basePrice)){
+        if (Float.isNaN(basePrice)) {
             throw new Exception("Invalid base price!");
-        }
-        else if (this.reservationsList.size() != 0)
+        } else if (this.reservationsList.size() != 0)
             throw new Exception("There are still active bookings!");
         else if (basePrice < 100.0f)
             throw new Exception("New price is too low!");
@@ -397,7 +396,8 @@ public class Hotel {
     }
 
     /**
-     * Getter of specific reservation given index
+     * Getter of specific reservation given reservation id
+     * format of id found in Reservation constructor
      * 
      * @param id String identification assigned to reservation
      * @return Reservation if in range, null otherwise

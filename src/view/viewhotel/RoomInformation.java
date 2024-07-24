@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.Hotel;
 import model.rooms.Room;
 import view.common.MyStyles;
 import view.common.components.MyComponents;
@@ -21,7 +22,7 @@ public class RoomInformation extends JPanel {
     private JLabel infoRoomName;
     private JLabel infoRoomType;
     private JLabel infoNightlyRate;
-    private JLabel infoAvailabilityDate[] = new JLabel[31];
+    private JLabel infoAvailabilityDate[] = new JLabel[Hotel.NUM_NIGHTS];
 
     public RoomInformation(ArrayList<Room> rooms) {
         super();
@@ -76,8 +77,7 @@ public class RoomInformation extends JPanel {
 
             availabilityPanel.add(infoAvailabilityDate[i], gbcCalendar);
         }
-
-        ++gbcCalendar.gridx;
+        
         infoPanel.add(infoRoomName, gbc);
         infoPanel.add(infoNightlyRate, gbc);
         infoPanel.add(availabilityPanel, gbc);

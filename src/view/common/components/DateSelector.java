@@ -13,7 +13,7 @@ import model.Hotel;
 import view.common.MyStyles;
 
 public class DateSelector extends JPanel {
-    private JButton buttons[] = new JButton[31];
+    private JButton buttons[] = new JButton[Hotel.NUM_NIGHTS];
 
     public DateSelector(Hotel hotel) {
         setLayout(new GridBagLayout());

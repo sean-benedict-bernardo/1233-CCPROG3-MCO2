@@ -12,7 +12,7 @@ public class ReservationForm extends JDialog {
     private JPanel containerPanel;
 
     private JPanel availabilityPanel;
-    private JLabel infoAvailabilityDate[] = new JLabel[31];
+    private JLabel infoAvailabilityDate[] = new JLabel[Hotel.NUM_NIGHTS];
 
     // input fields
     private JTextField guestNameField;
@@ -24,7 +24,7 @@ public class ReservationForm extends JDialog {
     private JButton cancelReservation;
 
     public ReservationForm(Hotel hotel) {
-        super((Dialog)null);
+        super((Dialog) null);
 
         setLayout(new BorderLayout());
         setTitle(hotel.getName() + " Reservation Form");
@@ -45,8 +45,8 @@ public class ReservationForm extends JDialog {
         this.guestNameField = new JTextField("", 20);
         this.guestRoomSelection = new JComboBox<String>(hotel.getRoomNames());
         this.guestRoomSelection.setSelectedIndex(0);
-        this.guestCheckIn = new JSpinner(new SpinnerNumberModel(1, 1, 30, 1));
-        this.guestCheckOut = new JSpinner(new SpinnerNumberModel(2, 2, 31, 1));
+        this.guestCheckIn = new JSpinner(new SpinnerNumberModel(1, 1, Hotel.NUM_NIGHTS - 1, 1));
+        this.guestCheckOut = new JSpinner(new SpinnerNumberModel(2, 2, Hotel.NUM_NIGHTS, 1));
         this.guestDiscountCode = new JTextField("", 20);
         this.submitReservation = MyComponents.button("Make Reservation");
         this.cancelReservation = MyComponents.button("Cancel Reservation");

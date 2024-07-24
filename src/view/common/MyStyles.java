@@ -22,6 +22,7 @@ public class MyStyles {
 
     public class color {
         public static final Color BLACK = Color.decode("#121212");
+        public static final Color DARKGRAY = Color.decode("#333333");
         public static final Color GRAY = Color.decode("#4E4E4E");
         public static final Color LIGHTGRAY = Color.decode("#C4C4C4");
         public static final Color WHITE = Color.white;

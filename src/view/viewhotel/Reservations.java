@@ -1,6 +1,7 @@
 package view.viewhotel;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import view.common.components.ReservationSelector;
 
 public class Reservations extends JPanel {
     private ReservationSelector reservationSelectPanel;
+    private JPanel infoContainerPanel;
 
     private JLabel infoName, infoRoom, infoCheckIn, infoCheckOut, infoDiscountCode;
     private JPanel infoNightlyBreakdown;
@@ -28,6 +30,8 @@ public class Reservations extends JPanel {
         setBackground(MyStyles.color.BACKGROUND);
 
         if (reservations.size() > 0) {
+            this.infoContainerPanel = new JPanel(new FlowLayout());
+
             this.initFrame(reservations);
             this.updateInformation(reservations.get(0));
         }
@@ -47,7 +51,7 @@ public class Reservations extends JPanel {
         this.reservationSelectPanel = new ReservationSelector(reservations);
         add(this.reservationSelectPanel, BorderLayout.WEST);
 
-        // Information Panel
+        // Left Info Panel
         this.infoName = MyComponents.headerText();
         this.infoRoom = MyComponents.headerText();
         this.infoCheckIn = MyComponents.headerText();
@@ -62,7 +66,7 @@ public class Reservations extends JPanel {
                 { MyComponents.headerText("Discount Code"), this.infoDiscountCode },
         };
 
-        JPanel infoContainerPanel = new JPanel(new GridBagLayout());
+        JPanel leftInfoPanel = new JPanel(new GridBagLayout());
 
         gbc.weightx = 0;
         gbc.weighty = 0;
@@ -70,7 +74,7 @@ public class Reservations extends JPanel {
             for (int j = 0; j < gridMap[0].length; j++) {
                 gbc.gridy = i;
                 gbc.gridx = j;
-                infoContainerPanel.add(gridMap[i][j], gbc);
+                leftInfoPanel.add(gridMap[i][j], gbc);
             }
         }
 
@@ -82,10 +86,11 @@ public class Reservations extends JPanel {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.gridheight = GridBagConstraints.REMAINDER;
 
+        // Initialize right info panel
         this.makeNightlyBreakdown(reservations.get(0));
-        gbc.gridy = 0;
-        gbc.gridx = 3;
-        infoContainerPanel.add(this.infoNightlyBreakdown, gbc);
+
+        infoContainerPanel.add(leftInfoPanel, FlowLayout.LEFT);
+        infoContainerPanel.add(this.infoNightlyBreakdown, FlowLayout.RIGHT);
         add(infoContainerPanel, BorderLayout.CENTER);
     }
 
@@ -96,6 +101,22 @@ public class Reservations extends JPanel {
         this.infoCheckOut.setText("" + reservation.getCheckOutDate());
         this.infoDiscountCode.setText(
                 (!reservation.getDiscountCode().equals(Reservation.NODISCOUNT)) ? reservation.getDiscountCode() : "");
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridy = 0;
+        gbc.gridx = 3;
+        gbc.ipadx = 12;
+        gbc.ipady = 12;
+        gbc.gridheight = GridBagConstraints.REMAINDER;
+        gbc.anchor = GridBagConstraints.NORTH;
+
+        // Redraw component
+        infoContainerPanel.remove(this.infoNightlyBreakdown);
+        this.infoNightlyBreakdown = null;
+        this.makeNightlyBreakdown(reservation);
+        infoContainerPanel.add(this.infoNightlyBreakdown, gbc);
+        revalidate();
+        repaint();
     }
 
     private void makeNightlyBreakdown(Reservation reservation) {
@@ -133,11 +154,7 @@ public class Reservations extends JPanel {
         totalPrice.setHorizontalAlignment(SwingConstants.RIGHT);
         this.infoNightlyBreakdown.add(totalPrice,
                 gbc);
-        revalidate();
-        repaint();
     }
-
-    
 
     public ArrayList<JButton> getReservationSelectButtons() {
         return reservationSelectPanel.getReservationSelectButtons();

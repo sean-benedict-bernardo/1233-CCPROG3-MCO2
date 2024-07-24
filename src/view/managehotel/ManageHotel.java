@@ -12,18 +12,18 @@ import view.common.components.ToolBar;
 
 public class ManageHotel extends JDialog {
     private Hotel hotel;
-    private JPanel cardComponents[] = new JPanel[5];
+    private JPanel cardComponents[] = new JPanel[4];
     private JPanel cardPanel;
     private CardLayout cardPanelLayout = new CardLayout();
     private ToolBar toolBar;
 
-    public ManageHotel(Hotel hotel){
+    public ManageHotel(Hotel hotel) {
         super((Dialog) null);
         this.hotel = hotel;
 
         setLayout(new BorderLayout());
 
-        setTitle("Manage " + hotel.getName());
+        setTitle("Managing " + hotel.getName());
 
         setBackground(MyStyles.color.BACKGROUND);
         setForeground(MyStyles.color.FOREGROUND);
@@ -38,17 +38,12 @@ public class ManageHotel extends JDialog {
     }
 
     private void initButtons() {
-        // BUTTONS
         String buttonsList[] = {
-                "Change Hotel Name",
-                "Add Room",
-                "Remove Room",
-                "Update Base Price",
-                "Remove Hotel",
-                //"Remove Reservation",
-                //"Edit Date Price Modifer"
+                "Manage Hotel",
+                "Manage Rooms",
+                "Manage Reservation",
                 "Main Menu"
-                };
+        };
 
         this.toolBar = new ToolBar(buttonsList);
 
@@ -58,16 +53,10 @@ public class ManageHotel extends JDialog {
     private void initCardContent() {
         this.cardPanel = new JPanel(this.cardPanelLayout);
 
-        this.cardComponents[0] = new ChangeHotelName(this.hotel);
-        this.cardComponents[1] = new AddRoom(this.hotel);
-        this.cardComponents[2] = new RemoveRoom(this.hotel.getRooms());
-        this.cardComponents[3] = new UpdateBasePrice(this.hotel);
-        /* 
-        //Sean will cook date price modifier
-        */
-        this.cardComponents[4] = new RemoveHotel(this.hotel);
-        //this.cardComponents[5] = new RemoveHotel(this.hotel);
-        
+        this.cardComponents[0] = new ManageHotelPanel(this.hotel);
+        this.cardComponents[1] = new ManageHotelPanel(this.hotel);
+        this.cardComponents[2] = new ManageHotelPanel(this.hotel);
+        this.cardComponents[3] = new ManageHotelPanel(this.hotel);
 
         for (int i = 0; i < this.cardComponents.length; i++)
             this.cardPanel.add(this.cardComponents[i], "" + i);
@@ -81,7 +70,7 @@ public class ManageHotel extends JDialog {
     }
 
     public void showCard(int index) {
-        if (0 <= index && index <= 5) {
+        if (0 <= index && index <= 3) {
             this.cardPanelLayout.show(this.cardPanel, "" + index);
         }
     }
@@ -95,6 +84,6 @@ public class ManageHotel extends JDialog {
     }
 
     public JPanel getCardComponent(int index) {
-        return (0 <= index && index <= 6) ? this.cardComponents[index] : null;
+        return (0 <= index && index <= 3) ? this.cardComponents[index] : null;
     }
 }

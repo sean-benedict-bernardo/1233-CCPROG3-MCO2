@@ -9,52 +9,62 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import model.Hotel;
 import view.common.MyStyles;
 import view.common.components.MyComponents;
 
-public class ChangeHotelName extends JPanel{
+public class ChangeHotelName extends JPanel {
     private Hotel hotel;
     private JTextField hotelName;
     private JButton confirmButton;
-    private GridBagConstraints gbc;
 
-    public ChangeHotelName(Hotel hotel){
+    public ChangeHotelName(Hotel hotel) {
         super();
         this.hotel = hotel;
-        
+
         setLayout(new GridBagLayout());
 
-        initFrame();
+        this.initFrame();
 
         setBackground(MyStyles.color.BACKGROUND);
     }
 
-    public void initFrame(){
-        JPanel container = new JPanel();
-        this.gbc = new GridBagConstraints();
-        confirmButton = MyComponents.button("Confirm");
-        JLabel labelTxtBox = MyComponents.headerText("New Hotel Name:");
-        hotelName = new JTextField(this.hotel.getName(), 20); 
-
-        container.setLayout(new FlowLayout());
+    private void initFrame() {
+        JPanel container = new JPanel(new GridBagLayout());
         container.setBackground(MyStyles.color.BACKGROUND);
 
-        hotelName.setFont(MyStyles.font.BODY);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(8, 8, 8, 8);
 
-        container.add(labelTxtBox);
-        gbc.insets = new Insets(0, 0, 0, 20);
+        JLabel labelTxtBox = MyComponents.headerText("New Hotel Name:");
+
+        this.hotelName = MyComponents.textField(this.hotel.getName());
+        hotelName.setFont(MyStyles.font.HEADER);
+
+        this.confirmButton = MyComponents.button("Change Hotel Name");
+        this.confirmButton.setBorder(new EmptyBorder(12, 12, 12, 12));
+
+        container.add(labelTxtBox, gbc);
+        gbc.gridx = 1;
         container.add(hotelName, gbc);
-        container.add(confirmButton);
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        container.add(confirmButton, gbc);
         this.add(container);
     }
 
-    public JButton getConfirmButton(){
+    public JButton getConfirmButton() {
         return this.confirmButton;
     }
 
-    public JTextField getHotelNameField(){
+    public JTextField getHotelNameField() {
         return this.hotelName;
     }
 }
