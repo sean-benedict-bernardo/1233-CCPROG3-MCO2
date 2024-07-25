@@ -6,7 +6,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import model.Hotel;
-import view.common.auxiliary.Alert;
 import view.viewhotel.*;
 
 /**

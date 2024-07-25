@@ -12,7 +12,7 @@ import view.common.components.ToolBar;
 
 public class ManageHotel extends JDialog {
     private Hotel hotel;
-    private JPanel cardComponents[] = new JPanel[4];
+    private JPanel cardComponents[] = new JPanel[3];
     private JPanel cardPanel;
     private CardLayout cardPanelLayout = new CardLayout();
     private ToolBar toolBar;
@@ -46,7 +46,7 @@ public class ManageHotel extends JDialog {
         };
 
         this.toolBar = new ToolBar(buttonsList);
-
+        this.updateReservationButton(this.hotel.getNumReservations() == 0);
         add(this.toolBar, BorderLayout.NORTH);
     }
 
@@ -54,9 +54,14 @@ public class ManageHotel extends JDialog {
         this.cardPanel = new JPanel(this.cardPanelLayout);
 
         this.cardComponents[0] = new ManageHotelPanel(this.hotel);
-        this.cardComponents[1] = new ManageHotelPanel(this.hotel);
-        this.cardComponents[2] = new ManageHotelPanel(this.hotel);
-        this.cardComponents[3] = new ManageHotelPanel(this.hotel);
+        this.cardComponents[1] = new ManageRooms(this.hotel);
+        try {
+            this.cardComponents[2] = new ManageReservations(this.hotel);
+        } catch (Exception e) {
+            // No reservations
+            this.cardComponents[2] = new JPanel();
+            this.cardComponents[2].setBackground(MyStyles.color.BACKGROUND);
+        }
 
         for (int i = 0; i < this.cardComponents.length; i++)
             this.cardPanel.add(this.cardComponents[i], "" + i);
@@ -67,6 +72,20 @@ public class ManageHotel extends JDialog {
 
         add(cardPanel);
         this.cardPanelLayout.show(this.cardPanel, "-1");
+    }
+
+    /**
+     * Updates whether reservation button can be used or not
+     * 
+     * @param isAccessible boolean of whether button can be used
+     */
+    public void updateReservationButton(boolean isAccessible) {
+        if (isAccessible) {
+            JButton reservationButton = this.toolBar.getButtons()[2];
+            reservationButton.setBackground(MyStyles.color.LIGHTGRAY);
+            // disable button
+            reservationButton.setEnabled(false);
+        }
     }
 
     public void showCard(int index) {
@@ -84,6 +103,6 @@ public class ManageHotel extends JDialog {
     }
 
     public JPanel getCardComponent(int index) {
-        return (0 <= index && index <= 3) ? this.cardComponents[index] : null;
+        return (0 <= index && index <= 2) ? this.cardComponents[index] : null;
     }
 }

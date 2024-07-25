@@ -1,16 +1,15 @@
 package view.managehotel;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -19,7 +18,6 @@ import javax.swing.border.EmptyBorder;
 import model.Hotel;
 import model.NightRates;
 import view.common.MyStyles;
-import view.common.auxiliary.Alert;
 import view.common.components.MyComponents;
 
 public class ManageHotelPanel extends JPanel {
@@ -28,15 +26,16 @@ public class ManageHotelPanel extends JPanel {
     private JTextField changeHotelName, changeBasePrice;
     private JPanel panelDateModifier;
     private JSpinner changeDateModifier[];
-    private JButton deleteHotel, saveChanges;
+    private JButton deleteHotel, saveHotelName, saveBasePrice, saveDateModifier;
 
     public ManageHotelPanel(Hotel hotel) {
         super(new BorderLayout());
         this.hotel = hotel;
         setBackground(MyStyles.color.BACKGROUND);
         setForeground(MyStyles.color.FOREGROUND);
+        setBorder(new EmptyBorder(24, 24, 24, 24));
         this.initComponents();
-        this.updateValidity();
+        this.updateValidity(this.hotel.getNumReservations() == 0);
         this.initFrame();
     }
 
@@ -44,9 +43,12 @@ public class ManageHotelPanel extends JPanel {
         this.changeHotelName = MyComponents.textField(this.hotel.getName());
         this.changeBasePrice = MyComponents.textField(String.format("%.2f", this.hotel.getBasePrice()));
         this.deleteHotel = MyComponents.button("Delete Hotel");
-        this.saveChanges = MyComponents.button("Save Change");
         this.changeDateModifier = new JSpinner[hotel.getNightRates().length];
         this.initDatePriceModifier();
+
+        this.saveDateModifier = MyComponents.button("Update Date Price Modifier");
+        this.saveBasePrice = MyComponents.button("Update Base Price");
+        this.saveHotelName = MyComponents.button("Update Hotel Name");
     }
 
     private void initFrame() {
@@ -54,24 +56,60 @@ public class ManageHotelPanel extends JPanel {
         containerPanel.setBackground(MyStyles.color.BACKGROUND);
 
         GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(4, 4, 4, 4);
+
+        // First Column titles
+
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 0;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        containerPanel.add(MyComponents.headerText("New Name: "), gbc);
+        containerPanel.add(MyComponents.headerText("Name:"), gbc);
+        gbc.gridy = 1;
+        containerPanel.add(MyComponents.headerText("Base Price:"), gbc);
+        gbc.gridy = 2;
+        containerPanel.add(MyComponents.headerText("Date Price Modifier:"), gbc);
+
+        // 2nd Column Text Fields
         gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
         containerPanel.add(this.changeHotelName, gbc);
-        gbc.gridy++;
-        gbc.gridx = 0;
-        containerPanel.add(MyComponents.headerText("Update Base Price:"), gbc);
-        gbc.gridx = 1;
+        gbc.gridy = 1;
         containerPanel.add(this.changeBasePrice, gbc);
-        gbc.gridy++;
+        gbc.weightx = 0;
+
+        // Date Price Modifier
+        gbc.gridy = 3;
         gbc.gridx = 0;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         containerPanel.add(this.panelDateModifier, gbc);
-        gbc.gridy++;
-        containerPanel.add(this.saveChanges, gbc);
-        gbc.gridy++;
+        gbc.gridwidth = 1;
+
+        // Third Column Buttons
+        Dimension dim = new Dimension(300, (int) this.saveHotelName.getPreferredSize().getHeight());
+        this.saveHotelName.setPreferredSize(dim);
+        this.saveBasePrice.setPreferredSize(dim);
+        this.saveDateModifier.setPreferredSize(dim);
+
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 0;
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        containerPanel.add(this.saveHotelName, gbc);
+        gbc.gridy = 1;
+        containerPanel.add(this.saveBasePrice, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        containerPanel.add(this.saveDateModifier, gbc);
+
+        // Delete Hotel Button
+        gbc.gridy = 4;
+        gbc.gridx = 0;
+        gbc.weightx = 1;
         containerPanel.add(this.deleteHotel, gbc);
 
         add(containerPanel, BorderLayout.CENTER);
@@ -79,7 +117,7 @@ public class ManageHotelPanel extends JPanel {
 
     private void initDatePriceModifier() {
         this.panelDateModifier = new JPanel(new GridBagLayout());
-        this.panelDateModifier.setBorder(BorderFactory.createLineBorder(MyStyles.color.FOREGROUND, 2));
+        this.panelDateModifier.setBackground(MyStyles.color.BACKGROUND);
         NightRates[] nightRates = this.hotel.getNightRates();
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -87,24 +125,6 @@ public class ManageHotelPanel extends JPanel {
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.WEST;
-
-        /**
-         * 
-         * gbc.gridy = 0;
-         * gbc.gridx = 0;
-         * JLabel index = MyComponents.bodyText("" + (i + 1));
-         * index.setPreferredSize(new Dimension(20,
-         * (int)index.getPreferredSize().getHeight()));
-         * entryPanel.add(index, gbc);
-         * gbc.gridx = 1;
-         * entryPanel.add(
-         * MyComponents.bodyText("" + (this.hotel.getNightRate(i).getNightRate() *
-         * this.hotel.getBasePrice())),
-         * gbc);
-         * 
-         * gbc.gridy = i / 7;
-         * gbc.gridx = i % 7;
-         */
 
         for (int i = 0; i < nightRates.length; i++) {
             JPanel sliderPanel = new JPanel(new GridBagLayout());
@@ -141,8 +161,7 @@ public class ManageHotelPanel extends JPanel {
      * This method essentially updates specific fields dependent
      * whether there are still active reservations or not
      */
-    public void updateValidity() {
-        boolean isValid = this.hotel.getNumReservations() == 0;
+    public void updateValidity(boolean isValid) {
         this.changeBasePrice.setEditable(isValid);
         for (int i = 0; i < changeDateModifier.length; i++) {
             this.changeDateModifier[i].setEnabled(isValid);
@@ -165,18 +184,30 @@ public class ManageHotelPanel extends JPanel {
         float[] dateModifier = new float[this.changeDateModifier.length];
 
         for (int i = 0; i < this.changeDateModifier.length; i++) {
-            dateModifier[i] = (float) this.changeDateModifier[i].getValue() / 100.0f;
+            try {
+                this.changeDateModifier[i].commitEdit();
+                dateModifier[i] = ((Integer) this.changeDateModifier[i].getValue()) / 100.0f;
+            } catch (Exception e) {/* Do nothing */}
+
         }
 
         return dateModifier;
     }
 
-    public JButton getDeleteHotelButton() {
+    public JButton getDeleteHotel() {
         return this.deleteHotel;
     }
 
-    public JButton getSaveChangesButton() {
-        return this.saveChanges;
+    public JButton getSaveHotelName() {
+        return this.saveHotelName;
+    }
+
+    public JButton getSaveBasePrice() {
+        return this.saveBasePrice;
+    }
+
+    public JButton getSaveDateModifier() {
+        return this.saveDateModifier;
     }
 
 }

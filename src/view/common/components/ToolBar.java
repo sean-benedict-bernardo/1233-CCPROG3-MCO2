@@ -5,7 +5,6 @@ import javax.swing.*;
 import view.common.MyStyles;
 
 public class ToolBar extends JToolBar {
-    private JLabel titleText;
     private JButton buttons[];
 
     /**

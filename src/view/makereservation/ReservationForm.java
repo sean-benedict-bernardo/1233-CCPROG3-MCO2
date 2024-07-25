@@ -40,7 +40,6 @@ public class ReservationForm extends JDialog {
     }
 
     public void initFrame(Hotel hotel) {
-        GridBagConstraints gbc = new GridBagConstraints();
         this.containerPanel.setBorder(BorderFactory.createEmptyBorder(16, 24, 16, 24));
         this.guestNameField = new JTextField("", 20);
         this.guestRoomSelection = new JComboBox<String>(hotel.getRoomNames());
@@ -54,12 +53,15 @@ public class ReservationForm extends JDialog {
         this.initAvailabilityCalendar(hotel.getRooms().get(0));
 
         // NORTH
-        add(MyComponents.headerText("Booking under " + hotel.getName()), BorderLayout.NORTH);
+        add(MyComponents.titleText("Booking under " + hotel.getName()), BorderLayout.NORTH);
 
         // Adding Components
-        gbc.insets = new Insets(2, 4, 2, 4);
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(4, 4, 4, 4);
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridy = 0;
         gbc.gridwidth = 1;
         this.containerPanel.add(MyComponents.bodyText("Guest Name: "), gbc);

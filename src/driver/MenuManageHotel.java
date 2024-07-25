@@ -1,199 +1,72 @@
 package driver;
 
-import java.util.ArrayList;
-
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 import model.Hotel;
+import model.HotelCollection;
+import model.Reservation;
 import view.common.auxiliary.Alert;
 import view.common.auxiliary.UserInput;
 import view.managehotel.ManageHotel;
 import view.managehotel.ManageHotelPanel;
+import view.managehotel.ManageReservations;
+import view.managehotel.ManageRooms;
 
 public class MenuManageHotel {
     private ManageHotel gui;
     private Hotel hotel;
-    private ArrayList<Hotel> hotelList;
+    private HotelCollection hotelList;
 
-    public MenuManageHotel(Hotel hotel, ArrayList<Hotel> hotelList) {
+    private ManageHotelPanel manageHotelPanel;
+    private ManageRooms manageRoomPanel;
+    private ManageReservations manageReservationsPanel;
+
+    public MenuManageHotel(Hotel hotel, HotelCollection hotelList) {
         this.hotel = hotel;
         this.hotelList = hotelList;
         this.gui = new ManageHotel(this.hotel);
+        this.initToolBar();
         this.initButtons();
-
         this.gui.setModal(true);
         this.gui.setVisible(true);
     }
 
-    public void initButtons() {
+    private void initToolBar() {
         JButton buttons[] = this.gui.getButtons();
 
         buttons[0].addActionListener(e -> this.gui.showCard(0));
-
-        JPanel manageHotelPanel = this.gui.getCardComponent(0);
-        if (manageHotelPanel instanceof ManageHotelPanel) {
-            ((ManageHotelPanel) manageHotelPanel).getSaveChangesButton().addActionListener(e -> this.updateHotel());
-            ((ManageHotelPanel) manageHotelPanel).getDeleteHotelButton().addActionListener(e -> this.deleteHotel());
-        }
-
+        buttons[1].addActionListener(e -> this.gui.showCard(1));
+        if (this.hotel.getNumReservations() > 0)
+            buttons[2].addActionListener(e -> this.gui.showCard(2));
         buttons[3].addActionListener(e -> this.hideWindow());
 
-        /*
-         * buttons[1].addActionListener(e -> this.gui.showCard(1));
-         * 
-         * JPanel currentPanel2 = this.gui.getCardComponent(1);
-         * if (currentPanel2 instanceof AddRoom) {
-         * JButton confirmButton = ((AddRoom) currentPanel2).getConfirmButton();
-         * 
-         * confirmButton.addActionListener((e) -> {
-         * char roomType = ((AddRoom) currentPanel2).getRoomType();
-         * System.out.println("Adding " + Character.toString(roomType) + " to " +
-         * this.hotel.getName());
-         * 
-         * try {
-         * Room room = this.hotel.addRoom(roomType);
-         * Alert.displayAlert(
-         * "Adding " + room.getRoomType() + " room " + room.getName() + " to " +
-         * this.hotel.getName());
-         * } catch (Exception omg) {
-         * Alert.displayAlert(omg);
-         * }
-         * });
-         * }
-         * 
-         * buttons[2].addActionListener(e -> this.gui.showCard(2));
-         * 
-         * JPanel currentPanel3 = this.gui.getCardComponent(2);
-         * if (currentPanel3 instanceof RemoveRoom) {
-         * JButton confirmButton = ((RemoveRoom) currentPanel3).getConfirmButton();
-         * JButton nameSelectButton = ((RemoveRoom)
-         * currentPanel3).getNameSelectButton();
-         * 
-         * confirmButton.addActionListener((e) -> {
-         * String roomName = ((RemoveRoom) currentPanel3).getCurrentRoomName();
-         * System.out.println("Deleting room" + roomName + " from " +
-         * this.hotel.getName());
-         * 
-         * try {
-         * this.hotel.removeRoom(roomName);
-         * Alert.displayAlert("Removing " + roomName + " from " + this.hotel.getName());
-         * }
-         * 
-         * catch (Exception omg) {
-         * Alert.displayAlert(omg);
-         * }
-         * });
-         * 
-         * nameSelectButton.addActionListener((e) -> {
-         * nameSelectButton.setText("...");
-         * String buttonText = UserInput.selectRoom(this.hotel.getRooms());
-         * if (buttonText.equals(""))
-         * nameSelectButton.setText("...");
-         * 
-         * else
-         * nameSelectButton.setText(buttonText);
-         * });
-         * }
-         * 
-         * buttons[3].addActionListener(e -> this.gui.showCard(3));
-         * 
-         * JPanel currentPanel4 = this.gui.getCardComponent(3);
-         * if (currentPanel4 instanceof UpdateBasePrice) {
-         * JButton confirmButton = ((UpdateBasePrice) currentPanel4).getConfirmButton();
-         * JTextField basePriceField = ((UpdateBasePrice)
-         * currentPanel4).getBasePriceField();
-         * 
-         * confirmButton.addActionListener((e) -> {
-         * try {
-         * float basePrice = Float.parseFloat(basePriceField.getText());
-         * 
-         * this.hotel.setBasePrice(basePrice);
-         * Alert.displayAlert("Changing base price of " + this.hotel.getName() + " to "
-         * + basePrice);
-         * System.out.println("New Base Price: " + basePrice);
-         * }
-         * 
-         * catch (NumberFormatException numOMG) {
-         * Alert.displayAlert("Invalid input!");
-         * }
-         * 
-         * catch (Exception omg) {
-         * Alert.displayAlert(omg);
-         * }
-         * });
-         * }
-         * 
-         * buttons[4].addActionListener(e -> this.gui.showCard(4));
-         * 
-         * JPanel currentPanel6 = this.gui.getCardComponent(4);
-         * if (currentPanel6 instanceof RemoveHotel) {
-         * JButton deleteButton = ((RemoveHotel) currentPanel6).getDeleteButton();
-         * 
-         * deleteButton.addActionListener((e) -> {
-         * try {
-         * boolean hasConfirmed =
-         * UserInput.confirmAction("Do you want to delete this hotel");
-         * 
-         * if (hasConfirmed) {
-         * this.hotelList.remove(getHotelIndex(this.hotel));
-         * Alert.displayAlert("Deleting " + this.hotel.getName());
-         * System.out.println("Deleted: " + this.hotel.getName());
-         * this.hideWindow();
-         * }
-         * }
-         * 
-         * catch (Exception omg) {
-         * Alert.displayAlert(omg);
-         * }
-         * });
-         * }
-         * 
-         * buttons[5].addActionListener(e -> this.hideWindow());
-         * 
-         * /*
-         * // the card can only show if there are reservations
-         * if (this.hotel.getNumReservations() > 0)
-         * buttons[3].addActionListener((e) -> this.gui.showCard(3));
-         * 
-         * buttons[4].addActionListener(e -> this.hideWindow());
-         * 
-         * // add eventlistener to the jscrollpane
-         * JPanel roomInfoPanel = this.gui.getCardComponent(2);
-         * 
-         * if (roomInfoPanel instanceof RoomInformation) {
-         * ArrayList<JButton> roomSelectButtons = ((RoomInformation)
-         * roomInfoPanel).getRoomSelectButtons();
-         * 
-         * for (JButton jButton : roomSelectButtons) {
-         * jButton.addActionListener((e) -> {
-         * ((RoomInformation)
-         * roomInfoPanel).dispRoomInfo(this.hotel.getRoom(e.getActionCommand()));
-         * });
-         * }
-         * }
-         * 
-         * JPanel roomAvailabilityPanel = this.gui.getCardComponent(1);
-         * 
-         * if (roomAvailabilityPanel instanceof RoomAvailability) {
-         * JButton calendarButtons[] = ((RoomAvailability)
-         * roomAvailabilityPanel).getDateSelector();
-         * 
-         * for (JButton jButton : calendarButtons) {
-         * jButton.addActionListener((e) -> {
-         * ((RoomAvailability)
-         * roomAvailabilityPanel).updateAvailability(this.hotel.getRooms(),
-         * Integer.parseInt(e.getActionCommand()));
-         * });
-         * }
-         * }
-         */
     }
 
-    public void updateHotel() {
-        this.updateHotelName();
-        this.updateBasePrice();
-        this.updateDatePriceModifier();
+    private void initButtons() {
+        this.manageHotelPanel = (ManageHotelPanel) this.gui.getCardComponent(0);
+        if (manageHotelPanel instanceof ManageHotelPanel) {
+            this.manageHotelPanel.getSaveHotelName().addActionListener(e -> this.updateHotelName());
+            this.manageHotelPanel.getSaveBasePrice().addActionListener(e -> this.updateBasePrice());
+            this.manageHotelPanel.getSaveDateModifier().addActionListener(e -> this.updateDatePriceModifier());
+            this.manageHotelPanel.getDeleteHotel().addActionListener(e -> this.deleteHotel());
+        }
+
+        this.manageRoomPanel = (ManageRooms) this.gui.getCardComponent(1);
+        if (manageRoomPanel instanceof ManageRooms) {
+            this.manageRoomPanel.getRoomAdd().addActionListener(e -> this.addRoom(this.manageRoomPanel.getRoomType()));
+            this.manageRoomPanel.getRoomDelete()
+                    .addActionListener(e -> this.deleteRoom(this.manageRoomPanel.getSelectedRoom()));
+        }
+
+        if (this.hotel.getNumReservations() > 0) {
+            this.manageReservationsPanel = (ManageReservations) this.gui.getCardComponent(2);
+            if (this.manageReservationsPanel instanceof ManageReservations) {
+                this.manageReservationsPanel.getDropDown().addActionListener((e) -> {
+                    this.updateReservationInfo(this.manageReservationsPanel.getSelectedReservation());
+                });
+                this.manageReservationsPanel.getDeleteReservation().addActionListener(e -> this.deleteReservation());
+            }
+        }
     }
 
     private void updateHotelName() {
@@ -201,16 +74,20 @@ public class MenuManageHotel {
             ManageHotelPanel manageHotelPanel = (ManageHotelPanel) this.gui.getCardComponent(0);
             String hotelName = manageHotelPanel.getHotelName();
 
-            if (hotelName == null)
+            // TODO: check if this logic should be moved to HotelCollection
+            // Check if hotel name field is empty
+            if (hotelName == null || hotelName.isEmpty())
                 throw new Exception("Invalid Input!");
-            else if (!this.isUniqueHotelName(hotelName, getHotelIndex(this.hotel)))
+            // Check if hotel name is unique
+            else if (!this.hotelList.isUniqueHotelName(hotelName, hotel))
                 throw new Exception(hotelName + " already exists!");
-            else if (this.hotel.getName().equals(hotelName))
-                throw new Exception("New name is the same as the current name!");
-            else {
+            // Changes if hotel is different from the original
+            // Otherwise nothing should happen
+            else if (!this.hotel.getName().equals(hotelName)) {
                 Alert.displayAlert("Changing name of " + this.hotel.getName() + " to " + hotelName);
                 this.hotel.setName(hotelName);
             }
+            // If the new name is the same as the old, nothing happens
         } catch (Exception omg) {
             Alert.displayAlert(omg);
         }
@@ -234,12 +111,10 @@ public class MenuManageHotel {
             ManageHotelPanel manageHotelPanel = (ManageHotelPanel) this.gui.getCardComponent(0);
             float[] dateModifier = manageHotelPanel.getDateModifier();
 
-            for (int i = 0; i < this.hotel.getNightRates().length; i++) {
-                this.hotel.getNightRate(i).setNightRate(dateModifier[i]);
-            }
-
+            for (int i = 0; i < this.hotel.getNightRates().length; i++)
+                this.hotel.setNightRate(i, dateModifier[i]);
         } catch (Exception e) {
-            // TODO: handle exception
+            Alert.displayAlert(e);
         }
     }
 
@@ -248,7 +123,7 @@ public class MenuManageHotel {
             boolean hasConfirmed = UserInput.confirmAction("Do you want to delete this hotel");
 
             if (hasConfirmed) {
-                this.hotelList.remove(getHotelIndex(this.hotel));
+                this.hotelList.removeHotel(this.hotel.getName());
                 Alert.displayAlert("Deleting " + this.hotel.getName());
                 System.out.println("Deleted: " + this.hotel.getName());
                 this.hideWindow();
@@ -258,39 +133,49 @@ public class MenuManageHotel {
         }
     }
 
+    private void addRoom(char roomType) {
+        try {
+            this.hotel.addRoom(roomType);
+            this.manageRoomPanel.updateContent();
+        } catch (Exception e) {
+            Alert.displayAlert(e);
+        }
+    }
+
+    private void deleteRoom(String selectedRoom) {
+        try {
+            this.hotel.removeRoom(selectedRoom);
+            this.manageRoomPanel.updateContent();
+        } catch (Exception e) {
+            Alert.displayAlert(e);
+        }
+    }
+
+    private void updateReservationInfo(String id) {
+        this.manageReservationsPanel.updateReservation(id);
+    }
+
+    private void deleteReservation() {
+        try {
+            String deleteId = this.manageReservationsPanel.getSelectedReservation();
+            this.hotel.removeReservation(deleteId);
+
+            boolean isEmpty = this.hotel.getNumReservations() == 0;
+            // Exit manage Reservation menu
+            if (isEmpty) {
+                this.gui.updateReservationButton(isEmpty);
+                this.gui.showCard(0);
+            } else
+                this.manageReservationsPanel.updateReservationList(this.hotel.getReservationIds());
+
+        } catch (Exception omg) {
+            Alert.displayAlert(omg);
+        }
+    }
+
     public void hideWindow() {
         System.out.println("ManageHotel: window hidden");
         this.gui.setVisible(false);
         this.gui.dispose();
-    }
-
-    public int getHotelIndex(Hotel hotel) {
-        int i = 0;
-        for (Hotel candidate : this.hotelList) {
-            if (hotel.getName().equals(candidate.getName()))
-                return i;
-
-            i++;
-        }
-
-        return -1;
-    }
-
-    /**
-     * checks if potential hotel name is unique
-     * 
-     * @param key         hotel name to check from hotelList
-     * @param ignoreIndex index in list to be ignored
-     * @return boolean whether hotel name is unique or not
-     */
-    private boolean isUniqueHotelName(String key, int ignoreIndex) {
-        int i = 0;
-        for (Hotel hotel : this.hotelList) {
-            if ((key.equals(hotel.getName())) && i != ignoreIndex)
-                return false;
-            i++;
-        }
-
-        return true;
     }
 }

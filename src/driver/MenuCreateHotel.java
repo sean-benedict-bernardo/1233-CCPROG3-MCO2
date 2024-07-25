@@ -1,8 +1,7 @@
 package driver;
 
-import java.util.ArrayList;
-
 import model.Hotel;
+import model.HotelCollection;
 import view.common.auxiliary.Alert;
 import view.createhotel.CreateHotel;
 
@@ -14,10 +13,10 @@ import view.createhotel.CreateHotel;
  * @author Luis Andrew Madridijo
  */
 public class MenuCreateHotel {
-    private ArrayList<Hotel> hotelList;
+    private HotelCollection hotelList;
     private CreateHotel gui;
 
-    public MenuCreateHotel(ArrayList<Hotel> hotelList) {
+    public MenuCreateHotel(HotelCollection hotelList) {
         this.hotelList = hotelList;
         this.gui = new CreateHotel();
 
@@ -46,7 +45,7 @@ public class MenuCreateHotel {
      */
     private boolean isUniqueHotelName(String key, int ignoreIndex) {
         int i = 0;
-        for (Hotel hotel : this.hotelList) {
+        for (Hotel hotel : this.hotelList.getHotels()) {
             if ((key.equals(hotel.getName())) && i != ignoreIndex)
                 return false;
             i++;
@@ -69,7 +68,7 @@ public class MenuCreateHotel {
                 throw new Exception(hotelName + " already exists!");
             else {
                 hotelName = hotelName.toString();
-                this.hotelList.add(new Hotel(hotelName, this.gui.getFirstRoomType()));
+                this.hotelList.addHotel(new Hotel(hotelName, this.gui.getFirstRoomType()));
                 Alert.displayAlert("Creating " + hotelName);
                 // Return to main menu
                 this.gui.dispose();
@@ -81,7 +80,7 @@ public class MenuCreateHotel {
 
     public int getHotelIndex(Hotel hotel){
         int i = 0;
-        for (Hotel candidate : this.hotelList){
+        for (Hotel candidate : this.hotelList.getHotels()){
             if (hotel.getName().equals(candidate.getName()))
                 return i;
     

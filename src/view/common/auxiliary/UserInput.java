@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import model.Hotel;
+import model.HotelCollection;
 import model.rooms.*;
 
 public class UserInput {
@@ -42,14 +43,14 @@ public class UserInput {
         return selectedRoom;
     }
 
-    public static Hotel selectHotel(ArrayList<Hotel> hotelList) throws Exception {
+    public static Hotel selectHotel(HotelCollection hotelList) throws Exception {
 
-        if (hotelList.size() == 0)
+        if (hotelList.getNumHotels() == 0)
             throw new Exception("No hotels in system!");
         else {
-            String[] hotelNames = new String[hotelList.size()];
+            String[] hotelNames = new String[hotelList.getNumHotels()];
             int i = 0;
-            for (Hotel hotel : hotelList) {
+            for (Hotel hotel : hotelList.getHotels()) {
                 hotelNames[i++] = hotel.getName();
             }
 
@@ -59,7 +60,7 @@ public class UserInput {
                         JOptionPane.QUESTION_MESSAGE, null,
                         hotelNames, hotelNames[0]);
 
-                for (Hotel hotel : hotelList) {
+                for (Hotel hotel : hotelList.getHotels()) {
                     if (hotel.getName().equals(selectedHotel))
                         return hotel;
                 }

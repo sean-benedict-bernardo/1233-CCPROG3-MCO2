@@ -3,11 +3,13 @@ package view.viewhotel;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import model.Hotel;
 import model.rooms.Room;
@@ -43,10 +45,9 @@ public class RoomInformation extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(2, 2, 2, 2);
         gbc.weightx = 0;
         gbc.weighty = 0;
-        gbc.ipadx = 4;
-        gbc.ipady = 4;
 
         // CENTER
         JPanel infoPanel = new JPanel(new GridBagLayout());
@@ -59,9 +60,9 @@ public class RoomInformation extends JPanel {
         // Info text
         Room firstRoom = rooms.get(0); // This is assumed to exist
 
-        this.infoRoomName = MyComponents.bodyText();
-        this.infoRoomType = MyComponents.bodyText();
-        this.infoNightlyRate = MyComponents.bodyText();
+        this.infoRoomName = MyComponents.headerText();
+        this.infoRoomType = MyComponents.headerText();
+        this.infoNightlyRate = MyComponents.headerText();
         for (int i = 0; i < infoAvailabilityDate.length; i++)
             infoAvailabilityDate[i] = MyComponents.bodyText(
                     String.format("%d - %c", i + 1, !firstRoom.getDayAvailability(i) ? '✓' : '✗'),
@@ -77,9 +78,11 @@ public class RoomInformation extends JPanel {
 
             availabilityPanel.add(infoAvailabilityDate[i], gbcCalendar);
         }
-        
+
         infoPanel.add(infoRoomName, gbc);
+        infoPanel.add(infoRoomType, gbc);
         infoPanel.add(infoNightlyRate, gbc);
+        infoPanel.add(MyComponents.headerText("Availability", SwingConstants.CENTER), gbc);
         infoPanel.add(availabilityPanel, gbc);
         infoPanel.add(MyComponents.bodyText("✓ - Room is available | ✗ - Room is Reserved"), gbc);
         add(infoPanel, BorderLayout.CENTER);
@@ -87,7 +90,7 @@ public class RoomInformation extends JPanel {
 
     public void dispRoomInfo(Room room) {
         this.infoRoomName.setText("Room " + room.getName());
-        this.infoRoomType.setText("Room Type: " + room.getRoomType());
+        this.infoRoomType.setText(room.getRoomType() + " Room");
         this.infoNightlyRate.setText(String.format("Base Nightly Rate: %.2f", room.getPrice()));
 
         for (int i = 0; i < this.infoAvailabilityDate.length; i++) {

@@ -165,6 +165,8 @@ public class Hotel {
         int roomIndex = getRoomIndex(roomName);
         Room localRoom = (roomIndex != -1) ? this.roomsList.get(roomIndex) : null;
 
+        this.getRoom(roomName);
+
         if (localRoom == null) {
             throw new Exception("Room not found!");
         } else if (localRoom.getNumReservedNights() > 0) {
@@ -209,12 +211,14 @@ public class Hotel {
         else {
             System.out.println("newReservation: " + guestName);
             try {
+                // Mark dates as reserved
                 localRoom.addReservedDays(checkInDate, checkOutDate);
+                NightRates subNightRates[] = Arrays.copyOfRange(this.nightRates, checkInDate - 1, checkOutDate - 1);
                 Reservation newReservation = (roomName != null) ? new Reservation(guestName,
-                        Arrays.copyOfRange(this.nightRates, checkInDate, checkOutDate), localRoom,
+                        subNightRates, localRoom,
                         this.basePrice)
                         : new Reservation(guestName,
-                                Arrays.copyOfRange(this.nightRates, checkInDate, checkOutDate), localRoom,
+                                subNightRates, localRoom,
                                 this.basePrice);
                 this.reservationsList.add(newReservation);
             } catch (Exception e) {
@@ -238,18 +242,22 @@ public class Hotel {
      * reservation at that index
      * else print an error message and do nothing
      * 
-     * @param reservationIndex index of the reservation to be deleted
+     * @param reservationId Id of the reservation to be deleted
      * @throws Exception when reservationIndex is out of range
      */
-    public void removeReservation(int reservationIndex) throws Exception {
-        int roomIndex = getRoomIndex(this.reservationsList.get(reservationIndex).getRoom().getName());
-        if (reservationIndex < 0 || this.reservationsList.size() - 1 < reservationIndex) {
+    @SuppressWarnings("unused")
+    public void removeReservation(String reservationId) throws Exception {
+        Reservation targetReservation = this.getReservation(reservationId);
+        int roomIndex = getRoomIndex(targetReservation.getRoom().getName());
+
+        // Java claims the next 2 lines are dead code although
+        if (targetReservation == null) {
             throw new Exception("Reservation not found!");
         } else {
-            Alert.displayAlert("Deleting reservation of " + this.reservationsList.get(reservationIndex).getGuestName());
+            Alert.displayAlert("Deleting reservation of " + targetReservation.getGuestName());
 
-            this.roomsList.get(roomIndex).removeReservedDays(this.reservationsList.get(reservationIndex));
-            this.reservationsList.remove(reservationIndex);
+            this.reservationsList.remove(this.getReservationIndex(reservationId));
+            this.roomsList.get(roomIndex).removeReservedDays(targetReservation);
         }
     }
 
@@ -320,6 +328,17 @@ public class Hotel {
         return (0 <= index && index <= 30) ? this.nightRates[index] : null;
     }
 
+    public void setNightRate(int index, float newRate) throws Exception {
+        if (this.getNumReservations() > 0)
+            throw new Exception("There are still active bookings!");
+        if (index < 0 || 30 < index)
+            throw new Exception("Index out of range!");
+        else if (newRate < 0.5f || 1.5f < newRate)
+            throw new Exception("New rate is too " + ((newRate < 0.5f) ? "low" : "high") + "!");
+        else
+            this.nightRates[index].setNightRate(newRate);
+    }
+
     public NightRates[] getNightRates() {
         return this.nightRates;
     }
@@ -386,16 +405,6 @@ public class Hotel {
     }
 
     /**
-     * Getter of specific reservation given index
-     * 
-     * @param index 0-indexed integer of selected reservation
-     * @return Reservation if in range, null otherwise
-     */
-    public Reservation getReservation(int index) {
-        return (0 <= index && index < this.reservationsList.size()) ? this.reservationsList.get(index) : null;
-    }
-
-    /**
      * Getter of specific reservation given reservation id
      * format of id found in Reservation constructor
      * 
@@ -416,5 +425,32 @@ public class Hotel {
      */
     public ArrayList<Reservation> getReservations() {
         return this.reservationsList;
+    }
+
+    /**
+     * Getter for all reservation IDs
+     * 
+     * @return String Array of all reservation Ids
+     */
+    public String[] getReservationIds() {
+        String reservationIds[] = new String[this.getNumReservations()];
+
+        int i = 0;
+        for (Reservation reservation : this.reservationsList) {
+            reservationIds[i++] = reservation.getId();
+        }
+
+        return reservationIds;
+    }
+
+    private int getReservationIndex(String key) {
+        int i = 0;
+        for (Reservation reservation : this.reservationsList) {
+            if (key.equals(reservation.getId()))
+                return i;
+            i++;
+        }
+
+        return -1;
     }
 }

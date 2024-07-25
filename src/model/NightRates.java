@@ -18,8 +18,9 @@ public class NightRates {
     }
 
     /**
-     * Updates rate
+     * Updates nightly rate
      * 
+     * @preconditon points of exceptions have been handled at the Hotel level
      * @param nightRate
      */
     public void setNightRate(float nightRate) {

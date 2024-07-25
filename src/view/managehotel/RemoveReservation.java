@@ -1,7 +1,5 @@
 package view.managehotel;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -12,11 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import model.Hotel;
 import model.Reservation;
-import model.rooms.Room;
 import view.common.MyStyles;
-import view.common.auxiliary.UserInput;
 import view.common.components.MyComponents;
 
 public class RemoveReservation extends JPanel{

@@ -1,10 +1,14 @@
 package view.common.components;
 
+import java.awt.Font;
+
 import javax.swing.*;
 
 import view.common.MyStyles;
 
 public class MyComponents {
+    public static int ITALICS = 1;
+    public static int BOLD = 2;
 
     /**
      * Custom JLabel as title component
@@ -18,6 +22,21 @@ public class MyComponents {
         jLabel.setBackground(MyStyles.color.BACKGROUND);
         jLabel.setForeground(MyStyles.color.WHITE);
         jLabel.setFont(MyStyles.font.TITLE);
+        return jLabel;
+    }
+
+    /**
+     * 
+     * @param text
+     * @param align
+     * @return JLabel of titel
+     */
+    public static JLabel smallTitleText(String text) {
+        JLabel jLabel = new JLabel(text, SwingConstants.CENTER);
+        jLabel.setOpaque(true);
+        jLabel.setBackground(MyStyles.color.BACKGROUND);
+        jLabel.setForeground(MyStyles.color.WHITE);
+        jLabel.setFont(MyStyles.font.SMALLTITLE);
         return jLabel;
     }
 
@@ -63,12 +82,23 @@ public class MyComponents {
      * @param text  to be put inside body
      * @return JLabel body
      */
-    public static JLabel bodyText(String text, int align) {
-        JLabel jLabel = new JLabel(text);
+    public static JLabel bodyText(String text, int align, int fontStyle) {
+        JLabel jLabel = new JLabel(text, align);
         jLabel.setOpaque(true);
         jLabel.setBackground(MyStyles.color.BACKGROUND);
         jLabel.setForeground(MyStyles.color.WHITE);
-        jLabel.setFont(MyStyles.font.BODY);
+
+        switch (fontStyle) {
+            case 1:
+                jLabel.setFont(MyStyles.font.ITALICS);
+                break;
+            case 2:
+                jLabel.setFont(new Font("Sans Serif", Font.BOLD, 14));
+                break;
+            default:
+                jLabel.setFont(MyStyles.font.BODY);
+                break;
+        }
         return jLabel;
     }
 
@@ -78,8 +108,12 @@ public class MyComponents {
      * @param text to be put inside body
      * @return JLabel body
      */
+    public static JLabel bodyText(String text, int align) {
+        return bodyText(text, align, 0);
+    }
+
     public static JLabel bodyText(String text) {
-        return bodyText(text, SwingConstants.CENTER);
+        return bodyText(text, SwingConstants.CENTER, 0);
     }
 
     /**
@@ -89,7 +123,7 @@ public class MyComponents {
      * @return JLabel body
      */
     public static JLabel bodyText() {
-        return bodyText("", SwingConstants.CENTER);
+        return bodyText("", SwingConstants.CENTER, 0);
     }
 
     /**

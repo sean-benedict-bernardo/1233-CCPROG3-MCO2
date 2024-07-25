@@ -5,7 +5,6 @@ import javax.swing.*;
 
 import model.*;
 import view.common.MyStyles;
-import view.common.components.MyComponents;
 import view.common.components.ToolBar;
 
 public class ViewHotel extends JDialog {

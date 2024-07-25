@@ -1,12 +1,10 @@
 package driver;
 
-import java.util.ArrayList;
 import javax.swing.JButton;
-import javax.swing.UIManager;
 
 import model.Hotel;
+import model.HotelCollection;
 import view.HomeMenu;
-import view.common.MyStyles;
 import view.common.auxiliary.Alert;
 import view.common.auxiliary.UserInput;
 
@@ -18,27 +16,31 @@ import view.common.auxiliary.UserInput;
  * @author Luis Andrew Madridijo
  */
 public class HotelReservationSystem {
-    private ArrayList<Hotel> hotelList;
+    private HotelCollection hotelList;
     private HomeMenu gui;
 
     /**
      * HotelReservationSystem constructor
      */
     public HotelReservationSystem() {
-        this.hotelList = new ArrayList<Hotel>();
+        this.hotelList = new HotelCollection();
         this.gui = new HomeMenu();
 
+        // testing here
         try {
-            Hotel myHotel = new Hotel("HotelGemal", 'S');
+            Hotel myHotel = new Hotel("NewHotel", 'S'),
+                    myHotel2 = new Hotel("HotelGemal", 'D');
 
             for (int i = 0; i < 49; i++) {
                 myHotel.addRoom('S');
             }
 
-            myHotel.createReservation("Ryan", 3, 14, "S1");
-            myHotel.createReservation("Jack", 2, 5, "S2");
+            myHotel.createReservation("Short", 1, 5, "S1");
+            myHotel.createReservation("Mid", 1, 15, "S2");
+            myHotel.createReservation("Long", 1, 31, "S3");
 
-            this.hotelList.add(myHotel);
+            this.hotelList.addHotel(myHotel2);
+            this.hotelList.addHotel(myHotel);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -80,7 +82,7 @@ public class HotelReservationSystem {
             try {
                 Hotel localHotel = UserInput.selectHotel(hotelList);
 
-                if (this.hotelList.isEmpty()) {
+                if (this.hotelList.getNumHotels() == 0) {
                     throw new Exception("There are no hotels in the system!");
                 }
 

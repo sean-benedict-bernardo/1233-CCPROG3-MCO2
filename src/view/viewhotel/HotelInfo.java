@@ -29,6 +29,7 @@ public class HotelInfo extends JPanel {
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(2, 2, 2, 2);
         gbc.weightx = 1;
         gbc.weighty = 0;
         gbc.ipadx = 4;
@@ -38,6 +39,7 @@ public class HotelInfo extends JPanel {
                 { "Name", this.hotel.getName() },
                 { "Room Count", "" + this.hotel.getNumRooms() },
                 { "Reservation Count", "" + this.hotel.getNumReservations() },
+                { "Base Price", String.format("%.2f", this.hotel.getBasePrice()) },
                 { "Total Revenue", String.format("%.2f", this.hotel.getTotalRevenue()) }
         };
 
@@ -56,6 +58,10 @@ public class HotelInfo extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.gridx = 0;
+        gbc.gridy++;
+        gbc.insets.top = 12;
+        tablePanel.add(MyComponents.headerText("Rates for Each Night", SwingConstants.CENTER), gbc);
+        gbc.insets.top = 4;
         gbc.gridy++;
         tablePanel.add(this.nightlyRates, gbc);
 
@@ -80,7 +86,7 @@ public class HotelInfo extends JPanel {
             gbc.gridy = 0;
             gbc.gridx = 0;
             JLabel index = MyComponents.bodyText("" + (i + 1));
-            index.setPreferredSize(new Dimension(20, (int)index.getPreferredSize().getHeight()));
+            index.setPreferredSize(new Dimension(20, (int) index.getPreferredSize().getHeight()));
             entryPanel.add(index, gbc);
             gbc.gridx = 1;
             entryPanel.add(
