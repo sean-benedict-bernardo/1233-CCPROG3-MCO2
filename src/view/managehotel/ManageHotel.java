@@ -67,6 +67,7 @@ public class ManageHotel extends JDialog {
             this.cardPanel.add(this.cardComponents[i], "" + i);
 
         JPanel dummyPanel = new JPanel();
+        dummyPanel.setBackground(MyStyles.color.BACKGROUND);
         dummyPanel.setSize(MyStyles.misc.SCREEN_SIZE);
         this.cardPanel.add(dummyPanel, "" + -1);
 

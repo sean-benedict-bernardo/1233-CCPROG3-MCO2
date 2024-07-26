@@ -49,11 +49,12 @@ public class Hotel {
         }
 
         // to satisfy minimum of one room
+        // needs to be encapsulated to sat
         try {
             this.addRoom(roomType);
+            System.out.printf("%s - %s: Creating New Hotel '%s'\n", "Hotel", "N/A", this.name);
         } catch (Exception e) {
-            throw e;
-            // Do nothing
+            throw e; // this should not be thrown
         }
     }
 
@@ -103,17 +104,21 @@ public class Hotel {
 
             Room newRoom = null;
 
-            switch (roomType) {
-                case 'S': // Standard
-                    newRoom = new Room(roomNumStr, this.basePrice);
-                    break;
-                case 'D': // Deluxe
-                    newRoom = new DeluxeRoom(roomNumStr, this.basePrice);
-                    break;
-                case 'E': // Executive
-                    newRoom = new ExecutiveRoom(roomNumStr, this.basePrice);
-                    break;
-            }
+            /**
+             * In honor of the Cursed Technique known as CCDSTRU
+             * 
+             * M(x) = x.getClass().getSimpleName()
+             * 
+             * roomType ⊆ {'S', 'D', 'E'} => M(newRoom) ⊆ {"ExecutiveRoom", "DeluxeRoom",
+             * "Room"}
+             * roomType ⊄ {'S', 'D', 'E'} => M(newRoom) == "Room"
+             */
+            if (roomType == 'E')
+                newRoom = new ExecutiveRoom(roomNumStr, this.basePrice);
+            else if (roomType == 'D')
+                newRoom = new DeluxeRoom(roomNumStr, this.basePrice);
+            else
+                newRoom = new Room(roomNumStr, this.basePrice);
 
             /*
              * Insertion Logic:
@@ -140,7 +145,7 @@ public class Hotel {
                 i++;
                 this.roomsList.add(i, newRoom);
             }
-            System.out.printf("Adding Room '%s'\n", roomNumStr);
+            System.out.printf("%s - %s | Creating Room '%s'\n", "Hotel", this.name, roomNumStr);
             return newRoom;
         }
 
@@ -171,11 +176,23 @@ public class Hotel {
             throw new Exception("Room not found!");
         } else if (localRoom.getNumReservedNights() > 0) {
             throw new Exception("Room has an active reservation and cannot be deleted!");
-        } else if (this.roomsList.size() == 1) {
+        } else if (this.getNumRooms() == 1) {
             throw new Exception("The hotel must have at least one room!");
         } else {
-            System.out.println("Deleting room '" + localRoom.getName() + "'");
+            System.out.printf("%s - %s | Deleting Room '%s'\n", "Hotel", this.name, localRoom.getName());
             this.roomsList.remove(roomIndex);
+        }
+    }
+
+    /**
+     * 
+     * @throws Exception if there are still active reservations within the 
+     */
+    public void removeAllRooms() throws Exception {
+        if (this.getNumReservations() > 0)
+            throw new Exception(this.name + " still has active reservations!");
+        else {
+            this.roomsList.removeAll(this.roomsList.subList(1, this.roomsList.size()));
         }
     }
 
@@ -209,18 +226,15 @@ public class Hotel {
         else if (!localRoom.checkRoomAvailability(checkInDate, checkOutDate))
             throw new Exception("Given dates are either invalid or are already booked!");
         else {
-            System.out.println("newReservation: " + guestName);
             try {
                 // Mark dates as reserved
                 localRoom.addReservedDays(checkInDate, checkOutDate);
                 NightRates subNightRates[] = Arrays.copyOfRange(this.nightRates, checkInDate - 1, checkOutDate - 1);
-                Reservation newReservation = (roomName != null) ? new Reservation(guestName,
-                        subNightRates, localRoom,
-                        this.basePrice)
-                        : new Reservation(guestName,
-                                subNightRates, localRoom,
-                                this.basePrice);
+                Reservation newReservation = new Reservation(guestName, subNightRates, localRoom, this.basePrice,
+                        discountCode);
                 this.reservationsList.add(newReservation);
+                System.out.printf("%s - %s: Creating New Reservation '%s'\n", "Hotel", this.name,
+                        String.format("%s %s", newReservation.getId(), newReservation.getGuestName()));
             } catch (Exception e) {
                 throw e;
             }
@@ -230,7 +244,7 @@ public class Hotel {
     public void createReservation(String guestName, int checkInDate, int checkOutDate, String roomName)
             throws Exception {
         try {
-            this.createReservation(guestName, checkInDate, checkOutDate, roomName, null);
+            this.createReservation(guestName, checkInDate, checkOutDate, roomName, Reservation.NODISCOUNT);
         } catch (Exception e) {
             throw e;
         }
@@ -249,14 +263,18 @@ public class Hotel {
     public void removeReservation(String reservationId) throws Exception {
         Reservation targetReservation = this.getReservation(reservationId);
         int roomIndex = getRoomIndex(targetReservation.getRoom().getName());
+        int reservationIndex = this.getReservationIndex(reservationId);
 
-        // Java claims the next 2 lines are dead code although
+        // Java claims the next 2 lines are dead code although a check
+        // is needed regardless in the event the JComboBox doesn't update
         if (targetReservation == null) {
             throw new Exception("Reservation not found!");
         } else {
             Alert.displayAlert("Deleting reservation of " + targetReservation.getGuestName());
+            System.out.printf("%s - %s: Deleting Reservation '%s'\n", "Hotel", this.name,
+                    String.format("%s %s", targetReservation.getId(), targetReservation.getGuestName()));
 
-            this.reservationsList.remove(this.getReservationIndex(reservationId));
+            this.reservationsList.remove(reservationIndex);
             this.roomsList.get(roomIndex).removeReservedDays(targetReservation);
         }
     }
@@ -277,7 +295,7 @@ public class Hotel {
      * 
      * @param name String of new hotel name
      */
-    public void setName(String name) {
+    public void setName(String name) throws Exception {
         this.name = name;
     }
 
@@ -312,7 +330,7 @@ public class Hotel {
                 try {
                     room.setPrice(basePrice);
                 } catch (Exception e) {
-                    Alert.displayAlert(e);
+                    throw e;
                 }
             }
         }

@@ -23,6 +23,8 @@ public class RoomSelector extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.weightx = 1;
+        gbc.ipadx = 4;
+        gbc.ipady = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JPanel scrollArea = new JPanel(new GridBagLayout());
@@ -30,13 +32,16 @@ public class RoomSelector extends JPanel {
         for (Room room : rooms) {
             JButton button = MyComponents.button(room.getName());
             button.setName(room.getName());
-            button.setHorizontalAlignment(SwingConstants.LEFT);
+            button.setHorizontalAlignment(SwingConstants.CENTER);
+            button.setMargin(new Insets(0, 0, 0, 10));
+            button.setPreferredSize(new Dimension(48, 28));
+            button.setMinimumSize(new Dimension(48, 28));
             this.roomButtons.add(button);
             scrollArea.add(button, gbc);
         }
 
         // Room Select
-        this.roomSelect = new JScrollPane(scrollArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+        this.roomSelect = new JScrollPane(scrollArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         roomSelect.setBackground(MyStyles.color.GRAY);
 

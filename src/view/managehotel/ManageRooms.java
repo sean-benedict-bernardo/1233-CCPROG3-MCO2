@@ -8,7 +8,10 @@ import java.awt.Insets;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 import model.Hotel;
 import view.common.MyStyles;
@@ -21,14 +24,11 @@ public class ManageRooms extends JPanel {
     private RoomTypeSelector newRoomType;
     private JComboBox<String> roomSelect;
 
-    private JButton roomAdd, roomDelete;
+    private JButton roomAdd, roomDelete, roomDeleteAll;
 
     public ManageRooms(Hotel hotel) {
         super(new BorderLayout());
         this.hotel = hotel;
-
-        setBackground(MyStyles.color.BACKGROUND);
-        setForeground(MyStyles.color.FOREGROUND);
 
         this.initComponents();
         this.initFrame();
@@ -37,6 +37,7 @@ public class ManageRooms extends JPanel {
     private void initComponents() {
         this.roomAdd = MyComponents.button("Add Room");
         this.roomDelete = MyComponents.button("Delete Room");
+        this.roomDeleteAll = MyComponents.button("Delete All Rooms");
 
         this.newRoomType = new RoomTypeSelector();
         this.roomSelect = new JComboBox<>(this.hotel.getRoomNames());
@@ -48,30 +49,34 @@ public class ManageRooms extends JPanel {
         setForeground(MyStyles.color.FOREGROUND);
 
         JPanel containerPanel = new JPanel(new GridBagLayout());
+        containerPanel.setBackground(MyStyles.color.BACKGROUND);
+        containerPanel.setForeground(MyStyles.color.FOREGROUND);
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(4, 4, 4, 4);
 
-        // First Column
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        containerPanel.add(MyComponents.headerText("Select Type of Room to Add"), gbc);
-        gbc.gridy = 1;
-        containerPanel.add(MyComponents.headerText("Select Room to Delete"), gbc);
+        JComponent gridMap[][] = {
+                { MyComponents.smallTitleText("Manage Rooms") },
+                { MyComponents.bodyText("Add and Delete Rooms", SwingConstants.CENTER, MyComponents.ITALICS) },
+                { MyComponents.headerText("Select Type of Room to Add"), this.newRoomType },
+                { this.roomAdd },
+                { new JSeparator() },
+                { MyComponents.headerText("Select Room to Delete"), this.roomSelect },
+                { this.roomDelete, this.roomDeleteAll },
+                { MyComponents.bodyText(
+                        "<html><body style='text-align: center;'>NOTE: Rooms with active reservations<br>cannot be delted</body></html>",
+                        SwingConstants.CENTER, MyComponents.ITALICS) }
+        };
 
-        // Second Column
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        containerPanel.add(this.newRoomType, gbc);
-        gbc.gridy = 1;
-        containerPanel.add(this.roomSelect, gbc);
-
-        // Third Column
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        containerPanel.add(this.roomAdd, gbc);
-        gbc.gridy = 1;
-        containerPanel.add(this.roomDelete, gbc);
+        for (int i = 0; i < gridMap.length; i++) {
+            for (int j = 0; j < gridMap[i].length; j++) {
+                gbc.gridy = i;
+                gbc.gridx = j;
+                gbc.gridwidth = (j + 1 == gridMap[i].length) ? GridBagConstraints.REMAINDER : 1;
+                containerPanel.add(gridMap[i][j], gbc);
+            }
+        }
 
         add(containerPanel, BorderLayout.CENTER);
     }
@@ -97,5 +102,9 @@ public class ManageRooms extends JPanel {
 
     public JButton getRoomDelete() {
         return this.roomDelete;
+    }
+
+    public JButton getRoomDeleteAll() {
+        return this.roomDeleteAll;
     }
 }

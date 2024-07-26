@@ -29,7 +29,7 @@ public class MyStyles {
         public static final Color LIGHTGRAY = Color.decode("#C4C4C4");
         public static final Color WHITE = Color.white;
 
-        public static final Color BACKGROUND = BLACK;
+        public static final Color BACKGROUND = Color.decode("#1b2a41");
         public static final Color FOREGROUND = WHITE;
     }
 

@@ -35,12 +35,23 @@ public class HotelReservationSystem {
                 myHotel.addRoom('S');
             }
 
-            myHotel.createReservation("Short", 1, 5, "S1");
-            myHotel.createReservation("Mid", 1, 15, "S2");
-            myHotel.createReservation("Long", 1, 31, "S3");
+            // Test PAYDAY
+            myHotel.createReservation("Payday14", 14, 15, "S1", "PAYDAY");
+            myHotel.createReservation("Payday15", 15, 16, "S1", "PAYDAY");
 
-            this.hotelList.addHotel(myHotel2);
+            // Test I_WORK_HERE
+            myHotel.createReservation("NonEmployee", 15, 16, "S4", "I_WORK_HERE");
+            myHotel.createReservation("Employee", 15, 16, "S5");
+
+            // Test STAY4_GET1
+            myHotel.createReservation("4DayStay", 15, 19, "S9", "STAY4_GET1");
+            myHotel.createReservation("5DayStay", 15, 20, "S7", "STAY4_GET1");
+            myHotel.createReservation("5DayStay_NoCode", 15, 20, "S8");
+
+            myHotel.createReservation("LongAssStay", 1, 31, "S27");
+
             this.hotelList.addHotel(myHotel);
+            this.hotelList.addHotel(myHotel2);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -100,7 +111,9 @@ public class HotelReservationSystem {
             try {
                 Hotel localHotel = UserInput.selectHotel(hotelList);
                 if (localHotel != null) {
+                    this.gui.setVisible(false);
                     new MenuMakeReservation(localHotel);
+                    this.gui.setVisible(true);
                 }
             } catch (Exception err) {
                 Alert.displayAlert(err);

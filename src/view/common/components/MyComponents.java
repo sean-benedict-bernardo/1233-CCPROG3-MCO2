@@ -20,7 +20,7 @@ public class MyComponents {
         JLabel jLabel = new JLabel(text, SwingConstants.CENTER);
         jLabel.setOpaque(true);
         jLabel.setBackground(MyStyles.color.BACKGROUND);
-        jLabel.setForeground(MyStyles.color.WHITE);
+        jLabel.setForeground(MyStyles.color.FOREGROUND);
         jLabel.setFont(MyStyles.font.TITLE);
         return jLabel;
     }
@@ -35,7 +35,7 @@ public class MyComponents {
         JLabel jLabel = new JLabel(text, SwingConstants.CENTER);
         jLabel.setOpaque(true);
         jLabel.setBackground(MyStyles.color.BACKGROUND);
-        jLabel.setForeground(MyStyles.color.WHITE);
+        jLabel.setForeground(MyStyles.color.FOREGROUND);
         jLabel.setFont(MyStyles.font.SMALLTITLE);
         return jLabel;
     }
@@ -51,7 +51,7 @@ public class MyComponents {
         JLabel jLabel = new JLabel(text, align);
         jLabel.setOpaque(true);
         jLabel.setBackground(MyStyles.color.BACKGROUND);
-        jLabel.setForeground(MyStyles.color.WHITE);
+        jLabel.setForeground(MyStyles.color.FOREGROUND);
         jLabel.setFont(MyStyles.font.HEADER);
         return jLabel;
     }
@@ -86,7 +86,7 @@ public class MyComponents {
         JLabel jLabel = new JLabel(text, align);
         jLabel.setOpaque(true);
         jLabel.setBackground(MyStyles.color.BACKGROUND);
-        jLabel.setForeground(MyStyles.color.WHITE);
+        jLabel.setForeground(MyStyles.color.FOREGROUND);
 
         switch (fontStyle) {
             case 1:
@@ -134,7 +134,7 @@ public class MyComponents {
      */
     public static JButton button(String text) {
         JButton jbutton = new JButton(text);
-        jbutton.setBackground(MyStyles.color.WHITE);
+        jbutton.setBackground(MyStyles.color.FOREGROUND);
         jbutton.setFont(MyStyles.font.BUTTON);
         jbutton.setFocusPainted(false);
         return jbutton;
@@ -148,7 +148,7 @@ public class MyComponents {
      */
     public static JButton smallButton(String text) {
         JButton jbutton = new JButton(text);
-        jbutton.setBackground(MyStyles.color.WHITE);
+        jbutton.setBackground(MyStyles.color.FOREGROUND);
         jbutton.setFont(MyStyles.font.BODY);
         jbutton.setFocusPainted(false);
         return jbutton;
@@ -157,6 +157,7 @@ public class MyComponents {
     public static JTextField textField(String defaultValue) {
         JTextField jtextfield = new JTextField(defaultValue, 20);
         jtextfield.setBackground(MyStyles.color.WHITE);
+        jtextfield.setForeground(MyStyles.color.BACKGROUND);
         jtextfield.setFont(MyStyles.font.BODY);
         return jtextfield;
     }

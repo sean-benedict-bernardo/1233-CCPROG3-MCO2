@@ -1,7 +1,6 @@
 package model;
 
 import model.rooms.Room;
-import view.common.auxiliary.Alert;
 
 /**
  * This class contains the reservation class
@@ -38,20 +37,22 @@ public class Reservation {
         this.nightRates = nightRates;
         this.room = room;
         this.discountCode = discountCode;
-        this.id = String.format("%s-%02d%02d",
-                this.room.getName(),
+        // assign
+        this.id = String.format("%s-%02d%02d", this.room.getName(),
                 this.getCheckInDate(), this.getCheckOutDate());
     }
 
+    /**
+     * Overloaded constructor with the absence of discount code
+     * 
+     * @param guestName    String name of guest
+     * @param checkInDate  integer representation of check-in date, 1-30
+     * @param checkOutDate integer representation of check-out date, 2-31
+     * @param room         Room details
+     */
     public Reservation(String guestName, NightRates[] nightRates,
             Room room, float basePrice) {
-        this.guestName = guestName;
-        this.nightRates = nightRates;
-        this.room = room;
-        this.discountCode = Reservation.NODISCOUNT;
-        this.id = String.format("%s-%02d%02d",
-                this.room.getName(),
-                this.getCheckInDate(), this.getCheckOutDate());
+        this(guestName, nightRates, room, basePrice, Reservation.NODISCOUNT);
     }
 
     /**
@@ -119,8 +120,12 @@ public class Reservation {
         return this.id;
     }
 
-    // no setter because the hotel should not
-    // be updating its prices if there are reservations
+    /**
+     * Getter for night price
+     * 
+     * @param index integer of night relative to this.nightRates
+     * @return float nightPrice()
+     */
     public float getNightPrice(int index) {
         return (0 <= index && index < nightRates.length)
                 ? this.room.getPrice() * nightRates[index].getNightRate()
@@ -128,49 +133,49 @@ public class Reservation {
     }
 
     /**
-     * Returns the total price of this specific reservation
-     * Total price is defined by the base price per night multiplied by
-     * the number of nights
      * 
-     * @return float of total price
+     * @return
      */
-
-    public float getTotalPrice() {
-        // this is needed because reservations are priced
-        // by the number of nights in a stay
-
+    public float getRawTotal() {
         float total = 0;
-        boolean isPayday = false;
 
-        for (int i = 0; i < nightRates.length; i++) {
-            if ("STAY4_GET1".equals(this.discountCode)
-                    && this.getCheckOutDate() - this.getCheckInDate() >= 5)
-                continue;
-            if (!isPayday && (nightRates[i].getDate() == 15 || nightRates[i].getDate() == 30))
-                isPayday = true;
+        for (int i = 0; i < nightRates.length; i++)
+            total += this.getNightPrice(i);
 
-            total += this.room.getPrice() * nightRates[i].getNightRate();
-        }
+        return total;
+    }
+
+    /**
+     * Getter for deduction
+     * 
+     * @return float amount to be deducted from raw total
+     */
+    public float getDiscountDeduction() {
+        float rawTotal = this.getRawTotal();
 
         switch (this.discountCode) {
             case "I_WORK_HERE":
-                total *= .90f;
-                break;
+                return rawTotal * 0.10f;
             case "PAYDAY":
-                if (isPayday)
-                    total *= .93f;
+                if (getCheckInDate() <= 15 && 15 < getCheckOutDate() ||
+                        getCheckInDate() <= 30 && 30 < getCheckOutDate())
+                    return rawTotal * 0.07f;
                 break;
-            case "0P3N_SESSION~":
-                if (this.room.getName().equals("S27")) {
-                    total *= 0.69f;
-                    Alert.displayAlert("Hello there, you found my easter egg >:}");
-                }
-                break;
-
-            default:
+            case "STAY4_GET1":
+                if (getCheckOutDate() - getCheckInDate() >= 5)
+                    return this.getNightPrice(0);
                 break;
         }
+        return 0.0f;
+    }
 
-        return total;
+    /**
+     * Returns the total price of this specific reservation
+     * Total price is defined as the raw title - deduction from discount
+     * 
+     * @return float of total price
+     */
+    public float getTotalPrice() {
+        return this.getRawTotal() - this.getDiscountDeduction();
     }
 }

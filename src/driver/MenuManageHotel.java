@@ -4,7 +4,7 @@ import javax.swing.JButton;
 
 import model.Hotel;
 import model.HotelCollection;
-import model.Reservation;
+import model.rooms.Room;
 import view.common.auxiliary.Alert;
 import view.common.auxiliary.UserInput;
 import view.managehotel.ManageHotel;
@@ -56,6 +56,7 @@ public class MenuManageHotel {
             this.manageRoomPanel.getRoomAdd().addActionListener(e -> this.addRoom(this.manageRoomPanel.getRoomType()));
             this.manageRoomPanel.getRoomDelete()
                     .addActionListener(e -> this.deleteRoom(this.manageRoomPanel.getSelectedRoom()));
+            this.manageRoomPanel.getRoomDeleteAll().addActionListener(e -> this.deleteAllRooms());
         }
 
         if (this.hotel.getNumReservations() > 0) {
@@ -74,7 +75,6 @@ public class MenuManageHotel {
             ManageHotelPanel manageHotelPanel = (ManageHotelPanel) this.gui.getCardComponent(0);
             String hotelName = manageHotelPanel.getHotelName();
 
-            // TODO: check if this logic should be moved to HotelCollection
             // Check if hotel name field is empty
             if (hotelName == null || hotelName.isEmpty())
                 throw new Exception("Invalid Input!");
@@ -135,7 +135,9 @@ public class MenuManageHotel {
 
     private void addRoom(char roomType) {
         try {
-            this.hotel.addRoom(roomType);
+            Room localRoom = this.hotel.addRoom(roomType);
+            // if exception hasnt been thrown, inform user and update panel
+            Alert.displayAlert("Room " + localRoom.getName() + " has been added.");
             this.manageRoomPanel.updateContent();
         } catch (Exception e) {
             Alert.displayAlert(e);
@@ -145,8 +147,28 @@ public class MenuManageHotel {
     private void deleteRoom(String selectedRoom) {
         try {
             this.hotel.removeRoom(selectedRoom);
+            // if exception hasnt been thrown, inform user and update panel
+            Alert.displayAlert("Room " + selectedRoom + " has been removed.");
             this.manageRoomPanel.updateContent();
         } catch (Exception e) {
+            Alert.displayAlert(e);
+        }
+    }
+
+    private void deleteAllRooms() {
+        try {
+            boolean confirmDeletion = true;
+
+            if (this.hotel.getNumReservations() == 0)
+                confirmDeletion = UserInput.confirmAction("Do you want to delete all rooms?\nRoom "
+                        + this.hotel.getRoomNames()[0] + " will be retained to satisfy minimum");
+            if (confirmDeletion)
+                this.hotel.removeAllRooms();
+            this.manageRoomPanel.updateContent();
+
+        } catch (
+
+        Exception e) {
             Alert.displayAlert(e);
         }
     }
@@ -163,7 +185,9 @@ public class MenuManageHotel {
             boolean isEmpty = this.hotel.getNumReservations() == 0;
             // Exit manage Reservation menu
             if (isEmpty) {
+                Alert.displayAlert("No more rooms\nexiting tab.");
                 this.gui.updateReservationButton(isEmpty);
+                this.manageHotelPanel.updateValidity(isEmpty);
                 this.gui.showCard(0);
             } else
                 this.manageReservationsPanel.updateReservationList(this.hotel.getReservationIds());

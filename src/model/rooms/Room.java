@@ -102,7 +102,7 @@ public class Room {
      * @param reservation Reservation containing check in and check out dates
      */
     public void removeReservedDays(Reservation reservation) {
-        for (int i = reservation.getCheckInDate(); i < reservation.getCheckOutDate() - 1; i++)
+        for (int i = reservation.getCheckInDate(); i < reservation.getCheckOutDate(); i++)
             this.daysReserved[i - 1] = false;
     }
 

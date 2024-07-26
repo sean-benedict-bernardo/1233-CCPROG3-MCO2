@@ -27,9 +27,9 @@ public class ReservationForm extends JDialog {
         super((Dialog) null);
 
         setLayout(new BorderLayout());
+        setBackground(MyStyles.color.BACKGROUND);
         setTitle(hotel.getName() + " Reservation Form");
 
-        this.containerPanel = new JPanel(new GridBagLayout());
         this.initFrame(hotel);
         this.updateCalendar(hotel.getRooms().get(0));
 
@@ -40,7 +40,11 @@ public class ReservationForm extends JDialog {
     }
 
     public void initFrame(Hotel hotel) {
+        this.containerPanel = new JPanel(new GridBagLayout());
         this.containerPanel.setBorder(BorderFactory.createEmptyBorder(16, 24, 16, 24));
+        containerPanel.setBackground(MyStyles.color.BACKGROUND);
+        containerPanel.setForeground(MyStyles.color.FOREGROUND);
+
         this.guestNameField = new JTextField("", 20);
         this.guestRoomSelection = new JComboBox<String>(hotel.getRoomNames());
         this.guestRoomSelection.setSelectedIndex(0);
@@ -55,8 +59,9 @@ public class ReservationForm extends JDialog {
         // NORTH
         add(MyComponents.titleText("Booking under " + hotel.getName()), BorderLayout.NORTH);
 
+
         // Adding Components
-        
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(4, 4, 4, 4);
         gbc.anchor = GridBagConstraints.WEST;
@@ -117,6 +122,7 @@ public class ReservationForm extends JDialog {
 
     private void initAvailabilityCalendar(Room room) {
         this.availabilityPanel = new JPanel(new GridBagLayout());
+        this.availabilityPanel.setBackground(MyStyles.color.BACKGROUND);
         GridBagConstraints calendarConstraints = new GridBagConstraints();
 
         for (int i = 0; i < infoAvailabilityDate.length; i++)

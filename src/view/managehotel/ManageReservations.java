@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 import model.Hotel;
@@ -27,8 +28,11 @@ public class ManageReservations extends JPanel {
 
     private JButton deleteReservation;
 
-    public ManageReservations(Hotel hotel) {
+    public ManageReservations(Hotel hotel) throws Exception {
         super(new BorderLayout());
+
+        if (hotel.getNumReservations() == 0)
+            throw new Exception("No reservations in system");
 
         this.hotel = hotel;
         this.initFrame();
@@ -39,6 +43,7 @@ public class ManageReservations extends JPanel {
         setBackground(MyStyles.color.BACKGROUND);
         setForeground(MyStyles.color.FOREGROUND);
         GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(2, 2, 2, 2);
 
         this.reservationSelector = new JComboBox<>(new DefaultComboBoxModel<>(this.hotel.getReservationIds()));
         this.reservationSelector.setSelectedIndex(0);
@@ -46,6 +51,7 @@ public class ManageReservations extends JPanel {
         this.deleteReservation = MyComponents.button("Delete Reservation");
 
         JPanel containerPanel = new JPanel(new GridBagLayout());
+        containerPanel.setBackground(MyStyles.color.BACKGROUND);
 
         // Left Info Panel
         this.infoName = MyComponents.headerText();
@@ -55,46 +61,29 @@ public class ManageReservations extends JPanel {
         this.infoDiscountCode = MyComponents.headerText();
 
         JComponent gridMap[][] = {
+                { MyComponents.smallTitleText("Manage Reservations") },
+                { MyComponents.bodyText("Choose reservation to delete", SwingConstants.CENTER, MyComponents.ITALICS) },
+                { MyComponents.bodyText("Selected:"), this.reservationSelector },
+                { new JSeparator() },
                 { MyComponents.headerText("Guest Name"), this.infoName },
                 { MyComponents.headerText("Room"), this.infoRoom },
                 { MyComponents.headerText("Check-in"), this.infoCheckIn },
                 { MyComponents.headerText("Check-out"), this.infoCheckOut },
                 { MyComponents.headerText("Discount Code"), this.infoDiscountCode },
+                { this.deleteReservation }
         };
 
-        gbc.insets = new Insets(2, 2, 2, 2);
-        gbc.gridy = 0;
-        gbc.gridx = 0;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        containerPanel.add(MyComponents.smallTitleText("Delete Reservation"), gbc);
-        gbc.gridy = 1;
-        containerPanel.add(
-                MyComponents.bodyText("Choose reservation to delete", SwingConstants.CENTER, MyComponents.ITALICS),
-                gbc);
-        gbc.gridwidth = 1;
-        gbc.gridy = 2;
-        gbc.insets.bottom = 12;
-        gbc.gridx = 0;
-        containerPanel.add(MyComponents.bodyText("Selected:"), gbc);
-        gbc.gridx = 1;
-        containerPanel.add(this.reservationSelector, gbc);
-
-        gbc.insets.bottom = 2;
         for (int i = 0; i < gridMap.length; i++) {
-            for (int j = 0; j < gridMap[0].length; j++) {
-                gbc.gridy = i + 3;
+            for (int j = 0; j < gridMap[i].length; j++) {
+
+                gbc.gridwidth = (j == gridMap[i].length - 1) ? GridBagConstraints.REMAINDER : 1;
+                gbc.fill = (i <= 1 || i == 3 || i == 9) ? GridBagConstraints.NONE : GridBagConstraints.HORIZONTAL;
+
+                gbc.gridy = i;
                 gbc.gridx = j;
                 containerPanel.add(gridMap[i][j], gbc);
             }
         }
-
-        gbc.gridy++;
-        gbc.gridx = 0;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        containerPanel.add(this.deleteReservation, gbc);
-
         add(containerPanel, BorderLayout.CENTER);
     }
 

@@ -8,11 +8,13 @@ import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import model.Hotel;
@@ -58,59 +60,43 @@ public class ManageHotelPanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(4, 4, 4, 4);
-
-        // First Column titles
-
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 0;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        containerPanel.add(MyComponents.headerText("Name:"), gbc);
-        gbc.gridy = 1;
-        containerPanel.add(MyComponents.headerText("Base Price:"), gbc);
-        gbc.gridy = 2;
-        containerPanel.add(MyComponents.headerText("Date Price Modifier:"), gbc);
-
-        // 2nd Column Text Fields
-        gbc.gridx = 1;
-        gbc.gridy = 0;
         gbc.weightx = 1;
-        containerPanel.add(this.changeHotelName, gbc);
-        gbc.gridy = 1;
-        containerPanel.add(this.changeBasePrice, gbc);
-        gbc.weightx = 0;
-
-        // Date Price Modifier
-        gbc.gridy = 3;
-        gbc.gridx = 0;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
-        containerPanel.add(this.panelDateModifier, gbc);
-        gbc.gridwidth = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
 
-        // Third Column Buttons
+        // Set preferred dimensions of buttons
         Dimension dim = new Dimension(300, (int) this.saveHotelName.getPreferredSize().getHeight());
         this.saveHotelName.setPreferredSize(dim);
         this.saveBasePrice.setPreferredSize(dim);
         this.saveDateModifier.setPreferredSize(dim);
 
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 0;
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        containerPanel.add(this.saveHotelName, gbc);
-        gbc.gridy = 1;
-        containerPanel.add(this.saveBasePrice, gbc);
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        containerPanel.add(this.saveDateModifier, gbc);
+        JComponent gridMap[][] = {
+                { MyComponents.smallTitleText("Manage Hotel") },
+                { MyComponents.bodyText("Update general hotel information", SwingConstants.CENTER,
+                        MyComponents.ITALICS) },
+                { MyComponents.headerText("Name:"), this.changeHotelName, this.saveHotelName },
+                { MyComponents.headerText("Base Price:"), this.changeBasePrice, this.saveBasePrice },
+                { MyComponents.headerText("Date Price Modifier"), this.saveDateModifier },
+                {this.panelDateModifier},
+                {this.deleteHotel},
+                {MyComponents.bodyText(
+                    "<html><body style='text-align: center;'>NOTE: Date price modifier and base room rates <br> cannot be changed while there is still an active reservation</body></html>",
+                    SwingConstants.CENTER, MyComponents.ITALICS)}
+        };
 
-        // Delete Hotel Button
-        gbc.gridy = 4;
-        gbc.gridx = 0;
-        gbc.weightx = 1;
-        containerPanel.add(this.deleteHotel, gbc);
+        for (int i = 0; i < gridMap.length; i++) {
+            for (int j = 0; j < gridMap[i].length; j++) {
+                gbc.gridy = i;
+                gbc.gridx = j;
+
+                gbc.weightx = (i < 2 || j == 1) ? 1 : 0;
+                gbc.gridwidth = (j == gridMap[i].length - 1) ? GridBagConstraints.REMAINDER : 1;
+                gbc.fill = (i == 4 && j == 1 || i == 6) ? GridBagConstraints.NONE : GridBagConstraints.BOTH;
+
+                containerPanel.add(gridMap[i][j], gbc);
+            }
+        }
 
         add(containerPanel, BorderLayout.CENTER);
     }
@@ -187,7 +173,8 @@ public class ManageHotelPanel extends JPanel {
             try {
                 this.changeDateModifier[i].commitEdit();
                 dateModifier[i] = ((Integer) this.changeDateModifier[i].getValue()) / 100.0f;
-            } catch (Exception e) {/* Do nothing */}
+            } catch (Exception e) {
+                /* Do nothing */}
 
         }
 

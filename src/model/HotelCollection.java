@@ -16,6 +16,7 @@ public class HotelCollection {
      */
     public void addHotel(Hotel newHotel) {
         this.hotelList.add(newHotel);
+        System.out.printf("%s | Adding Hotel '%s'\n", "HotelCollection", newHotel.getName());
     }
 
     /**
@@ -25,8 +26,10 @@ public class HotelCollection {
      */
     public void removeHotel(String key) {
         int deleteIndex = this.getHotelIndex(key);
-        if (deleteIndex > -1)
+        if (deleteIndex > -1) {
+            System.out.printf("%s | Deleting Hotel '%s'\n", "HotelCollection", key);
             this.hotelList.remove(deleteIndex);
+        }
     }
 
     /**
