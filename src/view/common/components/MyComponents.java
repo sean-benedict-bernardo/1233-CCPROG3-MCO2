@@ -154,11 +154,43 @@ public class MyComponents {
         return jbutton;
     }
 
+    /**
+     * Custom JTextField
+     * 
+     * @param defaultValue String to preload textfield with
+     * @return JTextField
+     */
     public static JTextField textField(String defaultValue) {
         JTextField jtextfield = new JTextField(defaultValue, 20);
         jtextfield.setBackground(MyStyles.color.WHITE);
         jtextfield.setForeground(MyStyles.color.BACKGROUND);
         jtextfield.setFont(MyStyles.font.BODY);
         return jtextfield;
+    }
+
+    public static JProgressBar progressBar(int min, int max, int value, String text) {
+        // UIManager stuff
+        UIManager.put("ProgressBar.foreground", MyStyles.color.FOREGROUND);
+        UIManager.put("ProgressBar.background", MyStyles.color.ACCENT);
+        UIManager.put("ProgressBar.selectionForeground", MyStyles.color.BLACK);
+        UIManager.put("ProgressBar.selectionBackground", MyStyles.color.WHITE);
+
+        JProgressBar jProgressBar = new JProgressBar(min, max);
+        jProgressBar.setValue(value);
+        jProgressBar.setString(text);
+        jProgressBar.setStringPainted(true);
+        return jProgressBar;
+    }
+
+    public static JProgressBar progressBar(int min, int max, int value) {
+        // UIManager stuff
+        UIManager.put("ProgressBar.foreground", MyStyles.color.FOREGROUND);
+        UIManager.put("ProgressBar.background", MyStyles.color.ACCENT);
+        UIManager.put("ProgressBar.selectionForeground", MyStyles.color.BLACK);
+        UIManager.put("ProgressBar.selectionBackground", MyStyles.color.WHITE);
+
+        JProgressBar jProgressBar = new JProgressBar(min, max);
+        jProgressBar.setValue(value);
+        return jProgressBar;
     }
 }

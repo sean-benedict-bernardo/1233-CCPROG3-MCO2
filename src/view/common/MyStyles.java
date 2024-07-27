@@ -12,10 +12,11 @@ import javax.swing.border.Border;
  * @author Luis Andrew Madridijo
  */
 public class MyStyles {
+
     public class font {
         public static final Font TITLE = new Font("Sans Serif", Font.BOLD, 32);
         public static final Font SMALLTITLE = new Font("Sans Serif", Font.BOLD, 18);
-        public static final Font HEADER = new Font("Sans Serif", Font.PLAIN, 18);
+        public static final Font HEADER = new Font("Sans Serif", Font.PLAIN, 16);
         public static final Font BODY = new Font("Sans Serif", Font.PLAIN, 14);
         public static final Font ITALICS = new Font("Sans Serif", Font.ITALIC, 14);
         public static final Font MONOSPACE = new Font("Ubuntu Mono", Font.PLAIN, 14);
@@ -30,6 +31,7 @@ public class MyStyles {
         public static final Color WHITE = Color.white;
 
         public static final Color BACKGROUND = Color.decode("#1b2a41");
+        public static final Color ACCENT = Color.decode("#1b2a41").brighter().brighter();
         public static final Color FOREGROUND = WHITE;
     }
 

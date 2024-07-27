@@ -31,7 +31,7 @@ public class HotelReservationSystem {
             Hotel myHotel = new Hotel("NewHotel", 'S'),
                     myHotel2 = new Hotel("HotelGemal", 'D');
 
-            for (int i = 0; i < 49; i++) {
+            for (int i = 0; i < 27; i++) {
                 myHotel.addRoom('S');
             }
 

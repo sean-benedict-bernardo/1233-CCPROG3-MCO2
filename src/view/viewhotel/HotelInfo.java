@@ -43,13 +43,17 @@ public class HotelInfo extends JPanel {
                 { "Total Revenue", String.format("%.2f", this.hotel.getTotalRevenue()) }
         };
 
+        int roomCtr = this.hotel.getNumRooms();
+        JProgressBar numRooms = MyComponents.progressBar(0, 50, roomCtr, roomCtr + " / 50 Rooms");
+
         for (int i = 0; i < data.length; i++) {
             gbc.gridy = i;
             for (int j = 0; j < data[0].length; j++) {
-                JLabel text = MyComponents.headerText(data[i][j], SwingConstants.LEFT);
                 gbc.gridx = j;
-
-                tablePanel.add(text, gbc);
+                JComponent obj = (i == 1 && j == 1)
+                        ? numRooms
+                        : MyComponents.headerText(data[i][j], SwingConstants.LEFT);
+                tablePanel.add(obj, gbc);
             }
         }
 
@@ -73,30 +77,39 @@ public class HotelInfo extends JPanel {
         this.nightlyRates.setBackground(MyStyles.color.BACKGROUND);
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1;
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 0;
-        gbc.ipadx = 4;
-        gbc.ipady = 4;
+        gbc.insets = new Insets(2, 4, 2, 4);
+
+        // lb 50
+        // middle 100
+        // upperbound 150
 
         for (int i = 0; i < this.hotel.getNightRates().length; i++) {
             JPanel entryPanel = new JPanel(new GridBagLayout());
             entryPanel.setBackground(MyStyles.color.BACKGROUND);
 
-            gbc.gridy = 0;
-            gbc.gridx = 0;
-            JLabel index = MyComponents.bodyText("" + (i + 1));
-            index.setPreferredSize(new Dimension(20, (int) index.getPreferredSize().getHeight()));
-            entryPanel.add(index, gbc);
-            gbc.gridx = 1;
-            entryPanel.add(
-                    MyComponents.bodyText("" + (this.hotel.getNightRate(i).getNightRate() * this.hotel.getBasePrice())),
-                    gbc);
+            gbc.gridy = (i / 7) * 2;
+            gbc.gridx = (i % 7) * 2;
 
-            gbc.gridy = i / 7;
-            gbc.gridx = i % 7;
+            float nightPrice = this.hotel.getNightRate(i).getNightRate() * this.hotel.getBasePrice();
+            int rate = (int) (this.hotel.getNightRate(i).getNightRate() * 100.0);
 
-            this.nightlyRates.add(entryPanel, gbc);
+            JProgressBar nightPriceObj = MyComponents.progressBar(50, 150, rate);
+            nightPriceObj.setPreferredSize(new Dimension(200, 50));
+
+            gbc.weightx = 0;
+            gbc.gridheight = 2;
+            this.nightlyRates.add(MyComponents.headerText("" + (i + 1)), gbc);
+
+            gbc.gridx++;
+            gbc.weightx = 1;
+            gbc.gridheight = 1;
+            gbc.weighty = 0;
+            this.nightlyRates.add(MyComponents.bodyText("" + nightPrice), gbc);
+            gbc.weighty = 1;
+            gbc.gridy++;
+            this.nightlyRates.add(nightPriceObj, gbc);
         }
 
     }

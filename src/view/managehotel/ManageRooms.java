@@ -1,15 +1,18 @@
 package view.managehotel;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Rectangle;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
@@ -23,6 +26,7 @@ public class ManageRooms extends JPanel {
 
     private RoomTypeSelector newRoomType;
     private JComboBox<String> roomSelect;
+    private JProgressBar numRooms;
 
     private JButton roomAdd, roomDelete, roomDeleteAll;
 
@@ -48,22 +52,30 @@ public class ManageRooms extends JPanel {
         setBackground(MyStyles.color.BACKGROUND);
         setForeground(MyStyles.color.FOREGROUND);
 
-        JPanel containerPanel = new JPanel(new GridBagLayout());
-        containerPanel.setBackground(MyStyles.color.BACKGROUND);
-        containerPanel.setForeground(MyStyles.color.FOREGROUND);
-
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(4, 4, 4, 4);
 
+        JPanel containerPanel = new JPanel(new GridBagLayout());
+        containerPanel.setBackground(MyStyles.color.BACKGROUND);
+        containerPanel.setForeground(MyStyles.color.FOREGROUND);
+
+        this.numRooms = MyComponents.progressBar(0, 50, this.hotel.getNumRooms());
+        Dimension roomCtrDimensions = new Dimension(this.numRooms.getPreferredSize());
+        roomCtrDimensions.height = 75;
+        this.numRooms.setBounds(new Rectangle(roomCtrDimensions));
+
+        // Set Values
+        this.numRooms.setStringPainted(true);
+        this.updateRoomCount();
+
         JComponent gridMap[][] = {
                 { MyComponents.smallTitleText("Manage Rooms") },
                 { MyComponents.bodyText("Add and Delete Rooms", SwingConstants.CENTER, MyComponents.ITALICS) },
-                { MyComponents.headerText("Select Type of Room to Add"), this.newRoomType },
-                { this.roomAdd },
-                { new JSeparator() },
-                { MyComponents.headerText("Select Room to Delete"), this.roomSelect },
-                { this.roomDelete, this.roomDeleteAll },
+                { MyComponents.headerText("Select Type of Room to Add"), this.newRoomType, this.roomAdd },
+                { new JSeparator(SwingConstants.VERTICAL) },
+                { MyComponents.headerText("Select Room to Delete"), this.roomSelect, this.roomDelete },
+                { this.numRooms },
                 { MyComponents.bodyText(
                         "<html><body style='text-align: center;'>NOTE: Rooms with active reservations<br>cannot be delted</body></html>",
                         SwingConstants.CENTER, MyComponents.ITALICS) }
@@ -79,6 +91,7 @@ public class ManageRooms extends JPanel {
         }
 
         add(containerPanel, BorderLayout.CENTER);
+
     }
 
     /**
@@ -86,6 +99,13 @@ public class ManageRooms extends JPanel {
      */
     public void updateContent() {
         this.roomSelect.setModel(new DefaultComboBoxModel<>(this.hotel.getRoomNames()));
+        this.updateRoomCount();
+    }
+
+    private void updateRoomCount() {
+        int roomCtr = this.hotel.getNumRooms();
+        this.numRooms.setString(roomCtr + " / 50 Rooms");
+        this.numRooms.setValue(roomCtr);
     }
 
     public char getRoomType() {
