@@ -77,5 +77,4 @@ public class CreateHotel extends JDialog {
     public char getFirstRoomType() {
         return this.roomTypeSelector.getSelected();
     }
-
 }

@@ -28,32 +28,33 @@ public class HotelReservationSystem {
 
         // testing here
         try {
-            Hotel myHotel = new Hotel("NewHotel", 'S'),
-                    myHotel2 = new Hotel("HotelGemal", 'D');
+            this.hotelList.addHotel("NewHotel", 'S');
+            this.hotelList.addHotel("HotelGemal", 'D');
 
-            for (int i = 0; i < 27; i++) {
-                myHotel.addRoom('S');
-            }
+            // Hotel myHotel = this.hotelList.getHotel("NewHotel"),
+            //         myHotel2 = this.hotelList.getHotel("HotelGemal");
 
-            // Test PAYDAY
-            myHotel.createReservation("Payday14", 14, 15, "S1", "PAYDAY");
-            myHotel.createReservation("Payday15", 15, 16, "S1", "PAYDAY");
+            // for (int i = 0; i < 27; i++) {
+            //     myHotel.addRoom('S');
+            // }
 
-            // Test I_WORK_HERE
-            myHotel.createReservation("NonEmployee", 15, 16, "S4", "I_WORK_HERE");
-            myHotel.createReservation("Employee", 15, 16, "S5");
+            // // Test PAYDAY
+            // myHotel.createReservation("Payday14", 14, 15, "S1", "PAYDAY");
+            // myHotel.createReservation("Payday15", 15, 16, "S1", "PAYDAY");
 
-            // Test STAY4_GET1
-            myHotel.createReservation("4DayStay", 15, 19, "S9", "STAY4_GET1");
-            myHotel.createReservation("5DayStay", 15, 20, "S7", "STAY4_GET1");
-            myHotel.createReservation("5DayStay_NoCode", 15, 20, "S8");
+            // // Test I_WORK_HERE
+            // myHotel.createReservation("NonEmployee", 15, 16, "S4", "I_WORK_HERE");
+            // myHotel.createReservation("Employee", 15, 16, "S5", Reservation.NODISCOUNT);
 
-            myHotel.createReservation("LongAssStay", 1, 31, "S27");
+            // // Test STAY4_GET1
+            // myHotel.createReservation("4DayStay", 15, 19, "S9", "STAY4_GET1");
+            // myHotel.createReservation("5DayStay", 15, 20, "S7", "STAY4_GET1");
+            // myHotel.createReservation("5DayStay_NoCode", 15, 20, "S8", Reservation.NODISCOUNT);
 
-            this.hotelList.addHotel(myHotel);
-            this.hotelList.addHotel(myHotel2);
+            // myHotel.createReservation("LongAssStay", 1, 31, "S27", Reservation.NODISCOUNT);
+
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
         this.initButtons();
@@ -129,7 +130,6 @@ public class HotelReservationSystem {
         try {
             new HotelReservationSystem();
         } catch (Exception e) {
-            System.err.println(e);
         }
     }
 }

@@ -41,15 +41,11 @@ public class MenuViewHotel {
     private void initToolBar() {
         JButton buttons[] = this.gui.getButtons();
 
-        for (int i = 0; i < buttons.length - 2; i++) {
+        for (int i = 0; i < buttons.length - 1; i++) {
             // Java throws a hissy fit when i is not final
             final int innerIndex = i;
             buttons[i].addActionListener(e -> this.gui.showCard(innerIndex));
         }
-
-        // the card can only show if there are reservations
-        if (this.hotel.getNumReservations() > 0)
-            buttons[3].addActionListener((e) -> this.gui.showCard(3));
         
         buttons[4].addActionListener(e -> this.hideWindow());
     }

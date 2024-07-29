@@ -1,6 +1,7 @@
 package driver;
 
 import model.Hotel;
+import model.Reservation;
 import view.common.auxiliary.Alert;
 import view.makereservation.ReservationForm;
 
@@ -66,11 +67,10 @@ public class MenuMakeReservation {
             if (guestName == null) {
                 throw new Exception("No name entered!");
             } else {
-                if (discountCode != null)
-                    this.hotel.createReservation(guestName, checkInDate, checkOutDate, roomName, discountCode);
-                else
-                    this.hotel.createReservation(guestName, checkInDate, checkOutDate, roomName);
-
+                this.hotel.createReservation(guestName, checkInDate, checkOutDate, roomName,
+                        (!discountCode.isEmpty() || discountCode != null)
+                                ? discountCode
+                                : Reservation.NODISCOUNT);
                 Alert.displayAlert("Creating reservation for " + guestName);
                 // return to main menu once successful
                 this.form.dispose();

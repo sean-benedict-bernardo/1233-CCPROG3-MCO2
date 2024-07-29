@@ -128,6 +128,7 @@ public class Room {
      */
     public boolean getDayAvailability(int index) throws ArrayIndexOutOfBoundsException {
         // ternary is safety check for in index access
+        
         if (0 <= index && index <= 30)
             return this.daysReserved[index];
         else

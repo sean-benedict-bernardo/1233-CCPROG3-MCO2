@@ -77,7 +77,7 @@ public class ManageRooms extends JPanel {
                 { MyComponents.headerText("Select Room to Delete"), this.roomSelect, this.roomDelete },
                 { this.numRooms },
                 { MyComponents.bodyText(
-                        "<html><body style='text-align: center;'>NOTE: Rooms with active reservations<br>cannot be delted</body></html>",
+                        "<html><body style='text-align: center;'>NOTE: Rooms with active reservations<br>cannot be deleted</body></html>",
                         SwingConstants.CENTER, MyComponents.ITALICS) }
         };
 
@@ -122,9 +122,5 @@ public class ManageRooms extends JPanel {
 
     public JButton getRoomDelete() {
         return this.roomDelete;
-    }
-
-    public JButton getRoomDeleteAll() {
-        return this.roomDeleteAll;
     }
 }

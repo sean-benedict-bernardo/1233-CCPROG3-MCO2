@@ -20,7 +20,7 @@ public class Hotel {
     private float basePrice;
     private ArrayList<Room> roomsList;
     private ArrayList<Reservation> reservationsList;
-    private NightRates[] nightRates = new NightRates[Hotel.NUM_NIGHTS];
+    private NightRate[] nightRates = new NightRate[Hotel.NUM_NIGHTS];
 
     private static HashMap<Character, Integer> compareRoomType = new HashMap<>();
 
@@ -35,7 +35,8 @@ public class Hotel {
     /**
      * Hotel constructor
      * 
-     * @param name String name of hotel
+     * @param name     String name of hotel
+     * @param roomType character of new room to be added
      */
 
     public Hotel(String name, char roomType) throws Exception {
@@ -44,18 +45,30 @@ public class Hotel {
         this.roomsList = new ArrayList<Room>();
         this.reservationsList = new ArrayList<Reservation>();
 
+        if (!Hotel.isValidHotelName(name))
+            throw new Exception("Invalid hotel name");
+
         for (int i = 0; i < nightRates.length; i++) {
-            this.nightRates[i] = new NightRates(i + 1);
+            this.nightRates[i] = new NightRate(i + 1);
         }
 
-        // to satisfy minimum of one room
-        // needs to be encapsulated to sat
         try {
             this.addRoom(roomType);
             System.out.printf("%s - %s: Creating New Hotel '%s'\n", "Hotel", "N/A", this.name);
         } catch (Exception e) {
-            throw e; // this should not be thrown
+            // This is unlikely to be thrown
+            Alert.displayAlert(e);
         }
+    }
+
+    /**
+     * Hotel name validity checker (does not check for uniqueness)
+     * 
+     * @param name String of candidate hotel name
+     * @return Returns true if hotel name is valid, i.e. nonempty or null
+     */
+    public static boolean isValidHotelName(String name) {
+        return !name.isEmpty() && name != null;
     }
 
     /*
@@ -105,12 +118,12 @@ public class Hotel {
             Room newRoom = null;
 
             /**
-             * In honor of the Cursed Technique known as CCDSTRU
+             * In honor of the cursed technique known as CCDSTRU
              * 
              * M(x) = x.getClass().getSimpleName()
              * 
-             * roomType ⊆ {'S', 'D', 'E'} => M(newRoom) ⊆ {"ExecutiveRoom", "DeluxeRoom",
-             * "Room"}
+             * roomType ⊆ {'S', 'D', 'E'}
+             * => M(newRoom) ⊆ {"ExecutiveRoom", "DeluxeRoom", "Room"}
              * roomType ⊄ {'S', 'D', 'E'} => M(newRoom) == "Room"
              */
             if (roomType == 'E')
@@ -184,18 +197,6 @@ public class Hotel {
         }
     }
 
-    /**
-     * 
-     * @throws Exception if there are still active reservations within the 
-     */
-    public void removeAllRooms() throws Exception {
-        if (this.getNumReservations() > 0)
-            throw new Exception(this.name + " still has active reservations!");
-        else {
-            this.roomsList.removeAll(this.roomsList.subList(1, this.roomsList.size()));
-        }
-    }
-
     /*
      * This entire section deals with creating and deleting reservations
      */
@@ -229,24 +230,14 @@ public class Hotel {
             try {
                 // Mark dates as reserved
                 localRoom.addReservedDays(checkInDate, checkOutDate);
-                NightRates subNightRates[] = Arrays.copyOfRange(this.nightRates, checkInDate - 1, checkOutDate - 1);
-                Reservation newReservation = new Reservation(guestName, subNightRates, localRoom, this.basePrice,
-                        discountCode);
+                NightRate subNightRates[] = Arrays.copyOfRange(this.nightRates, checkInDate - 1, checkOutDate - 1);
+                Reservation newReservation = new Reservation(guestName, subNightRates, localRoom, discountCode);
                 this.reservationsList.add(newReservation);
                 System.out.printf("%s - %s: Creating New Reservation '%s'\n", "Hotel", this.name,
                         String.format("%s %s", newReservation.getId(), newReservation.getGuestName()));
             } catch (Exception e) {
                 throw e;
             }
-        }
-    }
-
-    public void createReservation(String guestName, int checkInDate, int checkOutDate, String roomName)
-            throws Exception {
-        try {
-            this.createReservation(guestName, checkInDate, checkOutDate, roomName, Reservation.NODISCOUNT);
-        } catch (Exception e) {
-            throw e;
         }
     }
 
@@ -293,10 +284,12 @@ public class Hotel {
     /**
      * Setter for hotel name
      * 
+     * @precondition validity checks have been done at the HotelCollection level
      * @param name String of new hotel name
      */
-    public void setName(String name) throws Exception {
-        this.name = name;
+    public void setName(String name) {
+        if (Hotel.isValidHotelName(name))
+            this.name = name;
     }
 
     /**
@@ -336,13 +329,17 @@ public class Hotel {
         }
     }
 
+    public NightRate[] getNightRates() {
+        return this.nightRates;
+    }
+
     /**
      * 
      * @param date integer representation of date
      * @return NightRate
      */
 
-    public NightRates getNightRate(int index) {
+    public NightRate getNightRate(int index) {
         return (0 <= index && index <= 30) ? this.nightRates[index] : null;
     }
 
@@ -355,10 +352,6 @@ public class Hotel {
             throw new Exception("New rate is too " + ((newRate < 0.5f) ? "low" : "high") + "!");
         else
             this.nightRates[index].setNightRate(newRate);
-    }
-
-    public NightRates[] getNightRates() {
-        return this.nightRates;
     }
 
     /**
@@ -399,10 +392,20 @@ public class Hotel {
         return (roomIndex > -1) ? this.roomsList.get(roomIndex) : null;
     }
 
+    /**
+     * Getter for all rooms in system
+     * 
+     * @return ArrayList of all rooms
+     */
     public ArrayList<Room> getRooms() {
         return this.roomsList;
     }
 
+    /**
+     * Getter for all room names
+     * 
+     * @return ArrayList of all Room names
+     */
     public String[] getRoomNames() {
         String[] roomNames = new String[this.getNumRooms()];
 
@@ -436,6 +439,17 @@ public class Hotel {
         return null;
     }
 
+    private int getReservationIndex(String key) {
+        int i = 0;
+        for (Reservation reservation : this.reservationsList) {
+            if (key.equals(reservation.getId()))
+                return i;
+            i++;
+        }
+
+        return -1;
+    }
+
     /**
      * Getter for all reservations
      * 
@@ -459,16 +473,5 @@ public class Hotel {
         }
 
         return reservationIds;
-    }
-
-    private int getReservationIndex(String key) {
-        int i = 0;
-        for (Reservation reservation : this.reservationsList) {
-            if (key.equals(reservation.getId()))
-                return i;
-            i++;
-        }
-
-        return -1;
     }
 }

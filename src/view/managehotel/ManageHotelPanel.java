@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import model.Hotel;
-import model.NightRates;
+import model.NightRate;
 import view.common.MyStyles;
 import view.common.components.MyComponents;
 
@@ -104,7 +104,7 @@ public class ManageHotelPanel extends JPanel {
     private void initDatePriceModifier() {
         this.panelDateModifier = new JPanel(new GridBagLayout());
         this.panelDateModifier.setBackground(MyStyles.color.BACKGROUND);
-        NightRates[] nightRates = this.hotel.getNightRates();
+        NightRate[] nightRates = this.hotel.getNightRates();
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;

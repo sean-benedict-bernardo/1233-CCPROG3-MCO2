@@ -10,13 +10,25 @@ public class HotelCollection {
     }
 
     /**
-     * Adds hotel to hotelList
      * 
-     * @param newHotel hotel to be added
+     * @param newHotelName  name of new hotel
+     * @param firstRoomType character of new room
+     * @throws Exception if the hotel name is already taken
      */
-    public void addHotel(Hotel newHotel) {
-        this.hotelList.add(newHotel);
-        System.out.printf("%s | Adding Hotel '%s'\n", "HotelCollection", newHotel.getName());
+    public void addHotel(String newHotelName, char firstRoomType) throws Exception {
+        // Empty and invalid newHotelName are thrown here
+        Hotel candidateHotel = new Hotel(newHotelName, firstRoomType);
+
+        System.out.println("addHotel: " + !this.isUniqueHotelName(newHotelName, null));
+
+        // Check for uniqueness
+        if (!this.isUniqueHotelName(newHotelName, null))
+            throw new Exception(newHotelName + " already exists!");
+        else {
+            this.hotelList.add(candidateHotel);
+            // System.out.printf("%s | Adding Hotel '%s'\n", "HotelCollection",
+            // candidateHotel.getName());
+        }
     }
 
     /**
@@ -29,6 +41,28 @@ public class HotelCollection {
         if (deleteIndex > -1) {
             System.out.printf("%s | Deleting Hotel '%s'\n", "HotelCollection", key);
             this.hotelList.remove(deleteIndex);
+        }
+    }
+
+    /**
+     * Changes hotel name
+     * 
+     * @param oldHotelName name of hotel to be changed
+     * @param newHotelName name of new hotel name
+     * @throws Exception thrown if oldHotel is not found, newHotelName is invalid or
+     *                   an already existing name
+     */
+    public void updateHotelName(String oldHotelName, String newHotelName) throws Exception {
+        Hotel targetHotel = this.getHotel(oldHotelName);
+
+        if (targetHotel == null)
+            throw new Exception("Hotel not found");
+        else if (!Hotel.isValidHotelName(newHotelName))
+            throw new Exception("Invalid hotel name");
+        else if (!this.isUniqueHotelName(newHotelName, targetHotel))
+            throw new Exception(newHotelName + " already exists!");
+        else if (!oldHotelName.equals(newHotelName)) {
+            targetHotel.setName(newHotelName);
         }
     }
 
@@ -62,10 +96,11 @@ public class HotelCollection {
     /**
      * Hotel Index Getter by hotel name
      * 
-     * @param key hotel name to be surched
+     * @param key hotel name to be searched
      * @return integer index of hotel within hotelList, -1 if not found
      */
     private int getHotelIndex(String key) {
+
         for (int i = 0; i < hotelList.size(); i++) {
             if (key.equals(this.hotelList.get(i).getName()))
                 return i;

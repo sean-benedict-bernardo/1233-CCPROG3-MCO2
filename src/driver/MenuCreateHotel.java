@@ -1,6 +1,5 @@
 package driver;
 
-import model.Hotel;
 import model.HotelCollection;
 import view.common.auxiliary.Alert;
 import view.createhotel.CreateHotel;
@@ -13,11 +12,16 @@ import view.createhotel.CreateHotel;
  * @author Luis Andrew Madridijo
  */
 public class MenuCreateHotel {
-    private HotelCollection hotelList;
+    private HotelCollection hotels;
     private CreateHotel gui;
 
-    public MenuCreateHotel(HotelCollection hotelList) {
-        this.hotelList = hotelList;
+    /**
+     * MenuCreateHotel constructor
+     * 
+     * @param hotels HotelCollection to compare and add a new hotel to
+     */
+    public MenuCreateHotel(HotelCollection hotels) {
+        this.hotels = hotels;
         this.gui = new CreateHotel();
 
         this.initButtons();
@@ -26,32 +30,18 @@ public class MenuCreateHotel {
         this.gui.setVisible(true);
     }
 
+    /**
+     * Initializes and adds actionlisteners to buttons
+     */
     private void initButtons() {
         this.gui.getCreateButton().addActionListener((e) -> {
             System.out.println(this.gui.getFirstRoomType());
             this.createHotel();
         });
         this.gui.getCancelButton().addActionListener((e) -> {
+            System.out.println("Exiting Hotel Creation Menu");
             this.gui.dispose();
         });
-    }
-
-    /**
-     * checks if potential hotel name is unique
-     * 
-     * @param key         hotel name to check from hotelList
-     * @param ignoreIndex index in list to be ignored
-     * @return boolean whether hotel name is unique or not
-     */
-    private boolean isUniqueHotelName(String key, int ignoreIndex) {
-        int i = 0;
-        for (Hotel hotel : this.hotelList.getHotels()) {
-            if ((key.equals(hotel.getName())) && i != ignoreIndex)
-                return false;
-            i++;
-        }
-
-        return true;
     }
 
     /**
@@ -59,34 +49,10 @@ public class MenuCreateHotel {
      * This includes a check on whether the user entered a unique hotel name
      */
     public void createHotel() {
-        String hotelName = this.gui.getHotelField();
-        System.out.println(hotelName);
         try {
-            if (hotelName == null)
-                throw new Exception("Invalid Input!");
-            else if (!this.isUniqueHotelName(hotelName, -1))
-                throw new Exception(hotelName + " already exists!");
-            else {
-                hotelName = hotelName.toString();
-                this.hotelList.addHotel(new Hotel(hotelName, this.gui.getFirstRoomType()));
-                Alert.displayAlert("Creating " + hotelName);
-                // Return to main menu
-                this.gui.dispose();
-            }
+            this.hotels.addHotel(this.gui.getHotelField().toString(), this.gui.getFirstRoomType());
         } catch (Exception e) {
             Alert.displayAlert(e);
         }
-    }
-
-    public int getHotelIndex(Hotel hotel){
-        int i = 0;
-        for (Hotel candidate : this.hotelList.getHotels()){
-            if (hotel.getName().equals(candidate.getName()))
-                return i;
-    
-            i++;
-        }
-
-        return -1;
     }
 }

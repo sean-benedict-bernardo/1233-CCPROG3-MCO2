@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.net.URI;
 import java.util.ArrayList;
 
-import model.NightRates;
+import model.NightRate;
 import model.Reservation;
 import view.common.MyStyles;
 import view.common.components.MyComponents;
@@ -121,7 +121,7 @@ public class Reservations extends JPanel {
     }
 
     private void makeNightlyBreakdown(Reservation reservation) {
-        NightRates nightRates[] = reservation.getNightRates();
+        NightRate nightRates[] = reservation.getNightRates();
 
         JPanel localPanel = new JPanel(new GridBagLayout());
         localPanel.setBackground(MyStyles.color.BACKGROUND);

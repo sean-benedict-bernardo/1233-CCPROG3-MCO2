@@ -1,48 +1,11 @@
 package view.common.auxiliary;
 
-import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 
 import model.Hotel;
 import model.HotelCollection;
-import model.rooms.*;
 
 public class UserInput {
-    /**
-     * 
-     * @return Character representation of room
-     */
-    public static char selectRoomType() {
-        String[] roomTypes = { "Standard", "Deluxe", "Executive" };
-
-        String selectedRoom = (String) JOptionPane.showInputDialog(null,
-                "Select room to add", "Room Selection",
-                JOptionPane.QUESTION_MESSAGE, null,
-                roomTypes, roomTypes[0]);
-
-        return (selectedRoom != null) ? selectedRoom.charAt(0) : '\0';
-    }
-
-    /**
-     * 
-     * @return String representation of Room
-     */
-    public static String selectRoom(ArrayList<Room> roomsList) {
-        String[] roomNames = new String[roomsList.size()];
-        int i = 0;
-        for (Room room : roomsList) {
-            roomNames[i++] = room.getName();
-        }
-
-        String selectedRoom = (String) JOptionPane.showInputDialog(null,
-                "Select room", "Room Selection",
-                JOptionPane.QUESTION_MESSAGE, null,
-                roomNames, roomNames[0]);
-
-        return selectedRoom;
-    }
-
     public static Hotel selectHotel(HotelCollection hotelList) throws Exception {
 
         if (hotelList.getNumHotels() == 0)
@@ -50,9 +13,8 @@ public class UserInput {
         else {
             String[] hotelNames = new String[hotelList.getNumHotels()];
             int i = 0;
-            for (Hotel hotel : hotelList.getHotels()) {
+            for (Hotel hotel : hotelList.getHotels())
                 hotelNames[i++] = hotel.getName();
-            }
 
             try {
                 String selectedHotel = (String) JOptionPane.showInputDialog(null,
@@ -71,13 +33,15 @@ public class UserInput {
         }
     }
 
-    public static boolean confirmAction(String prompt){
-        int option = JOptionPane.showConfirmDialog(null, prompt, "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+    public static boolean confirmAction(String prompt) {
+        int option = JOptionPane.showConfirmDialog(null, prompt, "Confirmation", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
 
-        if (option == JOptionPane.YES_NO_OPTION){
+        if (option == JOptionPane.YES_NO_OPTION) {
             return true;
         }
 
-        else return false;
+        else
+            return false;
     }
 }

@@ -28,11 +28,9 @@ public class RoomAvailability extends JPanel {
     private void initFrame(Hotel hotel) {
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.ipadx = 12;
-        gbc.ipady = 12;
 
         // WEST
         JPanel dateSelectPanel = new JPanel(new GridBagLayout());
@@ -51,20 +49,24 @@ public class RoomAvailability extends JPanel {
         infoContainer.setBackground(MyStyles.color.BACKGROUND);
 
         int i = 0;
+        gbc.insets = new Insets(4, 4, 4, 4);
         for (Room room : hotel.getRooms()) {
             gbc.gridy = i / 7;
-            gbc.gridx = i % 7;
-            this.roomsAvailability[i] = MyComponents.bodyText(
-                    String.format("%s - %c",
-                            room.getName(),
-                            !room.getDayAvailability(0) ? '✓' : '✗'),
-                    SwingConstants.CENTER);
-            infoContainer.add(this.roomsAvailability[i], gbc);
+            gbc.gridx = i % 7 * 2;
+            this.roomsAvailability[i] = MyComponents.smallTitleText("");
 
-            this.roomsAvailability[i].setMinimumSize(new Dimension(64, 24));
-            this.roomsAvailability[i].setPreferredSize(new Dimension(64, 24));
+            gbc.insets.right = 4;
+            gbc.insets.left = 8;
+            infoContainer.add(MyComponents.headerText(room.getName()), gbc);
+            gbc.insets.right = 8;
+            gbc.insets.left = 4;
+            gbc.gridx++;
+
+            infoContainer.add(this.roomsAvailability[i], gbc);
             i++;
         }
+
+        this.updateAvailability(hotel.getRooms(), 1);
 
         add(infoContainer, BorderLayout.CENTER);
     }
@@ -72,12 +74,19 @@ public class RoomAvailability extends JPanel {
     public void updateAvailability(ArrayList<Room> rooms, int index) {
         this.selectedDate.setText("Selected: Day " + index);
         index--;
+
+        Dimension checkSize = new Dimension(25, 12);
+
         for (int i = 0; i < this.roomsAvailability.length; i++) {
-            this.roomsAvailability[i].setText(
-                    String.format("%s - %c",
-                            rooms.get(i).getName(),
-                            !rooms.get(i).getDayAvailability(index) ? '✓' : '✗'));
+            boolean isAvailable = rooms.get(i).getDayAvailability(index);
+            this.roomsAvailability[i].setText("" + (isAvailable ? '✗' : '✓'));
+            this.roomsAvailability[i].setForeground((isAvailable) ? MyStyles.color.RED : MyStyles.color.GREEN);
+
+            this.roomsAvailability[i].setMinimumSize(checkSize);
+            this.roomsAvailability[i].setPreferredSize(checkSize);
+            this.roomsAvailability[i].setMaximumSize(checkSize);
         }
+
     }
 
     public JButton[] getDateSelector() {

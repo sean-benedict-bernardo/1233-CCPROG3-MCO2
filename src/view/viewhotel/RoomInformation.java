@@ -57,25 +57,24 @@ public class RoomInformation extends JPanel {
         infoPanel.setBackground(MyStyles.color.BACKGROUND);
         availabilityPanel.setBackground(MyStyles.color.BACKGROUND);
 
-        // Info text
-        Room firstRoom = rooms.get(0); // This is assumed to exist
-
         this.infoRoomName = MyComponents.headerText();
         this.infoRoomType = MyComponents.headerText();
         this.infoNightlyRate = MyComponents.headerText();
         for (int i = 0; i < infoAvailabilityDate.length; i++)
-            infoAvailabilityDate[i] = MyComponents.bodyText(
-                    String.format("%d - %c", i + 1, !firstRoom.getDayAvailability(i) ? '✓' : '✗'),
-                    JLabel.RIGHT);
+            infoAvailabilityDate[i] = MyComponents.smallTitleText("");
 
-        gbcCalendar.ipadx = 5;
-        gbcCalendar.ipady = 2;
-        gbcCalendar.weightx = 1;
+        gbcCalendar.insets = new Insets(2, 4, 2, 4);
         gbcCalendar.fill = GridBagConstraints.HORIZONTAL;
         for (int i = 0; i < infoAvailabilityDate.length; i++) {
-            gbcCalendar.gridx = i % 7;
             gbcCalendar.gridy = i / 7;
+            gbcCalendar.gridx = i % 7 * 2;
 
+            gbcCalendar.insets.right = 4;
+            gbcCalendar.insets.left = 8;
+            availabilityPanel.add(MyComponents.bodyText("" + (i + 1)), gbcCalendar);
+            gbcCalendar.gridx++;
+            gbcCalendar.insets.right = 8;
+            gbcCalendar.insets.left = 4;
             availabilityPanel.add(infoAvailabilityDate[i], gbcCalendar);
         }
 
@@ -94,8 +93,9 @@ public class RoomInformation extends JPanel {
         this.infoNightlyRate.setText(String.format("Base Nightly Rate: %.2f", room.getPrice()));
 
         for (int i = 0; i < this.infoAvailabilityDate.length; i++) {
-            this.infoAvailabilityDate[i]
-                    .setText(String.format("%d - %c", i + 1, !room.getDayAvailability(i) ? '✓' : '✗'));
+            boolean isAvailable = room.getDayAvailability(i);
+            this.infoAvailabilityDate[i].setText("" + ((isAvailable) ? '✗' : '✓'));
+            this.infoAvailabilityDate[i].setForeground((isAvailable) ? MyStyles.color.RED : MyStyles.color.GREEN);
         }
     }
 

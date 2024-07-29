@@ -1,18 +1,29 @@
 package model;
 
-public class NightRates {
+public class NightRate {
     private int date; // dunno if i will need this but i'll keep it around
     private float nightRate;
 
-    public NightRates(int date) {
+    /**
+     * NightRate constructor
+     * 
+     * @param date integer of date
+     */
+    public NightRate(int date) {
         this.date = date;
         this.nightRate = 1.0f;
     }
 
+    /**
+     * @return int of date
+     */
     public int getDate() {
         return this.date;
     }
 
+    /**
+     * @return float of night rate
+     */
     public float getNightRate() {
         return nightRate;
     }

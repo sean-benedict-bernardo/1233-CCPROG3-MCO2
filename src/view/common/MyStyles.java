@@ -30,8 +30,11 @@ public class MyStyles {
         public static final Color LIGHTGRAY = Color.decode("#C4C4C4");
         public static final Color WHITE = Color.white;
 
+        public static final Color GREEN = Color.decode("#04b459");
+        public static final Color RED = Color.decode("#b72615");
+
         public static final Color BACKGROUND = Color.decode("#1b2a41");
-        public static final Color ACCENT = Color.decode("#1b2a41").brighter().brighter();
+        public static final Color ACCENT = Color.decode("#1b2a41").brighter();
         public static final Color FOREGROUND = WHITE;
     }
 
@@ -42,15 +45,16 @@ public class MyStyles {
                 (int) ((Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 3) / 4));
     }
 }
+
 /**
  * https://coolors.co/palette/121212-4e4e4e-c4c4c4-ffffff-ffb600-04b459-0885d9-b72615
  * 
- * --night: #121212ff;
- * --davys-gray: #4e4e4eff;
- * --silver: #c4c4c4ff;
- * --white: #ffffffff;
- * --selective-yellow: #ffb600ff;
- * --pigment-green: #04b459ff;
- * --bleu-de-france: #0885d9ff;
- * --engineering-orange: #b72615ff;
+ * --night: #121212;
+ * --davys-gray: #4e4e4e;
+ * --silver: #c4c4c4;
+ * --white: #ffffff;
+ * --selective-yellow: #ffb600;
+ * --pigment-green: #04b459;
+ * --bleu-de-france: #0885d9;
+ * --engineering-orange: #b72615;
  */

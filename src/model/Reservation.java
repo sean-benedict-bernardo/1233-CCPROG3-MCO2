@@ -3,7 +3,7 @@ package model;
 import model.rooms.Room;
 
 /**
- * This class contains the reservation class
+ * Reservation
  * 
  * simulates a reservation of a guest in a
  * hotel room for a specific duration and a certain
@@ -17,7 +17,7 @@ public class Reservation {
     public static final String NODISCOUNT = "__NULL__";
 
     private String guestName;
-    private NightRates nightRates[];
+    private NightRate nightRates[];
     private Room room;
     private String discountCode; // this is to be used in getTotalPrice
     private String id;
@@ -29,10 +29,9 @@ public class Reservation {
      * @param checkInDate  integer representation of check-in date, 1-30
      * @param checkOutDate integer representation of check-out date, 2-31
      * @param room         Room details
-     * @param basePrice    base price as passed from the instantiating Hotel
      */
-    public Reservation(String guestName, NightRates[] nightRates,
-            Room room, float basePrice, String discountCode) {
+    public Reservation(String guestName, NightRate[] nightRates,
+            Room room, String discountCode) {
         this.guestName = guestName;
         this.nightRates = nightRates;
         this.room = room;
@@ -40,19 +39,6 @@ public class Reservation {
         // assign
         this.id = String.format("%s-%02d%02d", this.room.getName(),
                 this.getCheckInDate(), this.getCheckOutDate());
-    }
-
-    /**
-     * Overloaded constructor with the absence of discount code
-     * 
-     * @param guestName    String name of guest
-     * @param checkInDate  integer representation of check-in date, 1-30
-     * @param checkOutDate integer representation of check-out date, 2-31
-     * @param room         Room details
-     */
-    public Reservation(String guestName, NightRates[] nightRates,
-            Room room, float basePrice) {
-        this(guestName, nightRates, room, basePrice, Reservation.NODISCOUNT);
     }
 
     /**
@@ -107,7 +93,7 @@ public class Reservation {
      * 
      * @return Array of all NightRates in the reservation
      */
-    public NightRates[] getNightRates() {
+    public NightRate[] getNightRates() {
         return this.nightRates;
     }
 

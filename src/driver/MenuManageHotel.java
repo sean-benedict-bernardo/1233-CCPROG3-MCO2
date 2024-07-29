@@ -34,14 +34,17 @@ public class MenuManageHotel {
     private void initToolBar() {
         JButton buttons[] = this.gui.getButtons();
 
-        buttons[0].addActionListener(e -> this.gui.showCard(0));
-        buttons[1].addActionListener(e -> this.gui.showCard(1));
-        if (this.hotel.getNumReservations() > 0)
-            buttons[2].addActionListener(e -> this.gui.showCard(2));
+        for (int i = 0; i < buttons.length - 1; i++) {
+            final int leIndexJames = i;
+            buttons[leIndexJames].addActionListener(e -> this.gui.showCard(leIndexJames));
+        }
         buttons[3].addActionListener(e -> this.hideWindow());
 
     }
 
+    /**
+     * Initializes buttons
+     */
     private void initButtons() {
         this.manageHotelPanel = (ManageHotelPanel) this.gui.getCardComponent(0);
         if (manageHotelPanel instanceof ManageHotelPanel) {
@@ -59,7 +62,6 @@ public class MenuManageHotel {
                     .addActionListener(e -> roomMethods.addRoom(manageRoomPanel.getRoomType()));
             manageRoomPanel.getRoomDelete()
                     .addActionListener(e -> roomMethods.deleteRoom(manageRoomPanel.getSelectedRoom()));
-            manageRoomPanel.getRoomDeleteAll().addActionListener(e -> roomMethods.deleteAllRooms());
         }
 
         // Do not instantiate if there are no reservations
@@ -88,21 +90,14 @@ public class MenuManageHotel {
 
         private void updateHotelName() {
             try {
-                String hotelName = manageHotelPanel.getHotelName();
+                String oldHotelName = hotel.getName();
+                String newHotelName = manageHotelPanel.getHotelName();
+                
+                hotelList.updateHotelName(hotel.getName(), newHotelName);
 
-                // Check if hotel name field is empty
-                if (hotelName == null || hotelName.isEmpty())
-                    throw new Exception("Invalid Input!");
-                // Check if hotel name is unique
-                else if (!hotelList.isUniqueHotelName(hotelName, hotel))
-                    throw new Exception(hotelName + " already exists!");
-                // Changes if hotel is different from the original
-                // Otherwise nothing should happen
-                else if (!hotel.getName().equals(hotelName)) {
-                    Alert.displayAlert("Changing name of " + hotel.getName() + " to " + hotelName);
-                    hotel.setName(hotelName);
-                }
-                // If the new name is the same as the old, nothing happens
+                if (!oldHotelName.equals(newHotelName))
+                    Alert.displayAlert("Changing name of " + oldHotelName + " to " + newHotelName);
+
             } catch (Exception omg) {
                 Alert.displayAlert(omg);
             }
@@ -174,23 +169,6 @@ public class MenuManageHotel {
             } catch (Exception e) {
                 Alert.displayAlert(e);
             }
-        }
-
-        private void deleteAllRooms() {
-            try {
-                boolean confirmDeletion = true;
-
-                if (hotel.getNumReservations() > 0)
-                    confirmDeletion = UserInput.confirmAction("Do you want to delete all rooms? Room "
-                            + hotel.getRoomNames()[0] + " will be retained to satisfy minimum");
-                if (confirmDeletion) {
-                    hotel.removeAllRooms();
-                    Alert.displayAlert("All but one rooms have been deleted.");
-                }
-            } catch (Exception e) {
-                Alert.displayAlert(e);
-            }
-            manageRoomPanel.updateContent();
         }
     }
 
