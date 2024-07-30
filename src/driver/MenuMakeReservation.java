@@ -62,13 +62,14 @@ public class MenuMakeReservation {
         int checkInDate = form.getCheckInDate();
         int checkOutDate = form.getCheckOutDate();
         String discountCode = form.getDiscountCode();
+        // Empty discountCode to be handled in create reservation
 
         try {
             if (guestName == null) {
                 throw new Exception("No name entered!");
             } else {
                 this.hotel.createReservation(guestName, checkInDate, checkOutDate, roomName,
-                        (!discountCode.isEmpty() || discountCode != null)
+                        (discountCode == null || !discountCode.isEmpty())
                                 ? discountCode
                                 : Reservation.NODISCOUNT);
                 Alert.displayAlert("Creating reservation for " + guestName);

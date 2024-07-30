@@ -162,8 +162,8 @@ public class ReservationForm extends JDialog {
     }
 
     public String getDiscountCode() {
-        String textValue = this.guestDiscountCode.getText();
-        return (!textValue.equals("")) ? textValue : null;
+        return this.guestDiscountCode.getText();
+        
     }
 
     // object getters

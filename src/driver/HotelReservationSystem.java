@@ -28,8 +28,8 @@ public class HotelReservationSystem {
 
         // testing here
         try {
-            this.hotelList.addHotel("NewHotel", 'S');
-            this.hotelList.addHotel("HotelGemal", 'D');
+            // this.hotelList.addHotel("NewHotel", 'S');
+            // this.hotelList.addHotel("HotelGemal", 'D');
 
             // Hotel myHotel = this.hotelList.getHotel("NewHotel"),
             //         myHotel2 = this.hotelList.getHotel("HotelGemal");

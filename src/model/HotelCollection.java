@@ -10,6 +10,25 @@ public class HotelCollection {
     }
 
     /**
+     * Checks if potential hotel name is unique
+     * 
+     * @param key         hotel name to check from hotelList
+     * @param hotelIgnore hotel to be skipped
+     * @return boolean whether hotel name is unique or not
+     */
+    public boolean isUniqueHotelName(String key, Hotel hotelIgnore) {
+        // Return true if
+        // - no hotel of matching name is found OR
+        // - the supplied hotel is equivalent to the hotelIgnore
+        try {
+            return this.getHotel(key) == null || hotelIgnore.getName().equals(this.getHotel(key).getName());
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Creating new hotel
      * 
      * @param newHotelName  name of new hotel
      * @param firstRoomType character of new room
@@ -26,8 +45,7 @@ public class HotelCollection {
             throw new Exception(newHotelName + " already exists!");
         else {
             this.hotelList.add(candidateHotel);
-            // System.out.printf("%s | Adding Hotel '%s'\n", "HotelCollection",
-            // candidateHotel.getName());
+            System.out.printf("%s | Adding Hotel '%s'\n", "HotelCollection", candidateHotel.getName());
         }
     }
 
@@ -37,11 +55,13 @@ public class HotelCollection {
      * @param key String name of hotel to be deleted
      */
     public void removeHotel(String key) {
-        int deleteIndex = this.getHotelIndex(key);
-        if (deleteIndex > -1) {
-            System.out.printf("%s | Deleting Hotel '%s'\n", "HotelCollection", key);
-            this.hotelList.remove(deleteIndex);
-        }
+        // Find index of room to delete
+        for (int i = 0; i < hotelList.size(); i++)
+            if (key.equals(this.hotelList.get(i).getName())) {
+                System.out.printf("%s | Deleting Hotel '%s'\n", "HotelCollection", key);
+                this.hotelList.remove(i);
+                break;
+            }
     }
 
     /**
@@ -67,45 +87,12 @@ public class HotelCollection {
     }
 
     /**
-     * Checks if potential hotel name is unique
-     * 
-     * @param key         hotel name to check from hotelList
-     * @param hotelIgnore hotel to be skipped
-     * @return boolean whether hotel name is unique or not
-     */
-    public boolean isUniqueHotelName(String key, Hotel hotelIgnore) {
-        // Return true if
-        // - no hotel of matching name is found OR
-        // - the supplied hotel is equivalent to the hotelIgnore
-        try {
-            return this.getHotel(key) == null || hotelIgnore.getName().equals(this.getHotel(key).getName());
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    /**
      * Getter for number of hotels in system
      * 
      * @return integer number of hotels in system
      */
     public int getNumHotels() {
         return this.hotelList.size();
-    }
-
-    /**
-     * Hotel Index Getter by hotel name
-     * 
-     * @param key hotel name to be searched
-     * @return integer index of hotel within hotelList, -1 if not found
-     */
-    private int getHotelIndex(String key) {
-
-        for (int i = 0; i < hotelList.size(); i++) {
-            if (key.equals(this.hotelList.get(i).getName()))
-                return i;
-        }
-        return -1;
     }
 
     /**

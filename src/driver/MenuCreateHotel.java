@@ -50,7 +50,11 @@ public class MenuCreateHotel {
      */
     public void createHotel() {
         try {
-            this.hotels.addHotel(this.gui.getHotelField().toString(), this.gui.getFirstRoomType());
+            String hotelName = this.gui.getHotelField().toString();
+            char roomType = this.gui.getFirstRoomType();
+            this.hotels.addHotel(hotelName, roomType);
+            Alert.displayAlert("Creating " + hotelName);
+            this.gui.dispose();
         } catch (Exception e) {
             Alert.displayAlert(e);
         }

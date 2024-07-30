@@ -35,7 +35,9 @@ public class Reservation {
         this.guestName = guestName;
         this.nightRates = nightRates;
         this.room = room;
-        this.discountCode = discountCode;
+        this.discountCode = (discountCode != null && !discountCode.isEmpty())
+                ? discountCode
+                : Reservation.NODISCOUNT;
         // assign
         this.id = String.format("%s-%02d%02d", this.room.getName(),
                 this.getCheckInDate(), this.getCheckOutDate());

@@ -28,7 +28,7 @@ public class ManageRooms extends JPanel {
     private JComboBox<String> roomSelect;
     private JProgressBar numRooms;
 
-    private JButton roomAdd, roomDelete, roomDeleteAll;
+    private JButton roomAdd, roomDelete;
 
     public ManageRooms(Hotel hotel) {
         super(new BorderLayout());
@@ -41,7 +41,6 @@ public class ManageRooms extends JPanel {
     private void initComponents() {
         this.roomAdd = MyComponents.button("Add Room");
         this.roomDelete = MyComponents.button("Delete Room");
-        this.roomDeleteAll = MyComponents.button("Delete All Rooms");
 
         this.newRoomType = new RoomTypeSelector();
         this.roomSelect = new JComboBox<>(this.hotel.getRoomNames());

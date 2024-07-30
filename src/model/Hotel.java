@@ -68,7 +68,7 @@ public class Hotel {
      * @return Returns true if hotel name is valid, i.e. nonempty or null
      */
     public static boolean isValidHotelName(String name) {
-        return !name.isEmpty() && name != null;
+        return name != null && !name.isEmpty();
     }
 
     /*
@@ -214,6 +214,7 @@ public class Hotel {
      * @param checkOutDate date when guest will check-out of the hotel
      * @param roomName     name of the room the guest will be reserved
      *                     assumed to be the string of an integer from 1 - 50
+     * @param discountCode discountCode to be applied, NO
      * @throws Exception if either the room is not found or
      *                   room is occupied in the given date range
      */
@@ -222,7 +223,13 @@ public class Hotel {
         int roomIndex = getRoomIndex(roomName);
         Room localRoom = (roomIndex != -1) ? this.roomsList.get(roomIndex) : null;
 
-        if (localRoom == null)
+        if (discountCode == null || discountCode.isEmpty()) {
+            discountCode = Reservation.NODISCOUNT;
+        }
+
+        if (guestName == null || guestName.isEmpty())
+            throw new Exception("No name entered!");
+        else if (localRoom == null)
             throw new Exception("Room not found!");
         else if (!localRoom.checkRoomAvailability(checkInDate, checkOutDate))
             throw new Exception("Given dates are either invalid or are already booked!");
