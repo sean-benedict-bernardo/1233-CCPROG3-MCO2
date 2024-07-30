@@ -273,7 +273,7 @@ public class MenuManageHotel {
                 boolean isEmpty = hotel.getNumReservations() == 0;
                 // Exit manage Reservation menu if there are no more reservations
                 if (isEmpty) {
-                    Alert.displayAlert("No more rooms\nexiting tab.");
+                    Alert.displayAlert("No more reservations\nexiting tab.");
                     gui.updateReservationButton(isEmpty);
                     manageHotelPanel.updateValidity(isEmpty);
                     gui.showCard(0);
