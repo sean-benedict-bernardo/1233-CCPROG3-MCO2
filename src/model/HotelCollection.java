@@ -2,9 +2,19 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * This class collates hotels and contains
+ * relevant methods that require all hotels to be checeked
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class HotelCollection {
     private ArrayList<Hotel> hotelList;
 
+    /**
+     * HotelCollection constructor
+     */
     public HotelCollection() {
         this.hotelList = new ArrayList<>();
     }
@@ -38,8 +48,6 @@ public class HotelCollection {
         // Empty and invalid newHotelName are thrown here
         Hotel candidateHotel = new Hotel(newHotelName, firstRoomType);
 
-        System.out.println("addHotel: " + !this.isUniqueHotelName(newHotelName, null));
-
         // Check for uniqueness
         if (!this.isUniqueHotelName(newHotelName, null))
             throw new Exception(newHotelName + " already exists!");
@@ -69,7 +77,8 @@ public class HotelCollection {
      * 
      * @param oldHotelName name of hotel to be changed
      * @param newHotelName name of new hotel name
-     * @throws Exception thrown if oldHotel is not found, newHotelName is invalid or
+     * @throws Exception thrown if oldHotel is not found,
+     *                   newHotelName is invalid or
      *                   an already existing name
      */
     public void updateHotelName(String oldHotelName, String newHotelName) throws Exception {
@@ -99,7 +108,7 @@ public class HotelCollection {
      * Hotel getter by hotel name
      * 
      * @param key
-     * @return Hotel
+     * @return matched hotel, null if none found
      */
     public Hotel getHotel(String key) {
         for (Hotel hotel : hotelList) {
@@ -110,6 +119,11 @@ public class HotelCollection {
         return null;
     }
 
+    /**
+     * Getter for all hotels
+     * 
+     * @return ArrayList of Hotels
+     */
     public ArrayList<Hotel> getHotels() {
         return this.hotelList;
     }

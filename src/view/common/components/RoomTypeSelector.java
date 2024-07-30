@@ -8,10 +8,20 @@ import javax.swing.JRadioButton;
 
 import view.common.MyStyles;
 
+/**
+ * RoomTypeSelector is a JPanel that enables
+ * users to select a specific roomType
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class RoomTypeSelector extends JPanel {
     private ButtonGroup roomTypeButtonGroup;
     private JRadioButton roomTypeButtons[];
 
+    /**
+     * RoomTypeSelector Constructor
+     */
     public RoomTypeSelector() {
         super(new FlowLayout(FlowLayout.LEFT, 4, 4));
 
@@ -40,7 +50,7 @@ public class RoomTypeSelector extends JPanel {
     }
 
     /**
-     * JPanel initilizer
+     * Initializes the JPanel
      */
     public void initFrame() {
         setBackground(MyStyles.color.BACKGROUND);

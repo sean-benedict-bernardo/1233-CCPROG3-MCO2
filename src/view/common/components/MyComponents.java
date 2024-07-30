@@ -6,9 +6,16 @@ import javax.swing.*;
 
 import view.common.MyStyles;
 
+/**
+ * MyComponents is a collection of standardized
+ * JComponents for better styling
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class MyComponents {
-    public static int ITALICS = 1;
-    public static int BOLD = 2;
+    public static final int ITALICS = 1;
+    public static final int BOLD = 2;
 
     /**
      * Custom JLabel as title component
@@ -67,7 +74,7 @@ public class MyComponents {
     }
 
     /**
-     * Custom JLabel empty
+     * Empty custom JLabel header component
      * 
      * @return JLabel header
      */
@@ -78,8 +85,9 @@ public class MyComponents {
     /**
      * Custom JLabel as body component with custom alignment
      * 
-     * @param align SwingConstants of text alignment
-     * @param text  to be put inside body
+     * @param align     SwingConstants of text alignment
+     * @param text      to be put inside body
+     * @param fontStyle integer as by the MyComponents constants
      * @return JLabel body
      */
     public static JLabel bodyText(String text, int align, int fontStyle) {
@@ -89,10 +97,10 @@ public class MyComponents {
         jLabel.setForeground(MyStyles.color.FOREGROUND);
 
         switch (fontStyle) {
-            case 1:
+            case MyComponents.ITALICS:
                 jLabel.setFont(MyStyles.font.ITALICS);
                 break;
-            case 2:
+            case MyComponents.BOLD:
                 jLabel.setFont(new Font("Sans Serif", Font.BOLD, 14));
                 break;
             default:
@@ -112,6 +120,12 @@ public class MyComponents {
         return bodyText(text, align, 0);
     }
 
+    /**
+     * Custom JLabel with default alignment and style
+     * 
+     * @param text to be put inside body
+     * @return JLabel body
+     */
     public static JLabel bodyText(String text) {
         return bodyText(text, SwingConstants.CENTER, 0);
     }
@@ -168,6 +182,15 @@ public class MyComponents {
         return jtextfield;
     }
 
+    /**
+     * Wrapper for custom JProgressBar
+     * 
+     * @param min   minimum value
+     * @param max   maximum value
+     * @param value starting value
+     * @param text  to be shown in the JProgressBar
+     * @return
+     */
     public static JProgressBar progressBar(int min, int max, int value, String text) {
         // UIManager stuff
         UIManager.put("ProgressBar.foreground", MyStyles.color.FOREGROUND);
@@ -177,20 +200,20 @@ public class MyComponents {
 
         JProgressBar jProgressBar = new JProgressBar(min, max);
         jProgressBar.setValue(value);
-        jProgressBar.setString(text);
+        jProgressBar.setString((text != null && !text.isEmpty()) ? text : "");
         jProgressBar.setStringPainted(true);
         return jProgressBar;
     }
 
+    /**
+     * Overloaded JProgress with default text
+     * 
+     * @param min
+     * @param max
+     * @param value
+     * @return
+     */
     public static JProgressBar progressBar(int min, int max, int value) {
-        // UIManager stuff
-        UIManager.put("ProgressBar.foreground", MyStyles.color.FOREGROUND);
-        UIManager.put("ProgressBar.background", MyStyles.color.ACCENT);
-        UIManager.put("ProgressBar.selectionForeground", MyStyles.color.BLACK);
-        UIManager.put("ProgressBar.selectionBackground", MyStyles.color.WHITE);
-
-        JProgressBar jProgressBar = new JProgressBar(min, max);
-        jProgressBar.setValue(value);
-        return jProgressBar;
+        return progressBar(min, max, value, null);
     }
 }

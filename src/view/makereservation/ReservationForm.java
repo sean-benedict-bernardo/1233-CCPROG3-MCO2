@@ -8,6 +8,13 @@ import model.rooms.Room;
 import view.common.MyStyles;
 import view.common.components.MyComponents;
 
+/**
+ * ReservationForm contains the GUI
+ * that allows user to create hotel
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class ReservationForm extends JDialog {
     private JPanel containerPanel;
 
@@ -23,6 +30,11 @@ public class ReservationForm extends JDialog {
     private JButton submitReservation;
     private JButton cancelReservation;
 
+    /**
+     * ReservationForm Constructor
+     * 
+     * @param hotel Hotel whose will get new reservation
+     */
     public ReservationForm(Hotel hotel) {
         super((Dialog) null);
 
@@ -39,6 +51,9 @@ public class ReservationForm extends JDialog {
         pack();
     }
 
+    /**
+     * Initializes the Frame
+     */
     public void initFrame(Hotel hotel) {
         this.containerPanel = new JPanel(new GridBagLayout());
         this.containerPanel.setBorder(BorderFactory.createEmptyBorder(16, 24, 16, 24));
@@ -58,7 +73,6 @@ public class ReservationForm extends JDialog {
 
         // NORTH
         add(MyComponents.titleText("Booking under " + hotel.getName()), BorderLayout.NORTH);
-
 
         // Adding Components
 
@@ -120,6 +134,11 @@ public class ReservationForm extends JDialog {
         add(this.containerPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Initializes the calendar of availability
+     * 
+     * @param room info whose dates are reference
+     */
     private void initAvailabilityCalendar(Room room) {
         this.availabilityPanel = new JPanel(new GridBagLayout());
         this.availabilityPanel.setBackground(MyStyles.color.BACKGROUND);
@@ -149,37 +168,77 @@ public class ReservationForm extends JDialog {
         return (!textValue.equals("")) ? textValue : null;
     }
 
+    /**
+     * Getter for room selection
+     * 
+     * @return selected room name from dropdown
+     */
     public String getRoomSelection() {
         return this.guestRoomSelection.getSelectedItem().toString();
     }
 
+    /**
+     * Getter for checkInDate
+     * 
+     * @return checkInDate from JSpinner
+     */
     public int getCheckInDate() {
         return Integer.parseInt(this.guestCheckIn.getValue().toString());
     }
 
+    /**
+     * Getter for CheckOutDate
+     * 
+     * @return CheckOutDate from JSpinner
+     */
     public int getCheckOutDate() {
         return Integer.parseInt(this.guestCheckOut.getValue().toString());
     }
 
+    /**
+     * Getter for discountCode
+     * 
+     * @return discountCode from JTextInput
+     */
     public String getDiscountCode() {
         return this.guestDiscountCode.getText();
-        
+
     }
 
     // object getters
 
+    /**
+     * Getter for create reservation button
+     * 
+     * @return JButton
+     */
     public JButton getSubmitButton() {
         return this.submitReservation;
     }
 
+    /**
+     * Getter for cancel reservation button
+     * 
+     * @return JButton
+     */
     public JButton getCancelButton() {
         return this.cancelReservation;
     }
 
+    /**
+     * Getter the entire JComboBox
+     * 
+     * @return JComboBox of room selection
+     */
     public JComboBox<String> getRoomSelectionObject() {
         return this.guestRoomSelection;
     }
 
+    /**
+     * Updates calendar of availability
+     * 
+     * @param room whose availability is shown
+     */
     public void updateCalendar(Room room) {
         for (int i = 0; i < infoAvailabilityDate.length; i++)
             infoAvailabilityDate[i]

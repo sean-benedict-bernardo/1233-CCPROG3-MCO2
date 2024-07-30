@@ -30,6 +30,11 @@ public class ManageHotelPanel extends JPanel {
     private JSpinner changeDateModifier[];
     private JButton deleteHotel, saveHotelName, saveBasePrice, saveDateModifier;
 
+    /**
+     * ManageHotelPanel
+     * 
+     * @param hotel Hotel to be manipulated
+     */
     public ManageHotelPanel(Hotel hotel) {
         super(new BorderLayout());
         this.hotel = hotel;
@@ -41,6 +46,9 @@ public class ManageHotelPanel extends JPanel {
         this.initFrame();
     }
 
+    /**
+     * Initializes the Components
+     */
     private void initComponents() {
         this.changeHotelName = MyComponents.textField(this.hotel.getName());
         this.changeBasePrice = MyComponents.textField(String.format("%.2f", this.hotel.getBasePrice()));
@@ -53,6 +61,9 @@ public class ManageHotelPanel extends JPanel {
         this.saveHotelName = MyComponents.button("Update Hotel Name");
     }
 
+    /**
+     * Initializes the Frame
+     */
     private void initFrame() {
         JPanel containerPanel = new JPanel(new GridBagLayout());
         containerPanel.setBackground(MyStyles.color.BACKGROUND);
@@ -101,6 +112,9 @@ public class ManageHotelPanel extends JPanel {
         add(containerPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Initializes the Date Price Modifer gui components
+     */
     private void initDatePriceModifier() {
         this.panelDateModifier = new JPanel(new GridBagLayout());
         this.panelDateModifier.setBackground(MyStyles.color.BACKGROUND);
@@ -154,10 +168,21 @@ public class ManageHotelPanel extends JPanel {
         }
     }
 
+    /**
+     * Hotel name getter from text field
+     * 
+     * @return the hotel name that the user entered
+     */
     public String getHotelName() {
         return this.changeHotelName.getText();
     }
 
+    /**
+     * Getter from input field
+     * 
+     * @return new base price
+     * @throws Exception If user tries to enter a string
+     */
     public float getBasePrice() throws Exception {
         try {
             return Float.parseFloat(this.changeBasePrice.getText());
@@ -166,6 +191,11 @@ public class ManageHotelPanel extends JPanel {
         }
     }
 
+    /**
+     * Getter for JSpinner input values
+     * 
+     * @return array of floats that will update the date price modifer
+     */
     public float[] getDateModifier() {
         float[] dateModifier = new float[this.changeDateModifier.length];
 

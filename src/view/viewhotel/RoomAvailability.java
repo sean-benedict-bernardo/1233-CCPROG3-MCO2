@@ -20,7 +20,7 @@ public class RoomAvailability extends JPanel {
         setBackground(MyStyles.color.BACKGROUND);
         setBackground(MyStyles.color.FOREGROUND);
 
-        this.dateSelector = new DateSelector(hotel);
+        this.dateSelector = new DateSelector();
         this.roomsAvailability = new JLabel[hotel.getNumRooms()];
         this.initFrame(hotel);
     }

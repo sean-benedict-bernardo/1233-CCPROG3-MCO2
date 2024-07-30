@@ -8,10 +8,22 @@ import view.common.MyStyles;
 
 import java.util.ArrayList;
 
+/**
+ * RoomSelector is a JPanel that enables
+ * users to select a specific room
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class RoomSelector extends JPanel {
     private ArrayList<JButton> roomButtons;
     private JScrollPane roomSelect;
 
+    /**
+     * RoomSelector Constructor
+     * 
+     * @param rooms ArrayList of Room to create buttons with
+     */
     public RoomSelector(ArrayList<Room> rooms) {
         super(new BorderLayout());
         this.roomButtons = new ArrayList<>();
@@ -19,6 +31,11 @@ public class RoomSelector extends JPanel {
         this.initFrame(rooms);
     }
 
+    /**
+     * Initializes the Frame
+     * 
+     * @param rooms ArrayList of rooms to show
+     */
     private void initFrame(ArrayList<Room> rooms) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;

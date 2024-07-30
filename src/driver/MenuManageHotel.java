@@ -12,6 +12,15 @@ import view.managehotel.ManageHotelPanel;
 import view.managehotel.ManageReservations;
 import view.managehotel.ManageRooms;
 
+/**
+ * MenuManageHotel is the Controller class
+ * for the "Manage Hotel" functionalities.
+ * 
+ * Specific functionalities are explained in the nested class
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class MenuManageHotel {
     private ManageHotel gui;
     private Hotel hotel;
@@ -21,6 +30,12 @@ public class MenuManageHotel {
     private ManageRooms manageRoomPanel;
     private ManageReservations manageReservationsPanel;
 
+    /**
+     * MenuManageHotel constructor
+     * 
+     * @param hotel
+     * @param hotelList for reference
+     */
     public MenuManageHotel(Hotel hotel, HotelCollection hotelList) {
         this.hotel = hotel;
         this.hotelList = hotelList;
@@ -31,6 +46,9 @@ public class MenuManageHotel {
         this.gui.setVisible(true);
     }
 
+    /**
+     * Initializes JToolBar
+     */
     private void initToolBar() {
         JButton buttons[] = this.gui.getButtons();
 
@@ -79,20 +97,34 @@ public class MenuManageHotel {
     }
 
     /**
-     * InnerMenuManageHotel
+     * ManageHotelMethods is the nested class
+     * for the "Manage Hotel" functionalities pertaining
+     * to modifying the following the hotel level info
+     * - Hotel Name
+     * - Base Price
+     * - Date Price Modifer
+     * 
+     * @author Sean Benedict Bernardo
+     * @author Luis Andrew Madridijo
      */
     public class ManageHotelMethods {
         private ManageHotelPanel manageHotelPanel;
 
+        /**
+         * ManageHotelMethods Constructor
+         */
         public ManageHotelMethods() {
             this.manageHotelPanel = (ManageHotelPanel) gui.getCardComponent(0);
         };
 
+        /**
+         * Updates hotel's name
+         */
         private void updateHotelName() {
             try {
                 String oldHotelName = hotel.getName();
                 String newHotelName = manageHotelPanel.getHotelName();
-                
+
                 hotelList.updateHotelName(hotel.getName(), newHotelName);
 
                 if (!oldHotelName.equals(newHotelName))
@@ -103,18 +135,23 @@ public class MenuManageHotel {
             }
         }
 
+        /**
+         * Updates hotel's base price
+         */
         private void updateBasePrice() {
             try {
                 float basePrice = manageHotelPanel.getBasePrice();
 
                 // Exceptions are done within setBasePrice
                 hotel.setBasePrice(basePrice);
-
             } catch (Exception omg) {
                 Alert.displayAlert(omg);
             }
         }
 
+        /**
+         * Updates Date Price Modifier of all dates
+         */
         private void updateDatePriceModifier() {
             try {
                 float[] dateModifier = manageHotelPanel.getDateModifier();
@@ -126,6 +163,9 @@ public class MenuManageHotel {
             }
         }
 
+        /**
+         * 
+         */
         private void deleteHotel() {
             try {
                 boolean hasConfirmed = UserInput.confirmAction("Do you want to delete this hotel");
@@ -142,13 +182,29 @@ public class MenuManageHotel {
         }
     }
 
+    /**
+     * ManageRoomsMethods is the nested class
+     * for the "Manage Hotel" functionalities
+     * pertaining to adding and removing rooms
+     * 
+     * @author Sean Benedict Bernardo
+     * @author Luis Andrew Madridijo
+     */
     public class ManageRoomsMethods {
         private ManageRooms manageRoomPanel;
 
+        /**
+         * ManageRoomsMethods constructor
+         */
         public ManageRoomsMethods() {
             this.manageRoomPanel = (ManageRooms) gui.getCardComponent(1);
         }
 
+        /**
+         * Adds room to hotel
+         * 
+         * @param roomType character of room type
+         */
         private void addRoom(char roomType) {
             try {
                 Room localRoom = hotel.addRoom(roomType);
@@ -160,6 +216,11 @@ public class MenuManageHotel {
             }
         }
 
+        /**
+         * Deletes room from hotel
+         * 
+         * @param selectedRoom String ID of room to be deleted
+         */
         private void deleteRoom(String selectedRoom) {
             try {
                 hotel.removeRoom(selectedRoom);
@@ -172,24 +233,45 @@ public class MenuManageHotel {
         }
     }
 
+    /**
+     * ManageReservationsMethods is the nested class
+     * for the "Manage Hotel" functionalities
+     * pertaining removing reservation
+     * 
+     * @author Sean Benedict Bernardo
+     * @author Luis Andrew Madridijo
+     */
     public class ManageReservationsMethods {
         private ManageReservations manageReservationsPanel;
 
+        /**
+         * ManageReservationsMethods constructor
+         */
         public ManageReservationsMethods() {
             this.manageReservationsPanel = (ManageReservations) gui.getCardComponent(2);
         }
 
+        /**
+         * Updates the JPanel when user switches
+         * reservation from the JComboBox
+         * 
+         * @param id
+         */
         private void updateReservationInfo(String id) {
             manageReservationsPanel.updateReservation(id);
         }
 
+        /**
+         * Handles the deletion of reservation
+         * also updates whether the tab is still viewable
+         */
         private void deleteReservation() {
             try {
                 String deleteId = manageReservationsPanel.getSelectedReservation();
                 hotel.removeReservation(deleteId);
 
                 boolean isEmpty = hotel.getNumReservations() == 0;
-                // Exit manage Reservation menu
+                // Exit manage Reservation menu if there are no more reservations
                 if (isEmpty) {
                     Alert.displayAlert("No more rooms\nexiting tab.");
                     gui.updateReservationButton(isEmpty);
@@ -204,6 +286,9 @@ public class MenuManageHotel {
         }
     }
 
+    /**
+     * Hides gui window
+     */
     public void hideWindow() {
         System.out.println("ManageHotel: window hidden");
         this.gui.setVisible(false);

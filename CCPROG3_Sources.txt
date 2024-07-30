@@ -1,3 +1,4 @@
+Coolors.co. n.d. https://coolors.co/palette/121212-4e4e4e-c4c4c4-ffffff-ffb600-04b459-0885d9-b72615
 The Java™ Tutorials: Creating a GUI With Swing. n.d. https://docs.oracle.com/javase%2Ftutorial%2Fuiswing%2F%2F/
 Oracle. n.d. How to Use GridBagLayout. https://docs.oracle.com/javase%2Ftutorial%2Fuiswing%2F%2F/layout/gridbag.html
 Javatpoint. n.d. Java Swing Tutorial. https://www.javatpoint.com/java-swing

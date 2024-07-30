@@ -12,7 +12,6 @@ import view.common.auxiliary.Alert;
  * @author Sean Benedict Bernardo
  * @author Luis Andrew Madridijo
  */
-
 public class Hotel {
     public static final int NUM_NIGHTS = 31;
 
@@ -94,15 +93,17 @@ public class Hotel {
      * Add a room to roomsList
      * naming convention is room type followed by
      * 
-     * @param roomType - integer representation of what type of room is to be added
+     * @param roomType character representation of what type of room is to be added
+     * @return added Room
+     * @throws Exception if the hotel is full
      */
 
     public Room addRoom(char roomType) throws Exception {
+        if (compareRoomType.get(roomType) == -1)
+            roomType = 'S';
+
         if (this.roomsList.size() >= 50) {
             throw new Exception("Hotel is full");
-        } else if (compareRoomType.get(roomType) == -1) {
-            // should not be possible as we are going to be using buttons for this
-            throw new Exception("Invalid room type");
         } else if (this.roomsList.size() < 50 && compareRoomType.get(roomType) != -1) {
             int roomNum = 1;
 
@@ -215,7 +216,8 @@ public class Hotel {
      * @param roomName     name of the room the guest will be reserved
      *                     assumed to be the string of an integer from 1 - 50
      * @param discountCode discountCode to be applied, NO
-     * @throws Exception if either the room is not found or
+     * @throws Exception if the guest name is empty,
+     *                   either the room is not found, or
      *                   room is occupied in the given date range
      */
     public void createReservation(String guestName, int checkInDate, int checkOutDate, String roomName,
@@ -336,6 +338,11 @@ public class Hotel {
         }
     }
 
+    /**
+     * Getter for all night rates
+     * 
+     * @return Array of NightRate of all night rates
+     */
     public NightRate[] getNightRates() {
         return this.nightRates;
     }
@@ -351,10 +358,18 @@ public class Hotel {
         return (0 <= index && index <= 30) ? this.nightRates[index] : null;
     }
 
+    /**
+     * 
+     * @param index   index night rate to be modified
+     * @param newRate new rate to be applied to the room
+     * @throws Exception if the hotel still has reservations, the index is out of
+     *                   range, or the new rate is outside of the specified
+     *                   50% - 150% range
+     */
     public void setNightRate(int index, float newRate) throws Exception {
         if (this.getNumReservations() > 0)
             throw new Exception("There are still active bookings!");
-        if (index < 0 || 30 < index)
+        if (index < 0 || Hotel.NUM_NIGHTS < index)
             throw new Exception("Index out of range!");
         else if (newRate < 0.5f || 1.5f < newRate)
             throw new Exception("New rate is too " + ((newRate < 0.5f) ? "low" : "high") + "!");

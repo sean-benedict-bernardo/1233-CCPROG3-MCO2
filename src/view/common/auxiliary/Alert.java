@@ -4,6 +4,9 @@ import javax.swing.JOptionPane;
 
 /**
  * The Alert class is a wrapper of common showMessageDialog calls
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
  */
 public class Alert {
     /**
@@ -21,6 +24,6 @@ public class Alert {
      * @param message String to be displayed
      */
     public static void displayAlert(Exception exception) {
-        JOptionPane.showMessageDialog(null, exception.getMessage(), "Alert!", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 }

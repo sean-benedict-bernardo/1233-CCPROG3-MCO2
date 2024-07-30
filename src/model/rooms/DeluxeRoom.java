@@ -1,7 +1,7 @@
 package model.rooms;
 
 /**
- * DeluxRoom extends Room with the difference of
+ * DeluxeRoom extends Room with the difference of
  * its price being 20% more expensive than the base price
  * 
  * @author Sean Benedict Bernardo

@@ -5,6 +5,12 @@ import javax.swing.JOptionPane;
 import model.Hotel;
 import model.HotelCollection;
 
+/**
+ * UserInput is a wrapper class of common JOptionPane calls
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class UserInput {
     public static Hotel selectHotel(HotelCollection hotelList) throws Exception {
 

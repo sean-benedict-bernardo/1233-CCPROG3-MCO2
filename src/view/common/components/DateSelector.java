@@ -6,21 +6,32 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import model.Hotel;
 import view.common.MyStyles;
 
+/**
+ * DateSelector is a JPanel of 31 buttons corresponding to a specific date
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class DateSelector extends JPanel {
     private JButton buttons[] = new JButton[Hotel.NUM_NIGHTS];
 
-    public DateSelector(Hotel hotel) {
+    /**
+     * DateSelector Constructor
+     */
+    public DateSelector() {
         setLayout(new GridBagLayout());
         this.initButtons();
         setBackground(MyStyles.color.BACKGROUND);
     }
 
+    /**
+     * Initilaizes buttons
+     */
     public void initButtons() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(0, 0, 0, 0);
@@ -39,14 +50,13 @@ public class DateSelector extends JPanel {
         }
     }
 
+    /**
+     * Getter for all buttons
+     * to be assigned iteratively
+     * 
+     * @return Array of JButton[] 
+     */
     public JButton[] getButtons() {
         return this.buttons;
-    }
-
-    public static void main(String[] args) {
-        JFrame myJFrame = new JFrame();
-        myJFrame.add(new DateSelector(null));
-        myJFrame.pack();
-        myJFrame.setVisible(true);
     }
 }

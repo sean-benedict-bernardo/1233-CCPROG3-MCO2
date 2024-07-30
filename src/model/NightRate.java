@@ -1,7 +1,14 @@
 package model;
 
+/**
+ * This class contains the logic
+ * pertaining to the Date Price Modifer
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class NightRate {
-    private int date; // dunno if i will need this but i'll keep it around
+    private int date;
     private float nightRate;
 
     /**

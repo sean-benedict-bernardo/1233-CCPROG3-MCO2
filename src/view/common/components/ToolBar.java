@@ -4,6 +4,12 @@ import javax.swing.*;
 
 import view.common.MyStyles;
 
+/**
+ * ToolBar is a JToolBar that collates the buttons of the functionalities
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class ToolBar extends JToolBar {
     private JButton buttons[];
 

@@ -10,6 +10,9 @@ import java.awt.*;
 public class HomeMenu extends JFrame {
     private JButton buttonsList[];
 
+    /**
+     * HomeMenu Constructor
+     */
     public HomeMenu() {
         setLayout(new BorderLayout());
 
@@ -21,6 +24,9 @@ public class HomeMenu extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
+    /**
+     * Initializes the Frame
+     */
     public void initFrame() {
         setBackground(MyStyles.color.BACKGROUND);
         setForeground(MyStyles.color.FOREGROUND);
@@ -61,6 +67,11 @@ public class HomeMenu extends JFrame {
         add(buttonPanelContain, BorderLayout.CENTER);
     }
 
+    /**
+     * Getter for Main Menu buttons
+     * 
+     * @return Array of Buttons
+     */
     public JButton[] getButtons() {
         return this.buttonsList;
     }

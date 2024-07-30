@@ -46,7 +46,7 @@ public class MenuCreateHotel {
 
     /**
      * Adds a new hotel to the system with a unique name provided by the user
-     * This includes a check on whether the user entered a unique hotel name
+     * Checks for uniqueness are done in the HotelCollection
      */
     public void createHotel() {
         try {

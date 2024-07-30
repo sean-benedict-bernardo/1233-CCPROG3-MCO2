@@ -7,6 +7,9 @@ import model.Hotel;
 import view.common.MyStyles;
 import view.common.components.MyComponents;
 
+/**
+ * HotelInfo
+ */
 public class HotelInfo extends JPanel {
     private Hotel hotel;
     private JPanel nightlyRates;

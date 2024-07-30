@@ -107,6 +107,8 @@ public class Room {
     }
 
     /**
+     * Getter for number of reserved nights in the hotel
+     * 
      * @return integer of the number of nights with daysReserved
      */
 
@@ -128,7 +130,7 @@ public class Room {
      */
     public boolean getDayAvailability(int index) throws ArrayIndexOutOfBoundsException {
         // ternary is safety check for in index access
-        
+
         if (0 <= index && index <= 30)
             return this.daysReserved[index];
         else
@@ -166,9 +168,9 @@ public class Room {
 
     /**
      * Updates price as Hotel is updated
-     * Doesn't do anything if price is less than 100.0
      * 
      * @param price Float of new nightly room rate of hotel and room
+     * @throws Exception if the input price is too low
      */
     public void setPrice(float price) throws Exception {
         // should already be handled in Hotel but this is an added safety net

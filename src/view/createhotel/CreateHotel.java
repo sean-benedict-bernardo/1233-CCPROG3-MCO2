@@ -7,12 +7,22 @@ import view.common.MyStyles;
 import view.common.components.MyComponents;
 import view.common.components.RoomTypeSelector;
 
+/**
+ * CreateHotel contains the GUI
+ * that allows user to create hotel
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class CreateHotel extends JDialog {
     private JPanel createHotel;
     private JTextField hotelNameField;
     private RoomTypeSelector roomTypeSelector;
     private JButton createHotelButton, cancelCreateButton;
 
+    /**
+     * CreateHotel constructor
+     */
     public CreateHotel() {
         this.createHotel = new JPanel(new GridBagLayout());
         this.createHotel.setBackground(MyStyles.color.BACKGROUND);

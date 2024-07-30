@@ -6,7 +6,7 @@ import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
 /**
- * This class contains standard fonts, colors, and
+ * This class contains standard fonts, colors, and other stuff
  * 
  * @author Sean Benedict Bernardo
  * @author Luis Andrew Madridijo
@@ -45,16 +45,3 @@ public class MyStyles {
                 (int) ((Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 3) / 4));
     }
 }
-
-/**
- * https://coolors.co/palette/121212-4e4e4e-c4c4c4-ffffff-ffb600-04b459-0885d9-b72615
- * 
- * --night: #121212;
- * --davys-gray: #4e4e4e;
- * --silver: #c4c4c4;
- * --white: #ffffff;
- * --selective-yellow: #ffb600;
- * --pigment-green: #04b459;
- * --bleu-de-france: #0885d9;
- * --engineering-orange: #b72615;
- */

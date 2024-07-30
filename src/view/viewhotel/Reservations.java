@@ -11,6 +11,9 @@ import view.common.MyStyles;
 import view.common.components.MyComponents;
 import view.common.components.ReservationSelector;
 
+/**
+ * Reservations is a JPanel contains the 
+ */
 public class Reservations extends JPanel {
     private ReservationSelector reservationSelectPanel;
     private JPanel infoContainerPanel;

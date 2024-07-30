@@ -3,9 +3,7 @@ package model;
 import model.rooms.Room;
 
 /**
- * Reservation
- * 
- * simulates a reservation of a guest in a
+ * Simulates a reservation of a guest in a
  * hotel room for a specific duration and a certain
  * price per night.
  * 
@@ -112,7 +110,7 @@ public class Reservation {
      * Getter for night price
      * 
      * @param index integer of night relative to this.nightRates
-     * @return float nightPrice()
+     * @return float of index night price, 0.0f if out of bounds
      */
     public float getNightPrice(int index) {
         return (0 <= index && index < nightRates.length)
@@ -121,8 +119,10 @@ public class Reservation {
     }
 
     /**
+     * Computes the raw total of the reservation
+     * a.k.a. before the discounts are applied
      * 
-     * @return
+     * @return float of raw total
      */
     public float getRawTotal() {
         float total = 0;
@@ -134,7 +134,7 @@ public class Reservation {
     }
 
     /**
-     * Getter for deduction
+     * Getter for deduction due to discount
      * 
      * @return float amount to be deducted from raw total
      */
