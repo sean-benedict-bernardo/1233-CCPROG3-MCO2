@@ -1,3 +1,8 @@
-Ted Hopp & Frederik Wordenskjold. Answer to "Static Initialization Blocks." https://stackoverflow.com/a/2420466
-Adeel Ansari. "How to get int value from spinner." https://stackoverflow.com/a/15400823
-user802421. How to Disable GUI Button in Java. https://stackoverflow.com/a/6835781
+The Java™ Tutorials: Creating a GUI With Swing. n.d. https://docs.oracle.com/javase%2Ftutorial%2Fuiswing%2F%2F/
+Oracle. n.d. How to Use GridBagLayout. https://docs.oracle.com/javase%2Ftutorial%2Fuiswing%2F%2F/layout/gridbag.html
+Javatpoint. n.d. Java Swing Tutorial. https://www.javatpoint.com/java-swing
+Ted Hopp & Frederik Wordenskjold. 2016. Answer to "Static Initialization Blocks." https://stackoverflow.com/a/2420466 
+Adeel Ansari. 2017. Answer to "How to get int value from spinner." https://stackoverflow.com/a/15400823 
+user802421. 2011. How to Disable GUI Button in Java. https://stackoverflow.com/a/6835781 
+Lukas Knuth. 2013. Answer to “Flush/Clear System.in (stdin) before reading.” https://stackoverflow.com/a/18275695
+RobertMS. 2012. Answer to “How to show usage of static methods UML Class Diagram.” https://stackoverflow.com/a/11213698
