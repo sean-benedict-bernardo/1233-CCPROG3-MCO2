@@ -341,9 +341,10 @@ public class Hotel {
     }
 
     /**
+     * Getter for a specific night
      * 
-     * @param date integer representation of date
-     * @return NightRate
+     * @param index integer of specific night
+     * @return NightRate at given index
      */
 
     public NightRate getNightRate(int index) {

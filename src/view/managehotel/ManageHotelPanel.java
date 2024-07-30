@@ -78,11 +78,11 @@ public class ManageHotelPanel extends JPanel {
                 { MyComponents.headerText("Name:"), this.changeHotelName, this.saveHotelName },
                 { MyComponents.headerText("Base Price:"), this.changeBasePrice, this.saveBasePrice },
                 { MyComponents.headerText("Date Price Modifier"), this.saveDateModifier },
-                {this.panelDateModifier},
-                {this.deleteHotel},
-                {MyComponents.bodyText(
-                    "<html><body style='text-align: center;'>NOTE: Date price modifier and base room rates <br> cannot be changed while there is still an active reservation</body></html>",
-                    SwingConstants.CENTER, MyComponents.ITALICS)}
+                { this.panelDateModifier },
+                { this.deleteHotel },
+                { MyComponents.bodyText(
+                        "<html><body style='text-align: center;'>NOTE: Date price modifier and base room rates <br> cannot be changed while there is still an active reservation</body></html>",
+                        SwingConstants.CENTER, MyComponents.ITALICS) }
         };
 
         for (int i = 0; i < gridMap.length; i++) {
@@ -123,7 +123,7 @@ public class ManageHotelPanel extends JPanel {
             dateLabel.setPreferredSize(new Dimension(20, (int) dateLabel.getPreferredSize().getHeight()));
 
             this.changeDateModifier[i] = new JSpinner(
-                    new SpinnerNumberModel((int) (100 * nightRates[i].getNightRate()), 50, 150, 1));
+                    new SpinnerNumberModel(100 * nightRates[i].getNightRate(), 50, 150, 1));
             this.changeDateModifier[i].setForeground(MyStyles.color.FOREGROUND);
             this.changeDateModifier[i].setBackground(MyStyles.color.BACKGROUND);
 
@@ -171,10 +171,11 @@ public class ManageHotelPanel extends JPanel {
 
         for (int i = 0; i < this.changeDateModifier.length; i++) {
             try {
+                // set buffered text stuff
                 this.changeDateModifier[i].commitEdit();
-                dateModifier[i] = ((Integer) this.changeDateModifier[i].getValue()) / 100.0f;
+                dateModifier[i] = (float) (((Double) this.changeDateModifier[i].getValue()) / 100.0f);
             } catch (Exception e) {
-                /* Do nothing */}
+                /* Do nothing */ }
 
         }
 
