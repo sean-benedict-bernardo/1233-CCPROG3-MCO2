@@ -12,7 +12,11 @@ import view.common.components.MyComponents;
 import view.common.components.ReservationSelector;
 
 /**
- * Reservations is a JPanel contains the 
+ * Reservations allows user to select and
+ * display specific reservation information
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
  */
 public class Reservations extends JPanel {
     private ReservationSelector reservationSelectPanel;
@@ -21,6 +25,11 @@ public class Reservations extends JPanel {
     private JLabel infoName, infoRoom, infoCheckIn, infoCheckOut, infoDiscountCode;
     private JPanel infoNightlyBreakdown;
 
+    /**
+     * Reservations Constructor
+     * 
+     * @param reservations list of reservations to be displayed
+     */
     public Reservations(ArrayList<Reservation> reservations) {
         super(new BorderLayout());
         setBackground(MyStyles.color.BACKGROUND);
@@ -34,6 +43,11 @@ public class Reservations extends JPanel {
         }
     }
 
+    /**
+     * Initializes frame
+     * 
+     * @param reservations list of reservations to be displayed
+     */
     private void initFrame(ArrayList<Reservation> reservations) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
@@ -97,6 +111,11 @@ public class Reservations extends JPanel {
         add(infoContainerPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Updates JLabels to display reservation info
+     * 
+     * @param reservation to be displayed
+     */
     public void updateInformation(Reservation reservation) {
         this.infoName.setText(reservation.getGuestName());
         this.infoRoom.setText(reservation.getRoom().getName());
@@ -123,6 +142,11 @@ public class Reservations extends JPanel {
         repaint();
     }
 
+    /**
+     * Initializes the nightly breakdown
+     * 
+     * @param reservation whose dates will be broken down
+     */
     private void makeNightlyBreakdown(Reservation reservation) {
         NightRate nightRates[] = reservation.getNightRates();
 
@@ -239,6 +263,11 @@ public class Reservations extends JPanel {
         }
     }
 
+    /**
+     * Getter for ReservationSelector buttons
+     * 
+     * @return ReservationSelector buttons
+     */
     public ArrayList<JButton> getReservationSelectButtons() {
         return reservationSelectPanel.getReservationSelectButtons();
     }

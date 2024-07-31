@@ -10,6 +10,13 @@ import model.Hotel;
 import view.common.MyStyles;
 import view.common.components.ToolBar;
 
+/**
+ * ManageHotel contains the GUI
+ * that allows user to manage hotel
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class ManageHotel extends JDialog {
     private Hotel hotel;
     private JPanel cardComponents[] = new JPanel[3];
@@ -17,6 +24,9 @@ public class ManageHotel extends JDialog {
     private CardLayout cardPanelLayout = new CardLayout();
     private ToolBar toolBar;
 
+    /**
+     * ManageHotel Constructor
+     */
     public ManageHotel(Hotel hotel) {
         super((Dialog) null);
         this.hotel = hotel;
@@ -37,6 +47,9 @@ public class ManageHotel extends JDialog {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
     }
 
+    /**
+     * Initializes ToolBar Buttons
+     */
     private void initButtons() {
         String buttonsList[] = {
                 "Manage Hotel",
@@ -50,6 +63,9 @@ public class ManageHotel extends JDialog {
         add(this.toolBar, BorderLayout.NORTH);
     }
 
+    /**
+     * Initialize card JPanels
+     */
     private void initCardContent() {
         this.cardPanel = new JPanel(this.cardPanelLayout);
 
@@ -89,20 +105,32 @@ public class ManageHotel extends JDialog {
         }
     }
 
+    /**
+     * Show card at index
+     * 
+     * @param index
+     */
     public void showCard(int index) {
         if (0 <= index && index <= 3) {
             this.cardPanelLayout.show(this.cardPanel, "" + index);
         }
     }
 
+    /**
+     * Getter for ToolBar buttons
+     * 
+     * @return ToolBar buttons
+     */
     public JButton[] getButtons() {
         return this.toolBar.getButtons();
     }
 
-    public JDialog getJDialog() {
-        return this;
-    }
-
+    /**
+     * Getter for card components
+     * 
+     * @param index of cardcomponent
+     * @return specific JPanel at index
+     */
     public JPanel getCardComponent(int index) {
         return (0 <= index && index <= 2) ? this.cardComponents[index] : null;
     }

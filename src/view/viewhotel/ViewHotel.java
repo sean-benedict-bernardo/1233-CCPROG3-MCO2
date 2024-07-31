@@ -7,6 +7,13 @@ import model.*;
 import view.common.MyStyles;
 import view.common.components.ToolBar;
 
+/**
+ * ViewHotel contains the GUI that
+ * allows user to view hotel information
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class ViewHotel extends JDialog {
     private Hotel hotel;
     private JPanel cardComponents[] = new JPanel[4];
@@ -14,6 +21,11 @@ public class ViewHotel extends JDialog {
     private CardLayout cardPanelLayout = new CardLayout();
     private ToolBar toolBar;
 
+    /**
+     * ViewHotel Constructor
+     * 
+     * @param hotel whose info will be viewed
+     */
     public ViewHotel(Hotel hotel) {
         super((Dialog) null);
         this.hotel = hotel;
@@ -30,6 +42,9 @@ public class ViewHotel extends JDialog {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
     }
 
+    /**
+     * Initializes frame
+     */
     private void initFrame() {
         setBackground(MyStyles.color.BACKGROUND);
         setForeground(MyStyles.color.FOREGROUND);
@@ -57,6 +72,9 @@ public class ViewHotel extends JDialog {
         add(this.toolBar, BorderLayout.NORTH);
     }
 
+    /**
+     * Initializes card component jpanels
+     */
     private void initCardContent() {
         this.cardPanel = new JPanel(this.cardPanelLayout);
 
@@ -77,7 +95,7 @@ public class ViewHotel extends JDialog {
     }
 
     /**
-     * shows
+     * Shows a certain card given index
      * 
      * @param index index of card to be shown 0-3
      */
@@ -87,14 +105,21 @@ public class ViewHotel extends JDialog {
         }
     }
 
+    /**
+     * Getter for ToolBar buttons
+     * 
+     * @return ToolBar buttons
+     */
     public JButton[] getButtons() {
         return this.toolBar.getButtons();
     }
 
-    public JDialog getJDialog() {
-        return this;
-    }
-
+    /**
+     * Getter for specific card component at index
+     * 
+     * @param index of card
+     * @return card component
+     */
     public JPanel getCardComponent(int index) {
         return (0 <= index && index <= 3) ? this.cardComponents[index] : null;
     }

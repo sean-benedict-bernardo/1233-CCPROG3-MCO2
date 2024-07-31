@@ -21,6 +21,13 @@ import view.common.MyStyles;
 import view.common.components.MyComponents;
 import view.common.components.RoomTypeSelector;
 
+/**
+ * ManageRooms contains the GUI component
+ * that allows user to add and delete rooms
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class ManageRooms extends JPanel {
     private Hotel hotel;
 
@@ -30,6 +37,11 @@ public class ManageRooms extends JPanel {
 
     private JButton roomAdd, roomDelete;
 
+    /**
+     * ManageRooms Constructor
+     * 
+     * @param hotel where rooms will be added to and deleted from
+     */
     public ManageRooms(Hotel hotel) {
         super(new BorderLayout());
         this.hotel = hotel;
@@ -38,6 +50,9 @@ public class ManageRooms extends JPanel {
         this.initFrame();
     }
 
+    /**
+     * Initializes components
+     */
     private void initComponents() {
         this.roomAdd = MyComponents.button("Add Room");
         this.roomDelete = MyComponents.button("Delete Room");
@@ -47,6 +62,9 @@ public class ManageRooms extends JPanel {
         this.roomSelect.setFont(MyStyles.font.HEADER);
     }
 
+    /**
+     * Initializes frame
+     */
     private void initFrame() {
         setBackground(MyStyles.color.BACKGROUND);
         setForeground(MyStyles.color.FOREGROUND);
@@ -101,24 +119,47 @@ public class ManageRooms extends JPanel {
         this.updateRoomCount();
     }
 
+    /**
+     * This updates the JProgressBar of the room count
+     */
     private void updateRoomCount() {
         int roomCtr = this.hotel.getNumRooms();
         this.numRooms.setString(roomCtr + " / 50 Rooms");
         this.numRooms.setValue(roomCtr);
     }
 
+    /**
+     * Getter for selected room type
+     * 
+     * @return selected room type
+     */
     public char getRoomType() {
         return this.newRoomType.getSelected();
     }
 
+    /**
+     * Getter for selected room
+     * 
+     * @return selected room
+     */
     public String getSelectedRoom() {
         return this.roomSelect.getSelectedItem().toString();
     }
 
+    /**
+     * Getter for add room button
+     * 
+     * @return add room button
+     */
     public JButton getRoomAdd() {
         return this.roomAdd;
     }
 
+    /**
+     * Getter for remove room button
+     * 
+     * @return remove room button
+     */
     public JButton getRoomDelete() {
         return this.roomDelete;
     }

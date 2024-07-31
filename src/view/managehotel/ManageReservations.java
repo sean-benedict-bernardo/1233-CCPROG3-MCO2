@@ -19,6 +19,13 @@ import model.Reservation;
 import view.common.MyStyles;
 import view.common.components.MyComponents;
 
+/**
+ * ManageReservations contains the GUI component
+ * that allows user to select and delete reservations
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class ManageReservations extends JPanel {
     private Hotel hotel;
 
@@ -28,6 +35,12 @@ public class ManageReservations extends JPanel {
 
     private JButton deleteReservation;
 
+    /**
+     * ManageReservations Constructor
+     * 
+     * @param hotel Hotel whose reservations are done
+     * @throws Exception throws exception if theres no reservation
+     */
     public ManageReservations(Hotel hotel) throws Exception {
         super(new BorderLayout());
 
@@ -39,6 +52,9 @@ public class ManageReservations extends JPanel {
         this.updateReservation(hotel.getReservationIds()[0]);
     }
 
+    /**
+     * Initializes the Frame
+     */
     private void initFrame() {
         setBackground(MyStyles.color.BACKGROUND);
         setForeground(MyStyles.color.FOREGROUND);
@@ -90,7 +106,7 @@ public class ManageReservations extends JPanel {
     /**
      * Getter for JComboBox object
      * 
-     * @return
+     * @return dropdown box object
      */
     public JComboBox<String> getDropDown() {
         return this.reservationSelector;
@@ -99,21 +115,26 @@ public class ManageReservations extends JPanel {
     /**
      * Returns what user selected in JComboBox
      * 
-     * @return String
+     * @return dropdown selection
      */
     public String getSelectedReservation() {
         return this.reservationSelector.getSelectedItem().toString();
     }
 
     /**
-     * Getter for deleteReservationButton
+     * Getter for delete reservation button
      * 
-     * @return JButton
+     * @return delete reservation button
      */
     public JButton getDeleteReservation() {
         return this.deleteReservation;
     }
 
+    /**
+     * Updates JPanel with the reservation information
+     * 
+     * @param id unique identification associated to reservation
+     */
     public void updateReservation(String id) {
         Reservation reservation = this.hotel.getReservation(id);
         this.infoName.setText(reservation.getGuestName());
@@ -124,6 +145,11 @@ public class ManageReservations extends JPanel {
                 (!reservation.getDiscountCode().equals(Reservation.NODISCOUNT)) ? reservation.getDiscountCode() : "");
     }
 
+    /**
+     * Updates the dropdown box after each deletion
+     * 
+     * @param idList string array of reservation id's
+     */
     public void updateReservationList(String idList[]) {
         reservationSelector.setModel(new DefaultComboBoxModel<>(idList));
         reservationSelector.setSelectedIndex(0);

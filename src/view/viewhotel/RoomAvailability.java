@@ -9,12 +9,25 @@ import model.rooms.Room;
 import view.common.MyStyles;
 import view.common.components.*;
 
+/**
+ * RoomAvailability allows user
+ * to select a certain date and
+ * display room availability
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class RoomAvailability extends JPanel {
     private DateSelector dateSelector;
 
     private JLabel selectedDate;
     private JLabel roomsAvailability[];
 
+    /**
+     * RoomAvailability Constructor
+     * 
+     * @param hotel whose rooms will be displayed
+     */
     public RoomAvailability(Hotel hotel) {
         super(new BorderLayout());
         setBackground(MyStyles.color.BACKGROUND);
@@ -25,6 +38,11 @@ public class RoomAvailability extends JPanel {
         this.initFrame(hotel);
     }
 
+    /**
+     * Initializes frame
+     * 
+     * @param hotel whose rooms will be displayed
+     */
     private void initFrame(Hotel hotel) {
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -71,6 +89,12 @@ public class RoomAvailability extends JPanel {
         add(infoContainer, BorderLayout.CENTER);
     }
 
+    /**
+     * Updates the availability of the rooms
+     * 
+     * @param rooms array list of rooms
+     * @param index day of room to be entered
+     */
     public void updateAvailability(ArrayList<Room> rooms, int index) {
         this.selectedDate.setText("Selected: Day " + index);
         index--;
@@ -89,6 +113,11 @@ public class RoomAvailability extends JPanel {
 
     }
 
+    /**
+     * Getter for date selector buttons
+     * 
+     * @return date selector buttons
+     */
     public JButton[] getDateSelector() {
         return dateSelector.getButtons();
     }

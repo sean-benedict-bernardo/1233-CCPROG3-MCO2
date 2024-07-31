@@ -25,38 +25,7 @@ public class HotelReservationSystem {
     public HotelReservationSystem() {
         this.hotelList = new HotelCollection();
         this.gui = new HomeMenu();
-
-        // testing here
-        try {
-            // this.hotelList.addHotel("NewHotel", 'S');
-            // this.hotelList.addHotel("HotelGemal", 'D');
-
-            // Hotel myHotel = this.hotelList.getHotel("NewHotel"),
-            //         myHotel2 = this.hotelList.getHotel("HotelGemal");
-
-            // for (int i = 0; i < 27; i++) {
-            //     myHotel.addRoom('S');
-            // }
-
-            // // Test PAYDAY
-            // myHotel.createReservation("Payday14", 14, 15, "S1", "PAYDAY");
-            // myHotel.createReservation("Payday15", 15, 16, "S1", "PAYDAY");
-
-            // // Test I_WORK_HERE
-            // myHotel.createReservation("NonEmployee", 15, 16, "S4", "I_WORK_HERE");
-            // myHotel.createReservation("Employee", 15, 16, "S5", Reservation.NODISCOUNT);
-
-            // // Test STAY4_GET1
-            // myHotel.createReservation("4DayStay", 15, 19, "S9", "STAY4_GET1");
-            // myHotel.createReservation("5DayStay", 15, 20, "S7", "STAY4_GET1");
-            // myHotel.createReservation("5DayStay_NoCode", 15, 20, "S8", Reservation.NODISCOUNT);
-
-            // myHotel.createReservation("LongAssStay", 1, 31, "S27", Reservation.NODISCOUNT);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
+        
         this.initButtons();
     }
 

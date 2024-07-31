@@ -22,6 +22,14 @@ import model.NightRate;
 import view.common.MyStyles;
 import view.common.components.MyComponents;
 
+/**
+ * ManageHotel contains the GUI component
+ * that allows user to manage hotel name,
+ * base price, and date price modifers
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class ManageHotelPanel extends JPanel {
     private Hotel hotel;
 
@@ -157,9 +165,11 @@ public class ManageHotelPanel extends JPanel {
         }
     }
 
-    /*
+    /**
      * This method essentially updates specific fields dependent
      * whether there are still active reservations or not
+     * 
+     * @param isValid true to enable fields
      */
     public void updateValidity(boolean isValid) {
         this.changeBasePrice.setEditable(isValid);
@@ -212,18 +222,38 @@ public class ManageHotelPanel extends JPanel {
         return dateModifier;
     }
 
+    /**
+     * Getter for delete hotel button
+     * 
+     * @return delete hotel button
+     */
     public JButton getDeleteHotel() {
         return this.deleteHotel;
     }
 
+    /**
+     * Getter for update hotel name button
+     * 
+     * @return update hotel name button
+     */
     public JButton getSaveHotelName() {
         return this.saveHotelName;
     }
 
+    /**
+     * Getter for update base price button
+     * 
+     * @return update base price button
+     */
     public JButton getSaveBasePrice() {
         return this.saveBasePrice;
     }
 
+    /**
+     * Getter for update date price modifer button
+     * 
+     * @return update date price modifer button
+     */
     public JButton getSaveDateModifier() {
         return this.saveDateModifier;
     }

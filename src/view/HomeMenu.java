@@ -7,6 +7,12 @@ import view.common.components.MyComponents;
 
 import java.awt.*;
 
+/**
+ * HomeMenu is the main menu of the Hotel Reservation System
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class HomeMenu extends JFrame {
     private JButton buttonsList[];
 

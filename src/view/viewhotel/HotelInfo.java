@@ -8,12 +8,20 @@ import view.common.MyStyles;
 import view.common.components.MyComponents;
 
 /**
- * HotelInfo
+ * HotelInfo displays high level hotel information
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
  */
 public class HotelInfo extends JPanel {
     private Hotel hotel;
     private JPanel nightlyRates;
 
+    /**
+     * HotelInfo Constructor
+     * 
+     * @param hotel whose high level info is shown
+     */
     public HotelInfo(Hotel hotel) {
         super();
         this.hotel = hotel;
@@ -25,6 +33,9 @@ public class HotelInfo extends JPanel {
         setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
     }
 
+    /**
+     * Initializes frame
+     */
     public void initFrame() {
         JPanel tablePanel = new JPanel(new GridBagLayout());
         tablePanel.setBackground(MyStyles.color.BACKGROUND);
@@ -75,6 +86,9 @@ public class HotelInfo extends JPanel {
         add(tablePanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Initializes date price modifiers
+     */
     private void initPriceRange() {
         this.nightlyRates = new JPanel(new GridBagLayout());
         this.nightlyRates.setBackground(MyStyles.color.BACKGROUND);

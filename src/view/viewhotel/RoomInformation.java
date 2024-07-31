@@ -17,6 +17,14 @@ import view.common.MyStyles;
 import view.common.components.MyComponents;
 import view.common.components.RoomSelector;
 
+/**
+ * RoomInformation allows user
+ * to select a certain room and
+ * display information of that room
+ * 
+ * @author Sean Benedict Bernardo
+ * @author Luis Andrew Madridijo
+ */
 public class RoomInformation extends JPanel {
     private JPanel roomSelectPanel;
 
@@ -26,6 +34,11 @@ public class RoomInformation extends JPanel {
     private JLabel infoNightlyRate;
     private JLabel infoAvailabilityDate[] = new JLabel[Hotel.NUM_NIGHTS];
 
+    /**
+     * RoomInformation Constructor
+     * 
+     * @param rooms list of rooms to inspect
+     */
     public RoomInformation(ArrayList<Room> rooms) {
         super();
         setLayout(new BorderLayout());
@@ -36,6 +49,11 @@ public class RoomInformation extends JPanel {
         this.dispRoomInfo(rooms.get(0));
     }
 
+    /**
+     * Initializes frame
+     * 
+     * @param rooms list of rooms to inspect
+     */
     private void initFrame(ArrayList<Room> rooms) {
         setBackground(MyStyles.color.BACKGROUND);
         setBackground(MyStyles.color.FOREGROUND);
@@ -87,6 +105,11 @@ public class RoomInformation extends JPanel {
         add(infoPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * Displays specific room information
+     * 
+     * @param room to be displayed
+     */
     public void dispRoomInfo(Room room) {
         this.infoRoomName.setText("Room " + room.getName());
         this.infoRoomType.setText(room.getRoomType() + " Room");
@@ -99,6 +122,11 @@ public class RoomInformation extends JPanel {
         }
     }
 
+    /**
+     * Getter for RoomSelector buttons
+     * 
+     * @return RoomSelector buttons
+     */
     public ArrayList<JButton> getRoomSelectButtons() {
         return ((RoomSelector) this.roomSelectPanel).getRoomSelectButtons();
     }
