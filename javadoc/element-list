@@ -1,0 +1,11 @@
+driver
+model
+model.rooms
+view
+view.common
+view.common.auxiliary
+view.common.components
+view.createhotel
+view.makereservation
+view.managehotel
+view.viewhotel

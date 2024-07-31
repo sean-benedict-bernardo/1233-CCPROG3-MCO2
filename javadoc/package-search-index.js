@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"driver"},{"l":"model"},{"l":"model.rooms"},{"l":"view"},{"l":"view.common"},{"l":"view.common.auxiliary"},{"l":"view.common.components"},{"l":"view.createhotel"},{"l":"view.makereservation"},{"l":"view.managehotel"},{"l":"view.viewhotel"}];updateSearchResults();
